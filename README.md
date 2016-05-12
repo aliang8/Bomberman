@@ -1,6 +1,6 @@
-# Bomberman
-/n Making Bomberman for APCS Spring Final Project
-/n Team Name:
+# Bomberman #
+Making Bomberman for APCS Spring Final Project
+Team Name:
 Project Name/ Description:
 Development Log:
 Project plan/outline including our goals prioritized by importance
