@@ -20,6 +20,7 @@ Project plan/outline including our goals prioritized by importance
 and chronology (things to do + things already done):
 
 (SUBJECT TO CHANGE)
+
 1. Make level editor
 - make a default map to test and for users to start with
 2. Implement the mechanics of the game such as: the player, bombs, powerups, powerdowns, obstacles
