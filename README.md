@@ -16,9 +16,7 @@ Lastly, we will TRY to implement a 3-D version of the game.
 ##Development Log: ##
 N/A
 
-##Project plan/outline including our goals prioritized by importance
-and chronology (things to do + things already done):##
-
+##Project plan/outline including our goals prioritized by importance and chronology (things to do + things already done): ##
 (SUBJECT TO CHANGE)
 
 1. Make level editor
