@@ -3,8 +3,8 @@ Making Bomberman for APCS Spring Final Project
 
 Team Name: Ziggs
 
-Project Name/ Description: 
-Name:Operation BumberMan 
+#Project Name/ Description: #
+Name: Operation BumberMan 
 
 Development Log: N/A
 
