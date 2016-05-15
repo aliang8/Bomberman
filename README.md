@@ -16,7 +16,17 @@ Lastly, we will TRY to implement a 3-D version of the game.
 ##Development Log: ##
  5/15/16
  
-Started up with the basic framework for Bomberman. Added some basic methods, classes. Working on creating powerups and player movement and AI movements. -Matthew Z
+Started up with the basic framework for Bomberman. 
+
+Added some basic methods, classes. 
+
+Working on creating powerups and player movement and AI movements.
+
+Does not compile yet, need to add more methods to our classes and make more classes for other AI, and obstacles and possible special maps.
+
+Need to add sprites and other graphical stuff.
+
+
 
 ##Project plan/outline including our goals prioritized by importance and chronology (things to do + things already done): ##
 (SUBJECT TO CHANGE)
