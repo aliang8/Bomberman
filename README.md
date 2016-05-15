@@ -14,7 +14,8 @@ can practice against. There will be three different AI difficulty levels: easy, 
 Lastly, we will TRY to implement a 3-D version of the game. 
 
 ##Development Log: ##
-N/A
+ -5/15/16-
+Started up with the basic framework for Bomberman. Added some basic methods, classes. Working on creating powerups and player movement and AI movements. -Matthew Z
 
 ##Project plan/outline including our goals prioritized by importance and chronology (things to do + things already done): ##
 (SUBJECT TO CHANGE)
