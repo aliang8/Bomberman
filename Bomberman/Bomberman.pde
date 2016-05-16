@@ -1,4 +1,5 @@
 String lastKey = "";
+PImage map = loadImage("defaultmap.png");
 boolean keyUsed = false;
 String state;
 boolean inGame = false;
@@ -27,9 +28,13 @@ public void draw(){
   if(inGame){
     displayMap();
   }
-  
   drawOverlay();
 }
+
+void displayMap(){
+  image(map,0,0);
+}
+
 public void keyPressed() {
   print(keyCode+",");
   keyUsed = true;
@@ -46,7 +51,7 @@ public void keyPressed() {
   if (keyCode == 83) { //S
     lastKey = "S";
   }
-  if(keyCode ==" "){
+  if(keyCode == ' '){
     lastKey = "SPACE";
   }
 }
@@ -57,7 +62,7 @@ public void handleUserInput() {
     }
     if (lastKey.equals("A")) {
       move("left");
-    }
+    
     if (lastKey.equals("S")) {
       move("down");
     }
