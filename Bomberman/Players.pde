@@ -2,6 +2,7 @@ class Players implements Moveable,Destroyable,Displayable{
     private Bombs inHand;
     private float x,y,heading,speed;
     private String state;
+    private PImage playerImage;
   public void move(){
       if(Math.random()* 4 == 0){
       x+= 1;
