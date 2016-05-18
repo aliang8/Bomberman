@@ -15,7 +15,8 @@ ArrayList<Displayable> thingsToDisplay = new ArrayList<Displayable>();
 ArrayList<Positionable> thingsThatExist = new ArrayList<Positionable>();
 ArrayList<Players> PlayersOnMap = new ArrayList<Players>();
 public void setup(){
-  size(640,576);
+    size(1200, 1000);
+    
   background(255,255,255);
   state = "menu";
   map = loadImage("defaultmap.png");
@@ -102,7 +103,6 @@ void makeMap(){
   }catch(IOException e){
     
   }
-  size(1200, 1000);
   per = 100;
   grid = new int[height/per][width/per];
 }
