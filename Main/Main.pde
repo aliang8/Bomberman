@@ -1,29 +1,62 @@
+String lastKey = "";
+int per;
+TileMap grid;
+PImage map; 
+PImage menu;
+PImage arrow;
+PImage gameOver;
+PImage victory;
+PImage players;
+PImage tiles;
+boolean keyUsed = false;
+String state;
+boolean inGame = false;
 ArrayList<Moveable> thingsToMove = new ArrayList<Moveable>();
 ArrayList<Displayable> thingsToDisplay = new ArrayList<Displayable>();
 ArrayList<Positionable> thingsThatExist = new ArrayList<Positionable>();
-EvilCamper player = new EvilCamper();
-String lastKey = "";
-boolean keyUsed = false;
-
-public void setup() {
-  size(600, 400);
-
-  for (int i = 0; i < 10; i++) {
-    Camper c = new Camper();
-    thingsToMove.add(c);
-    thingsToDisplay.add(c);
-    thingsThatExist.add(c);
-  }
-  thingsToMove.add(player);
-  thingsToDisplay.add(player);
-  thingsThatExist.add(player);
+ArrayList<Players> PlayersOnMap = new ArrayList<Players>();
+public void setup(){
+  size(800,600);
+  background(255,255,255);
+  state = "menu";
+  map = loadImage("defaultmap.png");
+  menu = loadImage("StartMenu.png");
+  tiles = loadImage("1.gif");
+  makeMap();
+ // arrow = loadImage("locator.png");
 }
+public void draw(){
+  handleUserInput();
+  for( Moveable m : thingsToMove){
+    m.move();
+    m.collide(thingsThatExist);
+  }
+  background(255);
+  for(Displayable d : thingsToDisplay){
+    d.display();
+  }
+  if(state.equals("menu")){
+    convertMap();
+  }
+  if(inGame){
+    displayMap();
+  }
+}
+
+void displayMap(){
+  convertMap();
+  
+}
+void setupMenu(){
+  image(menu,0,0);
+}
+  
 
 public void keyPressed() {
   print(keyCode+",");
   keyUsed = true;
   //WASD
-  if (keyCode == 65) { //A
+  if (keyCode == 65){ //A
     lastKey = "A";
   }
   if (keyCode == 68) { //D
@@ -35,98 +68,82 @@ public void keyPressed() {
   if (keyCode == 83) { //S
     lastKey = "S";
   }
-}
-
-public void mouseClicked() {
-  delete(mouseX, mouseY);
-}
-
-public void delete(float x, float y) {
-  for (int i = thingsThatExist.size() - 1; i>=0; i-- ) {
-    Positionable p = thingsThatExist.get(i);
-    if ( dist(x, y, p.getX(), p.getY())<20) {
-      p.setState("REMOVE");
-    }
+  if(keyCode == ' '){
+    lastKey = "SPACE";
   }
 }
-
-public void draw() {
-  /***********************************************
-  get user input
-  */
-  handleUserInput();
-
-  /************************************************
-  *change object states
-   */
-  for ( Moveable m : thingsToMove) {
-    //move objects
-    m.move();
-    //check for collisions/events
-    m.collide(thingsThatExist);
-  }
-
-  /************************************************
-  *draw objects
-   */  
-  //clear the world
-  background(255);
-  //draw things
-  for ( Displayable d : thingsToDisplay) {
-    d.display();
-  }
-  //draw overlay
-  drawOverlay();
-
-
-
-
-  /***********************************************
-  *remove objects from the game if they need to be
-   */
-   /*
-  for (int i = thingsToMove.size() - 1; i >= 0; i--) {
-    String state = thingsToMove.get(i).getState();
-      if (state.equals("DEAD") || state.equals("REMOVE")) {
-      thingsToMove.remove(i);
-    }
-  }
-  */
-  /*
-  for (int i = thingsToDisplay.size() - 1; i >= 0; i--) {
-    String state = thingsToDisplay.get(i).getState();
-      if ( state.equals("REMOVE")) {
-      thingsToDisplay.remove(i);
-    }
-  }
-  */
-  /*
-  for (int i = thingsThatExist.size() - 1; i >= 0; i--) {
-    String state = thingsThatExist.get(i).getState();
-      if ( state.equals("REMOVE")) {
-      thingsThatExist.remove(i);
-    }
-  }
-  */
-}
-
 public void handleUserInput() {
   if (keyUsed) {
     if (lastKey.equals("W")) {
+      PlayersOnMap.get(1).move("up");
     }
     if (lastKey.equals("A")) {
+      PlayersOnMap.get(1).move("left");
     }
     if (lastKey.equals("S")) {
+      PlayersOnMap.get(1).move("down");
     }
     if (lastKey.equals("D")) {
+      PlayersOnMap.get(1).move("right");
+    }
+    if(lastKey.equals("SPACE")){
+      PlayersOnMap.get(1).dropBomb();
     }
     //only allow one thing per key press
     keyUsed = false;
   }
 }
+void makeMap(){
+  try {
+    BufferedReader reader = createReader("level.txt");
+    String line = reader.readLine();
 
-public void drawOverlay() {
-  text("Things that exist: "+thingsThatExist.size(), 20, 20);
-  text("Things to display: "+thingsToDisplay.size(), 20, 40);
-  text("Things to move: "+thingsToMove.size(), 20, 60);
+    while (line != null) {
+      line = reader.readLine();
+    }
+  }catch(IOException e){
+    
+  }
+  per = 100;
+  grid = new TileMap(height/per,width/per);
+}
+
+void convertMap(){
+  background(0);
+  textSize(24);
+  for (int r = 0; r < height; r+=per) {
+    line(0, r, width, r);
+  }
+  for (int c = 0; c < width; c+=per) {
+    line(c, 0, c, height);
+  }
+
+  for (int r = 0; r < height/per; r+=1) {
+    for (int c = 0; c < width/per; c+=1) {
+      fill(255);
+      stroke(255);
+      
+    }
+  }
+}
+
+void mouseClicked() {
+  inc(mouseX, mouseY);
+}
+
+void inc(int x, int y) {
+  x = x / per;
+  y = y / per;
+}
+
+void exit() {
+  print("Write a file");
+  PrintWriter output = createWriter("level.txt");
+  output.println(height/per+","+width/per);
+  for (int r = 0; r < height/per; r+=1) {
+    for (int c = 0; c < width/per; c+=1) {
+      output.print(grid.getTile(r,c) + " ");
+    }
+  }
+  output.close();
 }
