@@ -1,5 +1,4 @@
 import java.awt.Image;
-
 public class TileMap {
     private Tiles[][] tiles;
     /**
@@ -8,6 +7,7 @@ public class TileMap {
     */
     public TileMap(int width, int height) {
         tiles = new Tiles[width][height];
+        
     }
     /**
     Gets the width of this TileMap (number of tiles across).

@@ -1,7 +1,11 @@
 public class MakeMap{
     int per;
     int [][]grid;
-    public void makeMap(){
+    public MakeMap(){
+      per =100;
+    }
+      
+     void makeMap(){
         try {
             BufferedReader reader = createReader("level.txt");
             String line = reader.readLine();
