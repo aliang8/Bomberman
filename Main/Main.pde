@@ -1,32 +1,27 @@
 String lastKey = "";
 int [][] grid;
 Tile [][] TileMap;
-int blockType = 1;
+int blockType;
+Sprite s;
 int per;
 ArrayList<PImage> images;
-PImage map; 
-PImage menu;
-PImage arrow;
-PImage gameOver;
-PImage victory;
-PImage players;
-PImage tiles;
 boolean keyUsed = false;
 String state;
 boolean inGame = false;
-ArrayList<Integer>mapTiles = new ArrayList<Integer>();
-ArrayList<Moveable> thingsToMove = new ArrayList<Moveable>();
-ArrayList<Displayable> thingsToDisplay = new ArrayList<Displayable>();
-ArrayList<Positionable> thingsThatExist = new ArrayList<Positionable>();
-ArrayList<Players> PlayersOnMap = new ArrayList<Players>();
 public void setup(){
   images = new ArrayList <PImage>();
-        for (int i = 1; i < 10; i++){
-            String imageName = i + ".jpg";
-            images.add(loadImage(imageName));
-        }
+  for (int i = 1; i < 10; i++){
+      String imageName = i + ".jpg";
+      images.add(loadImage(imageName));
+      images.get(i-1).resize(50,50);
+  }
+  for (int i = 1; i < 25; i++){
+      String imageName = "Red " + "(" + i + ").gif";
+      images.add(loadImage(imageName));
+  }
   state = "convertMap";
   size(800, 600);
+  s = new Sprite(100,100,"Red");
   per = 50;
   int rows = height/per;
   int cols = width/per;
@@ -56,14 +51,6 @@ public void setup(){
 
 public void draw(){
   handleUserInput();
-  for( Moveable m : thingsToMove){
-    m.move();
-    m.collide(thingsThatExist);
-  }
-  background(255);
-  for(Displayable d : thingsToDisplay){
-    d.display();
-  }
   if(state.equals("menu")){
     setupMenu();
   }
@@ -78,7 +65,6 @@ void setupMenu(){
   displayMap();
 }
 void displayMap(){
-        background(0);
         textSize(24);
       
         for (int r = 0; r < height/per; r+=1) {
@@ -99,9 +85,6 @@ void displayMap(){
               TileMap[r][c] = new Tile("floor",false,false);
               TileMap[r][c].showTile("floor",c * per, (r+1) * per - per);
             }
-            //draw text in the middle of the cell
-            fill(255);
-            text(grid[r][c]+"", c*per+per/2, r*per+per/2);
           }
         }
         rect(width - 2 * per, 0, 2 * per, height);
@@ -125,8 +108,7 @@ void displayMap(){
     void change(int x, int y) {
       x = x / per;
       y = y / per;
-      print(x + " " + y + " " + blockType + " ");
-      if(x > width/per - 2){
+      if(x > width/per - 4){
         if (y <= 1){
           blockType = 1;
         } else if (y <= 3){
@@ -181,24 +163,27 @@ public void keyPressed() {
     lastKey = "SPACE";
   }
 }
+
 public void handleUserInput() {
   if (keyUsed) {
-    if (lastKey.equals("W")) {
-      PlayersOnMap.get(1).move("up");
-    }
-    if (lastKey.equals("A")) {
-      PlayersOnMap.get(1).move("left");
-    }
-    if (lastKey.equals("S")) {
-      PlayersOnMap.get(1).move("down");
-    }
-    if (lastKey.equals("D")) {
-      PlayersOnMap.get(1).move("right");
-    }
-    if(lastKey.equals("SPACE")){
-      PlayersOnMap.get(1).dropBomb();
-    }
+    if (lastKey.equals("W") && s.curMove.equals("") || s.curMove.equals("walkUp")) {
+       s.dir = 'u';
+       s.walkMove(0, 4, "walkUp");
+    } else if (lastKey.equals("A") && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
+       s.dir = 'l';
+       s.walkMove(10, 14, "walkLeft");
+    } else if (lastKey.equals("S") && s.curMove.equals("") || s.curMove.equals("walkDown")) {
+       s.dir = 'd';
+       s.walkMove(5, 9, "walkDown");
+    } else if (lastKey.equals("D") && s.curMove.equals("") || s.curMove.equals("walkRight")) {
+       s.dir = 'r';
+       s.walkMove(15, 19, "walkRight");
+    } else if(lastKey.equals("SPACE")){
+      
+    } 
     //only allow one thing per key press
     keyUsed = false;
+  } else {
+    //s.reset(0);
   }
 }
