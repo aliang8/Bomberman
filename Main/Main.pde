@@ -1,7 +1,9 @@
 String lastKey = "";
 int [][] grid;
 Tile [][] TileMap;
+int blockType = 1;
 int per;
+ArrayList<PImage> images;
 PImage map; 
 PImage menu;
 PImage arrow;
@@ -18,13 +20,18 @@ ArrayList<Displayable> thingsToDisplay = new ArrayList<Displayable>();
 ArrayList<Positionable> thingsThatExist = new ArrayList<Positionable>();
 ArrayList<Players> PlayersOnMap = new ArrayList<Players>();
 public void setup(){
+  images = new ArrayList <PImage>();
+        for (int i = 1; i < 10; i++){
+            String imageName = i + ".jpg";
+            images.add(loadImage(imageName));
+        }
   state = "convertMap";
   size(800, 600);
   per = 50;
   int rows = height/per;
   int cols = width/per;
-  grid = new int[height/per][width/per];
-  TileMap = new Tile[height/per][width/per];
+  grid = new int[height/per][width/per - 2];
+  TileMap = new Tile[height/per][width/per - 2];
   String[] vals = new String[rows*cols];
   try {  
     BufferedReader reader = createReader("level.txt");
@@ -75,46 +82,79 @@ void displayMap(){
         textSize(24);
       
         for (int r = 0; r < height/per; r+=1) {
-          for (int c = 0; c < width/per; c+=1) {
-            //for each grid element
-            
-            //3 means green
-            if (grid[r][c] == 3) {
-              noStroke();
-              TileMap[r][c] = new Tile("bomb",false,false);
-              TileMap[r][c].showTile("bomb",(int)(c+.5) * per, (int)(r+.5) * per);
-              rect(c*per, r*per, per, per);
+          for (int c = 0; c < width/per - 2; c+=1) {
+            if (grid[r][c] == 1) {
+              TileMap[r][c] = new Tile("steel",false,false);
+              TileMap[r][c].showTile("steel",c * per, (r+1) * per - per);
             }
-            //2 means red
             if (grid[r][c] == 2) {
-              noStroke();
-              fill(255, 0, 0);
-              rect(c*per, r*per, per, per);
+              TileMap[r][c] = new Tile("metal",false,false);
+              TileMap[r][c].showTile("metal",c * per, (r+1) * per - per);
+            }
+            if (grid[r][c] == 3) {
+              TileMap[r][c] = new Tile("wood",false,false);
+              TileMap[r][c].showTile("wood",c * per, (r+1) * per - per);
+            }
+            if (grid[r][c] == 4) {
+              TileMap[r][c] = new Tile("floor",false,false);
+              TileMap[r][c].showTile("floor",c * per, (r+1) * per - per);
             }
             //draw text in the middle of the cell
             fill(255);
             text(grid[r][c]+"", c*per+per/2, r*per+per/2);
+          }
+        }
+        rect(width - 2 * per, 0, 2 * per, height);
+        for (int r = 0; r < height/per; r+=2) {
+          for (int c = width/per - 2; c < width/per; c+=1) {
+            line(width - 2 * per, r * per, width * per, r * per);
             
           }
         }
+        image(images.get(1), width - 2 * per, 0, 100, 100);
+        image(images.get(4), width - 2 * per, 2 * per, 100, 100);
+        image(images.get(6), width - 2 * per, 4 * per, 100, 100);
+        image(images.get(8), width - 2 * per, 6 * per, 100, 100);
+        //image(images.get(2), width - 2 * per, 8 * per, 100, 100);
     }
       
     void mouseClicked() {
-        inc(mouseX, mouseY);
+        change(mouseX, mouseY);
     }
     
-    void inc(int x, int y) {
+    void change(int x, int y) {
       x = x / per;
       y = y / per;
-      grid[y][x] += 1;
-      grid[y][x] %= 10;
+      print(x + " " + y + " " + blockType + " ");
+      if(x > width/per - 2){
+        if (y <= 1){
+          blockType = 1;
+        } else if (y <= 3){
+          blockType = 2;
+        } else if (y <= 5){
+          blockType = 3;
+        } else {
+          blockType = 4;
+        }
+      }
+      if (x < width/per - 2){
+        if (blockType == 1){
+          grid[y][x] = 1;
+        } else if (blockType == 2){
+          grid[y][x] = 2;
+        } else if (blockType == 3){
+          grid[y][x] = 3;
+        } else {
+          grid[y][x] = 4;
+        }       
+      }  
     }
     
     void exit() {
       print("Write a file");
       PrintWriter output = createWriter("level.txt");
-      for (int r = 0; r < height/per; r+=1) {
-        for (int c = 0; c < width/per; c+=1) {
+      for (int r = 0; r < height/per - 2; r+=1) {
+        for (int c = 0; c < width/per - 2; c+=1) {
           output.print(grid[r][c]+" ");
         }
       }

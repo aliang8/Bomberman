@@ -10,8 +10,8 @@ public class Tile{
     tileType = name;
     Destroyable = destroy;
     Alive = deader;
-      images = new ArrayList <PImage>();
-        for (int i = 1; i < 3; i++){
+     images = new ArrayList <PImage>();
+        for (int i = 1; i < 10; i++){
             String imageName = i + ".jpg";
             images.add(loadImage(imageName));
         }
@@ -22,10 +22,18 @@ public class Tile{
   }
   
   public void showTile(String type, int x, int y){
-    if(type.equals("bomb")){
-      image(images.get(0),x,y);
-    }else{
+    if(type.equals("steel")){
+      images.get(1).resize(50,50);
       image(images.get(1),x,y);
+    }else if(type.equals("metal")){
+      images.get(4).resize(50,50);
+      image(images.get(4),x,y);
+    }else if(type.equals("wood")){
+      images.get(6).resize(50,50);
+      image(images.get(6),x,y);
+    }else if(type.equals("floor")){
+      images.get(8).resize(50,50);
+      image(images.get(8),x,y);
     }
   }
       
