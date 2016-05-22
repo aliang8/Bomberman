@@ -1,7 +1,7 @@
 String lastKey = "";
-TileMap grid;
+int [][] grid;
+Tile [][] TileMap;
 int per;
-int [][]designermap;
 PImage map; 
 PImage menu;
 PImage arrow;
@@ -18,17 +18,35 @@ ArrayList<Displayable> thingsToDisplay = new ArrayList<Displayable>();
 ArrayList<Positionable> thingsThatExist = new ArrayList<Positionable>();
 ArrayList<Players> PlayersOnMap = new ArrayList<Players>();
 public void setup(){
-  per = 100;
-  size(600,800);
-  background(255,255,255);
   state = "convertMap";
-  map = loadImage("defaultmap.png");
-  menu = loadImage("StartMenu.png");
-  tiles = loadImage("1.gif");
-  grid = new TileMap(8,6);
-  designermap = new int[height/per][width/per];
- // arrow = loadImage("locator.png");
+  size(800, 600);
+  per = 50;
+  int rows = height/per;
+  int cols = width/per;
+  grid = new int[height/per][width/per];
+  TileMap = new Tile[height/per][width/per];
+  String[] vals = new String[rows*cols];
+  try {  
+    BufferedReader reader = createReader("level.txt");
+    String line = reader.readLine();
+    vals = line.split(" ");
+    println("Read a file");
+    for (int i = 0; i < rows*cols; i++) {
+      if (vals[i] != null) {
+        int n =Integer.parseInt(vals[i]);
+        grid[i/cols][i%cols] = n;
+      }
+    }
+  }
+  catch(Exception e) {
+    e.printStackTrace();
+    println("No file, or other error in setup");
+    for (int i = 0; i < vals.length; i++) {
+      vals[i]="0";
+    }
+  }
 }
+
 public void draw(){
   handleUserInput();
   for( Moveable m : thingsToMove){
@@ -50,59 +68,34 @@ void setState(String newState){
   state = newState;
 }
 void setupMenu(){
-  makeMap();
+  displayMap();
 }
 void displayMap(){
-        try {
-            BufferedReader reader = createReader("level.txt");
-            String line = reader.readLine();
-             int rCounter = 0;
-            int cCounter = 0;
-            for(int i = 0; i < line.length()-1;i++){
-              if(line.substring(i,i+1).equals("2")){
-                if(cCounter < grid.getWidth()){
-                grid[0][cCounter]=new Tiles("eWall",true,false);
-                cCounter++;
-                }
-                rCounter++;
-                cCounter = 0;
-                grid[rCounter][cCounter] = new Tiles("breakableWall",true,false);
-              }     
-            }
-            while (line != null) {
-                line = reader.readLine();
-        }
-        }catch(IOException e){
-            
-        }
-        designermap = new int[height/per][width/per]; 
-      }
-    void makeMap(){
         background(0);
         textSize(24);
-        for (int r = 0; r < height; r+=per) {
-            line(0, r, width, r);
-        }
-        for (int c = 0; c < width; c+=per) {
-            line(c, 0, c, height);
-        }
-        
+      
         for (int r = 0; r < height/per; r+=1) {
-            for (int c = 0; c < width/per; c+=1) {
-                fill(255);
-                stroke(255);
-                text(designermap[r][c]+"", c*per+per/2, r*per+per/2);
-                if (designermap[r][c] == 3) {
-                    noStroke();
-                    fill(0, 255, 0);
-                    rect(c*per, r*per, per, per);
-                }
-                if (designermap[r][c] == 2) {
-                    noStroke();
-                    fill(255, 0, 0);
-                    rect(c*per, r*per, per, per);
-                }
+          for (int c = 0; c < width/per; c+=1) {
+            //for each grid element
+            
+            //3 means green
+            if (grid[r][c] == 3) {
+              noStroke();
+              TileMap[r][c] = new Tile("bomb",false,false);
+              TileMap[r][c].showTile("bomb",(int)(c+.5) * per, (int)(r+.5) * per);
+              rect(c*per, r*per, per, per);
             }
+            //2 means red
+            if (grid[r][c] == 2) {
+              noStroke();
+              fill(255, 0, 0);
+              rect(c*per, r*per, per, per);
+            }
+            //draw text in the middle of the cell
+            fill(255);
+            text(grid[r][c]+"", c*per+per/2, r*per+per/2);
+            
+          }
         }
     }
       
@@ -111,27 +104,21 @@ void displayMap(){
     }
     
     void inc(int x, int y) {
-        x = x / per;
-        y = y / per;
-        if(designermap[y][x] > 2){
-          designermap[y][x]= 0;
-          designermap[y][x]%=10;
-        }
-        designermap[y][x] ++;
-        designermap[y][x] %= 10;
-
+      x = x / per;
+      y = y / per;
+      grid[y][x] += 1;
+      grid[y][x] %= 10;
     }
     
     void exit() {
-        print("Write a file");
-        PrintWriter output = createWriter("level.txt");
-        output.println(height/per+","+width/per);
-        for (int r = 0; r < height/per; r+=1) {
-            for (int c = 0; c < width/per; c+=1) {
-                output.print(designermap[r][c]+" ");
-            }
+      print("Write a file");
+      PrintWriter output = createWriter("level.txt");
+      for (int r = 0; r < height/per; r+=1) {
+        for (int c = 0; c < width/per; c+=1) {
+          output.print(grid[r][c]+" ");
         }
-        output.close();
+      }
+      output.close();
     }
 
 public void keyPressed() {
