@@ -16,19 +16,24 @@ Lastly, we will TRY to implement a 3-D version of the game.
 ##Development Log: ##
 Anthony 5/12/16:
 -Started working on level editor
+
 -Made the Tile class and added functionality
 
 Anthony 5/14/16
 -Found and resized the necessary sprites
+
 -Made it so that sprites and map are displayable
 
 Anthony 5/16/16
 -Made a palette on the level editor to select different blocks
+
 -After selecting the blocks you can change the type of individual tiles
 
 Anthony 5/18/16
 -Imported the sprites
+
 -Created the walk function
+
 Bug: walking is really laggy, especially when changing directions
 
 Anthony 5/20/16
