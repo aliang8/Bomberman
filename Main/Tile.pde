@@ -37,7 +37,9 @@ public class Tile{
   public void setType(String name){
     tileType = name;
   }
-  
+  public String getTileType(){
+    return tileType;
+  }
   public String toString(){
     return tileType;
   }

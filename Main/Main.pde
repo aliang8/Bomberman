@@ -1,16 +1,20 @@
 String lastKey = "";
+BufferedReader reader;
+String line;
 int [][] grid;
 Tile [][] TileMap;
 int blockType;
 Sprite s;
 int per;
 ArrayList<PImage> images;
+AI newBots;
 boolean keyUsed = false;
 String state;
 boolean inGame = false;
 public void setup(){
+  newBots = new AI();
   images = new ArrayList <PImage>();
-  for (int i = 1; i < 10; i++){
+  for (int i = 1; i <= 9; i++){
       String imageName = i + ".jpg";
       images.add(loadImage(imageName));
       images.get(i-1).resize(50,50);
@@ -47,10 +51,23 @@ public void setup(){
       vals[i]="0";
     }
   }
+  reader = createReader("level.txt");
 }
-
-public void draw(){
+ void draw(){
   handleUserInput();
+  newBots.makeMove();
+  try{
+    line = reader.readLine();
+    
+  }
+  catch(IOException e){
+    e.printStackTrace();
+    line = null;
+  }
+  if(line == null){
+    noLoop();
+  }
+    
   if(state.equals("menu")){
     setupMenu();
   }
@@ -62,7 +79,7 @@ void setState(String newState){
   state = newState;
 }
 void setupMenu(){
-  displayMap();
+  
 }
 void displayMap(){
         textSize(24);

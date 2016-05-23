@@ -10,17 +10,17 @@ class Sprite{
     int LEFT_BOUND = 30;
     int RIGHT_BOUND = width -15;
     public Sprite(int x, int y, String name){
-      images = new ArrayList<PImage>();
-      for (int i = 1; i < 25; i++){
-        String imageName = "Red " + "(" + i + ").gif";
-        images.add(loadImage(imageName));
-      }
       this.x = x;
       this.y = y;
       this.name = name;
       curMove = "";
       curFrame = 0;
-      state = "";      
+      state = ""; 
+            images = new ArrayList<PImage>();
+      for (int i = 1; i < 25; i++){
+        String imageName = name+""+ "(" + i + ").gif";
+        images.add(loadImage(imageName));
+      }
     }
     void reset(int resetFrame) {
         curFrame = resetFrame;
