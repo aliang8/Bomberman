@@ -4,7 +4,7 @@ Making Bomberman for APCS Spring Final Project
 ##Team Name: Ziggs##
 
 ##Project Name/ Description: ##
-Name: Operation BumberMan 
+Name: BombCraft
 
 Description: We want to create a replica of the game Bomberman. The objective of the game
 is to kill enemies using bombs. You can pick up powerups to gain an advantage/disadvantage 
