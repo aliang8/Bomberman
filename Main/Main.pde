@@ -1,20 +1,18 @@
 String lastKey = "";
-BufferedReader reader;
-String line;
 int [][] grid;
 Tile [][] TileMap;
 int blockType;
 Sprite s;
+PImage bg;
 int per;
 ArrayList<PImage> images;
-AI newBots;
 boolean keyUsed = false;
 String state;
 boolean inGame = false;
 public void setup(){
   newBots = new AI();
   images = new ArrayList <PImage>();
-  for (int i = 1; i <= 9; i++){
+  for (int i = 1; i < 10; i++){
       String imageName = i + ".jpg";
       images.add(loadImage(imageName));
       images.get(i-1).resize(50,50);
@@ -25,10 +23,13 @@ public void setup(){
   }
   state = "convertMap";
   size(800, 600);
+  //bg = loadImage("3.jpg");
+  //bg.resize(800,600);
+  //background(bg);
   s = new Sprite(100,100,"Red");
   per = 50;
   int rows = height/per;
-  int cols = width/per;
+  int cols = width/per - 2;
   grid = new int[height/per][width/per - 2];
   TileMap = new Tile[height/per][width/per - 2];
   String[] vals = new String[rows*cols];
@@ -51,23 +52,14 @@ public void setup(){
       vals[i]="0";
     }
   }
-  reader = createReader("level.txt");
 }
- void draw(){
+
+public void draw(){
   handleUserInput();
   newBots.makeMove();
-  try{
-    line = reader.readLine();
-    
-  }
-  catch(IOException e){
-    e.printStackTrace();
-    line = null;
-  }
-  if(line == null){
-    noLoop();
-  }
-    
+  //print(TileMap[s.y/per][s.x/per].isOccupied());
+  //print(TileMap[s.y/per][s.x/per]);
+  //print(images.get(20).width + " " + images.get(20).height);
   if(state.equals("menu")){
     setupMenu();
   }
@@ -79,27 +71,28 @@ void setState(String newState){
   state = newState;
 }
 void setupMenu(){
-  
+  displayMap();
 }
-void displayMap(){
-        textSize(24);
-      
+void displayMap(){  
         for (int r = 0; r < height/per; r+=1) {
           for (int c = 0; c < width/per - 2; c+=1) {
+            if(grid[r][c] == 0){
+              TileMap[r][c] = new Tile("blank",false,false,false);
+            }
             if (grid[r][c] == 1) {
-              TileMap[r][c] = new Tile("steel",false,false);
+              TileMap[r][c] = new Tile("steel",false,false,true);
               TileMap[r][c].showTile("steel",c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 2) {
-              TileMap[r][c] = new Tile("metal",false,false);
+              TileMap[r][c] = new Tile("metal",false,false,true);
               TileMap[r][c].showTile("metal",c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 3) {
-              TileMap[r][c] = new Tile("wood",false,false);
+              TileMap[r][c] = new Tile("wood",false,false,true);
               TileMap[r][c].showTile("wood",c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 4) {
-              TileMap[r][c] = new Tile("floor",false,false);
+              TileMap[r][c] = new Tile("floor",false,false,true);
               TileMap[r][c].showTile("floor",c * per, (r+1) * per - per);
             }
           }
@@ -125,7 +118,7 @@ void displayMap(){
     void change(int x, int y) {
       x = x / per;
       y = y / per;
-      if(x > width/per - 4){
+      if(x > width/per - 3){
         if (y <= 1){
           blockType = 1;
         } else if (y <= 3){
@@ -152,7 +145,7 @@ void displayMap(){
     void exit() {
       print("Write a file");
       PrintWriter output = createWriter("level.txt");
-      for (int r = 0; r < height/per - 2; r+=1) {
+      for (int r = 0; r < height/per; r+=1) {
         for (int c = 0; c < width/per - 2; c+=1) {
           output.print(grid[r][c]+" ");
         }
@@ -184,17 +177,32 @@ public void keyPressed() {
 public void handleUserInput() {
   if (keyUsed) {
     if (lastKey.equals("W") && s.curMove.equals("") || s.curMove.equals("walkUp")) {
-       s.dir = 'u';
-       s.walkMove(0, 4, "walkUp");
+      if(TileMap[s.y/per][s.x/per].isOccupied() == true){
+      } else {
+         s.dir = 'u';
+         s.walkMove(0, 4, "walkUp");
+      }
     } else if (lastKey.equals("A") && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
-       s.dir = 'l';
-       s.walkMove(10, 14, "walkLeft");
+      if(TileMap[s.y/per][s.x/per].isOccupied() == true){
+         s.x += 0;
+      } else{ 
+         s.dir = 'l';
+         s.walkMove(10, 14, "walkLeft");
+      }
     } else if (lastKey.equals("S") && s.curMove.equals("") || s.curMove.equals("walkDown")) {
-       s.dir = 'd';
-       s.walkMove(5, 9, "walkDown");
+      if(TileMap[s.y/per][s.x/per].isOccupied() == true){
+         s.x += 0;
+      } else {
+         s.dir = 'd';
+         s.walkMove(5, 9, "walkDown");
+      }
     } else if (lastKey.equals("D") && s.curMove.equals("") || s.curMove.equals("walkRight")) {
-       s.dir = 'r';
-       s.walkMove(15, 19, "walkRight");
+     if(TileMap[s.y/per][(s.x + s.getWidth())/per].isOccupied() == true){
+         s.x += 0;
+      } else {
+         s.dir = 'r';
+         s.walkMove(15, 19, "walkRight");
+      }
     } else if(lastKey.equals("SPACE")){
       
     } 

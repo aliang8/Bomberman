@@ -5,17 +5,13 @@ public class Tile{
   String tileType;
   Boolean Destroyable;
   Boolean Alive = true;
-
-  public Tile(String name, Boolean destroy, Boolean deader){
+  Boolean isOccupied = true;
+   
+  public Tile(String name, Boolean destroy, Boolean deader, Boolean filled){
     tileType = name;
     Destroyable = destroy;
+    isOccupied = filled;
     Alive = deader;
-     images = new ArrayList <PImage>();
-        for (int i = 1; i < 10; i++){
-            String imageName = i + ".jpg";
-            images.add(loadImage(imageName));
-            images.get(i-1).resize(50,50);
-        }
   }
   
   public String getType(){
@@ -23,6 +19,12 @@ public class Tile{
   }
   
   public void showTile(String type, int x, int y){
+     images = new ArrayList <PImage>();
+        for (int i = 1; i < 10; i++){
+            String imageName = i + ".jpg";
+            images.add(loadImage(imageName));
+            images.get(i-1).resize(50,50);
+        }
     if(type.equals("steel")){
       image(images.get(1),x,y);
     }else if(type.equals("metal")){
@@ -37,10 +39,12 @@ public class Tile{
   public void setType(String name){
     tileType = name;
   }
-  public String getTileType(){
-    return tileType;
-  }
+  
   public String toString(){
     return tileType;
+  }
+  
+  public boolean isOccupied(){
+    return isOccupied;
   }
 }
