@@ -10,7 +10,7 @@ boolean keyUsed = false;
 String state;
 boolean inGame = false;
 public void setup(){
-  newBots = new AI();
+  //newBots = new AI();
   images = new ArrayList <PImage>();
   for (int i = 1; i < 10; i++){
       String imageName = i + ".jpg";
@@ -55,8 +55,8 @@ public void setup(){
 }
 
 public void draw(){
-  handleUserInput();
-  newBots.makeMove();
+  background(255);
+  //newBots.makeMove();
   //print(TileMap[s.y/per][s.x/per].isOccupied());
   //print(TileMap[s.y/per][s.x/per]);
   //print(images.get(20).width + " " + images.get(20).height);
@@ -66,6 +66,7 @@ public void draw(){
   if(state.equals("convertMap")){
     displayMap();
   }
+  handleUserInput();
 }
 void setState(String newState){
   state = newState;
@@ -92,7 +93,7 @@ void displayMap(){
               TileMap[r][c].showTile("wood",c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 4) {
-              TileMap[r][c] = new Tile("floor",false,false,true);
+              TileMap[r][c] = new Tile("floor",false,false,false);
               TileMap[r][c].showTile("floor",c * per, (r+1) * per - per);
             }
           }
@@ -178,27 +179,28 @@ public void handleUserInput() {
   if (keyUsed) {
     if (lastKey.equals("W") && s.curMove.equals("") || s.curMove.equals("walkUp")) {
       if(TileMap[s.y/per][s.x/per].isOccupied() == true){
+        s.x -=1;
       } else {
          s.dir = 'u';
          s.walkMove(0, 4, "walkUp");
       }
     } else if (lastKey.equals("A") && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
       if(TileMap[s.y/per][s.x/per].isOccupied() == true){
-         s.x += 0;
+        s.x -=1;
       } else{ 
          s.dir = 'l';
          s.walkMove(10, 14, "walkLeft");
       }
     } else if (lastKey.equals("S") && s.curMove.equals("") || s.curMove.equals("walkDown")) {
       if(TileMap[s.y/per][s.x/per].isOccupied() == true){
-         s.x += 0;
+        s.x -=1;
       } else {
          s.dir = 'd';
          s.walkMove(5, 9, "walkDown");
       }
     } else if (lastKey.equals("D") && s.curMove.equals("") || s.curMove.equals("walkRight")) {
-     if(TileMap[s.y/per][(s.x + s.getWidth())/per].isOccupied() == true){
-         s.x += 0;
+     if(TileMap[s.y/per][s.x/per].isOccupied() == true){
+       s.x -=1;
       } else {
          s.dir = 'r';
          s.walkMove(15, 19, "walkRight");
@@ -209,6 +211,6 @@ public void handleUserInput() {
     //only allow one thing per key press
     keyUsed = false;
   } else {
-    //s.reset(0);
+    s.reset(15);
   }
 }

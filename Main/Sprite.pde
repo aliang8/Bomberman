@@ -18,8 +18,9 @@ class Sprite{
       state = ""; 
             images = new ArrayList<PImage>();
       for (int i = 1; i < 25; i++){
-        String imageName = name+""+ "(" + i + ").gif";
+        String imageName = name+" "+ "(" + i + ").gif";
         images.add(loadImage(imageName));
+        images.get(i-1).resize(25,50);
       }
     }
     void reset(int resetFrame) {
