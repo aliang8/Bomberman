@@ -8,20 +8,22 @@ class Sprite{
     int curFrame = 0;
     char dir;
     int LEFT_BOUND = 30;
-    int RIGHT_BOUND = width -15;
+    int RIGHT_BOUND = width - 15;
+    int UP_BOUND = 0;
+    int DOWN_BOUND = height - 15;
     public Sprite(int x, int y, String name){
+      images = new ArrayList<PImage>();
+      for (int i = 1; i < 25; i++){
+        String imageName = "Red " + "(" + i + ").gif";
+        images.add(loadImage(imageName));
+        images.get(i-1).resize(25,50);
+      }
       this.x = x;
       this.y = y;
       this.name = name;
       curMove = "";
       curFrame = 0;
-      state = ""; 
-            images = new ArrayList<PImage>();
-      for (int i = 1; i < 25; i++){
-        String imageName = name+" "+ "(" + i + ").gif";
-        images.add(loadImage(imageName));
-        images.get(i-1).resize(25,50);
-      }
+      state = "";      
     }
     void reset(int resetFrame) {
         curFrame = resetFrame;
@@ -42,9 +44,19 @@ class Sprite{
           pushMatrix();
           image(images.get(curFrame), x, y);
           popMatrix();
-        } else {
+        } else if (dir == 'r'){
             if (x + STEP <= RIGHT_BOUND) {
               x += STEP;
+            }
+            image(images.get(curFrame), x, y);
+        } else if (dir == 'u'){
+            if (y - STEP <= UP_BOUND) {
+              y -= STEP;
+            }
+            image(images.get(curFrame), x, y);
+        } else {
+            if (y + STEP <= DOWN_BOUND) {
+              y += STEP;
             }
             image(images.get(curFrame), x, y);
         }
@@ -69,5 +81,11 @@ class Sprite{
     }
     public void setState(String newState){
         state = newState;
+    }
+    public int getWidth(){
+      return images.get(curFrame).width;
+    }
+    public int getHeight(){
+      return images.get(curFrame).height;
     }
 }
