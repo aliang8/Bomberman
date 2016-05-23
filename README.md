@@ -14,7 +14,19 @@ can practice against. There will be three different AI difficulty levels: easy, 
 Lastly, we will TRY to implement a 3-D version of the game. 
 
 ##Development Log: ##
- 5/15/16
+Anthony 5/12/16:
+
+-Started working on level editor
+
+-Made the Tile class and added functionality
+
+Anthony 5/14/16
+
+-Found and resized the necessary sprites
+
+-Made it so that sprites and map are displayable
+
+Matthew 5/15/16
  
 Started up with the basic framework for Bomberman. 
 
@@ -26,7 +38,45 @@ Does not compile yet, need to add more methods to our classes and make more clas
 
 Need to add sprites and other graphical stuff.
 
+Anthony 5/16/16
 
+-Made a palette on the level editor to select different blocks
+
+-After selecting the blocks you can change the type of individual tiles
+
+Matthew 5/16/16
+
+Created separate Tile collection
+
+Added Methods to bomberman to move/drop bombs.
+
+Matthew 5/17/16
+
+added Images to setup and more used the makeMap(redesigning it)
+
+Anthony 5/18/16
+
+-Imported the sprites
+
+-Created the walk function
+
+Matthew 5/18/16
+
+Created Tile Collection to store the different types of tiles
+
+Bug: walking is really laggy, especially when changing directions
+
+Anthony 5/20/16
+
+-Working on making the tiles destroyable and adding collisions
+
+Matthew 5/21/16
+
+Experimenting with different menus and other misc stuff for bomberman.
+
+Matthew 5/22/16
+
+Started working on AI and fixing sprites problems and creating gameplay
 
 ##Project plan/outline including our goals prioritized by importance and chronology (things to do + things already done): ##
 (SUBJECT TO CHANGE)
