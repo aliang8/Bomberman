@@ -16,7 +16,7 @@ class PlayerOne{
            s.dir = 'u';
            s.walkMove(0, 4, "walkUp");
         }
-      } else if (downKeys['l'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
+      } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
         if(TileMap[s.y/per][(s.x - 3)/per].isOccupied() == true){
            print("lololol" + " " + s.getX());
         } else{ 
