@@ -1,6 +1,8 @@
 String lastKey = "";
 int [][] grid;
 Tile [][] TileMap;
+Bomb [][] BombMap;
+Timer t;
 int blockType;
 Sprite s;
 PImage bg;
@@ -22,6 +24,7 @@ public void setup(){
       images.add(loadImage(imageName));
   }
   state = "convertMap";
+  t = new Timer(60);
   size(800, 600);
   //bg = loadImage("3.jpg");
   //bg.resize(800,600);
@@ -32,6 +35,7 @@ public void setup(){
   int cols = width/per - 2;
   grid = new int[height/per][width/per - 2];
   TileMap = new Tile[height/per][width/per - 2];
+  BombMap = new Bomb[height/per][width/per - 2];
   String[] vals = new String[rows*cols];
   try {  
     BufferedReader reader = createReader("level.txt");
@@ -96,6 +100,22 @@ void displayMap(){
               TileMap[r][c] = new Tile("floor",false,false,true);
               TileMap[r][c].showTile("floor",c * per, (r+1) * per - per);
             }
+            if (grid[r][c] == 5) {
+              TileMap[r][c] = new Tile("blueBrick",false,false,true);
+              TileMap[r][c].showTile("blueBrick",c * per, (r+1) * per - per);
+            }
+            if (grid[r][c] == 6) {
+              TileMap[r][c] = new Tile("redBrick",false,false,true);
+              TileMap[r][c].showTile("redBrick",c * per, (r+1) * per - per);
+            }
+            if (grid[r][c] == 7) {
+              BombMap[r][c] = new Bomb("regular");
+              BombMap[r][c].displayBomb("regular",c * per, (r+1) * per - per);
+              t.run();
+              if(t.time == 2){
+                grid[r][c] = 0;
+              }
+            }
           }
         }
         rect(width - 2 * per, 0, 2 * per, height);
@@ -105,11 +125,13 @@ void displayMap(){
             
           }
         }
+        image(images.get(0), width - 2 * per, 8 * per, 100, 100);
         image(images.get(1), width - 2 * per, 0, 100, 100);
+        image(images.get(3), width - 2 * per, 10 * per, 100, 100);
         image(images.get(4), width - 2 * per, 2 * per, 100, 100);
         image(images.get(6), width - 2 * per, 4 * per, 100, 100);
         image(images.get(8), width - 2 * per, 6 * per, 100, 100);
-        //image(images.get(2), width - 2 * per, 8 * per, 100, 100);
+      
     }
       
     void mouseClicked() {
@@ -126,20 +148,28 @@ void displayMap(){
           blockType = 2;
         } else if (y <= 5){
           blockType = 3;
-        } else {
+        } else if (y <= 7){
           blockType = 4;
+        } else if (y <= 9){
+          blockType = 5;
+        } else {
+          blockType = 6;
         }
       }
-      if (x < width/per - 2){
+      if (x < width/per - 2 && x!= s.x){
         if (blockType == 1){
           grid[y][x] = 1;
         } else if (blockType == 2){
           grid[y][x] = 2;
         } else if (blockType == 3){
           grid[y][x] = 3;
-        } else {
+        } else if (blockType == 4){
           grid[y][x] = 4;
-        }       
+        } else if (blockType == 5){
+          grid[y][x] = 5;
+        } else {
+          grid[y][x] = 6;
+        }
       }  
     }
     
@@ -155,7 +185,6 @@ void displayMap(){
     }
 
 public void keyPressed() {
-  print(keyCode+",");
   keyUsed = true;
   //WASD
   if (keyCode == 65){ //A
@@ -178,34 +207,35 @@ public void keyPressed() {
 public void handleUserInput() {
   if (keyUsed) {
     if (lastKey.equals("W") && s.curMove.equals("") || s.curMove.equals("walkUp")) {
-      if(TileMap[s.y/per][s.x/per].isOccupied() == true){
+      if(TileMap[(s.y - 3)/per][s.x/per].isOccupied() == true){
+        print("lololol");
       } else {
          s.dir = 'u';
          s.walkMove(0, 4, "walkUp");
       }
     } else if (lastKey.equals("A") && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
-      if(TileMap[s.y/per][s.x/per].isOccupied() == true){
-         //s.x += 0;
+      if(TileMap[s.y/per][(s.x - 3)/per].isOccupied() == true){
+         print("lololol" + " " + s.getX());
       } else{ 
          s.dir = 'l';
          s.walkMove(10, 14, "walkLeft");
       }
     } else if (lastKey.equals("S") && s.curMove.equals("") || s.curMove.equals("walkDown")) {
-      if(TileMap[s.y/per][s.x/per].isOccupied() == true){
-         //s.x += 0;
+      if(TileMap[(s.y + 58)/per][s.x/per].isOccupied() == true){
+         print("lololol");
       } else {
          s.dir = 'd';
          s.walkMove(5, 9, "walkDown");
       }
     } else if (lastKey.equals("D") && s.curMove.equals("") || s.curMove.equals("walkRight")) {
-     if(TileMap[s.y/per][(s.x + s.getWidth())/per].isOccupied() == true){
-         //s.x += 0;
+     if(TileMap[s.y/per][(s.x + 25)/per].isOccupied() == true){
+         print("lololol" + " " + s.getX());
       } else {
          s.dir = 'r';
          s.walkMove(15, 19, "walkRight");
       }
     } else if(lastKey.equals("SPACE")){
-      
+      grid[s.y/per][s.x/per] = 7;
     } 
     //only allow one thing per key press
     keyUsed = false;

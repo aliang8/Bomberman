@@ -1,5 +1,5 @@
 class Sprite{
-    private Bombs inHand;
+    private Bomb inHand;
     private int x,y;
     private String state,name;
     int STEP = 8;
@@ -10,7 +10,7 @@ class Sprite{
     int LEFT_BOUND = 30;
     int RIGHT_BOUND = width - 15;
     int UP_BOUND = 0;
-    int DOWN_BOUND = height - 15;
+    int DOWN_BOUND = height - 50;
     public Sprite(int x, int y, String name){
       images = new ArrayList<PImage>();
       for (int i = 1; i < 25; i++){
@@ -50,7 +50,7 @@ class Sprite{
             }
             image(images.get(curFrame), x, y);
         } else if (dir == 'u'){
-            if (y - STEP <= UP_BOUND) {
+            if (y - STEP >= UP_BOUND) {
               y -= STEP;
             }
             image(images.get(curFrame), x, y);
@@ -75,9 +75,6 @@ class Sprite{
     }
     public String getState(){
         return state;
-    }
-    public int getinHand(){
-        return inHand.getAmmo();
     }
     public void setState(String newState){
         state = newState;

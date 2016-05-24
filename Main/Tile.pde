@@ -5,7 +5,7 @@ public class Tile{
   String tileType;
   Boolean Destroyable;
   Boolean Alive = true;
-  Boolean isOccupied = true;
+  Boolean isOccupied = false;
    
   public Tile(String name, Boolean destroy, Boolean deader, Boolean filled){
     tileType = name;
@@ -27,6 +27,10 @@ public class Tile{
         }
     if(type.equals("steel")){
       image(images.get(1),x,y);
+    }else if(type.equals("blueBrick")){
+      image(images.get(0),x,y);
+    }else if(type.equals("redBrick")){
+      image(images.get(3),x,y);
     }else if(type.equals("metal")){
       image(images.get(4),x,y);
     }else if(type.equals("wood")){
