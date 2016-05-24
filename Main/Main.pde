@@ -100,7 +100,7 @@ void displayMap(){
               image(images.get(6),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 4) {
-              TileMap[r][c] = new Tile("floor",false,false,true);
+              TileMap[r][c] = new Tile("floor",false,false,false);
               BombMap[r][c] = new Bomb("nothing",false);
               image(images.get(8),c * per, (r+1) * per - per);
             }
