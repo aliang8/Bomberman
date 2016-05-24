@@ -81,6 +81,13 @@ Matthew 5/22/16
 
 Started working on AI and fixing sprites problems and creating gameplay
 
+Matthew 5/23/16
+
+Merged devBranch stuff with master for demo
+
+Added movement to bots, although bots are still bugged in their movements.
+
+Players no longer collide into walls, but bots do.
 
 ##Project plan/outline including our goals prioritized by importance and chronology (things to do + things already done): ##
 (SUBJECT TO CHANGE)
