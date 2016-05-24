@@ -13,6 +13,7 @@ class AI{
      for(Sprite s : bot){
        int rand =(int)random(4);
        print(rand);
+       frameRate(20);
        if(rand ==0){
              s.dir = 'r';
              s.walkMove(0, 4, "walkRight");
