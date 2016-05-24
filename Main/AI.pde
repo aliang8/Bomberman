@@ -2,11 +2,28 @@
 import java.lang.Object;
 class AI{
   ArrayList<Sprite> bot = new ArrayList<Sprite>();
+  ArrayList < PImage > images;
   
   public AI(){
     bot.add(new Sprite(700,100,"Yellow"));
     bot.add(new Sprite(700,700,"Green"));
     bot.add(new Sprite(100,700,"Blue"));
+          images = new ArrayList<PImage>();
+      for (int i = 1; i < 25; i++){
+        String imageName = "Yellow" + "(" + i + ").gif";
+        images.add(loadImage(imageName));
+        images.get(i-1).resize(25,50);
+      }
+       for (int i = 1; i < 25; i++){
+        String imageName = "Green" + "(" + i + ").gif";
+        images.add(loadImage(imageName));
+        images.get(i-1).resize(25,50);
+      }
+       for (int i = 1; i < 25; i++){
+        String imageName = "Blue" + "(" + i + ").gif";
+        images.add(loadImage(imageName));
+        images.get(i-1).resize(25,50);
+      }
   }
   
   void makeMove(){

@@ -34,6 +34,18 @@ public void setup(){
       String imageName = "Red " + "(" + i + ").gif";
       images.add(loadImage(imageName));
   }
+    for (int i = 1; i < 25; i++){
+      String imageName = "Yellow" + "(" + i + ").gif";
+      images.add(loadImage(imageName));
+  }
+    for (int i = 1; i < 25; i++){
+      String imageName = "Green" + "(" + i + ").gif";
+      images.add(loadImage(imageName));
+  }
+    for (int i = 1; i < 25; i++){
+      String imageName = "Blue" + "(" + i + ").gif";
+      images.add(loadImage(imageName));
+  }
   initialize(fighter1,downKeys);
   t = new Timer(60);
   size(800, 600);
