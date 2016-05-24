@@ -71,9 +71,10 @@ public void setup(){
 
 public void draw(){
   background(255);
-  p1.action();
-  p2.action();
   displayMap();
+    p1.action();
+  p2.action();
+  newBots.makeMove();
 }
 
 void displayMap(){  
@@ -144,6 +145,9 @@ void displayMap(){
         //q.dir = 'l';
         p1 = new PlayerOne(s, downKeys);
         p2 = new PlayerOne(q, downKeys);
+        s2 = newBots.bot.get(0);
+        s3 = newBots.bot.get(1);
+        s4 = newBots.bot.get(2);
     }
     void mouseClicked() {
       print(mouseX + " " + mouseY);
