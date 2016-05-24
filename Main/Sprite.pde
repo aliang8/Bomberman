@@ -2,7 +2,7 @@ class Sprite{
     private Bomb inHand;
     private int x,y;
     private String state,name;
-    int STEP = 8;
+    int STEP = 6;
     String curMove;
     ArrayList < PImage > images;
     int curFrame = 0;

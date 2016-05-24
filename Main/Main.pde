@@ -45,7 +45,10 @@ public void setup(){
     for (int i = 1; i < 25; i++){
       String imageName = "Blue" + "(" + i + ").gif";
       images.add(loadImage(imageName));
-  }
+   for (int i = 1; i < 3; i++){
+      String imageName = "Bomb" + i + ".gif";
+      images.add(loadImage(imageName));
+      images.get(i+33-1).resize(50,50);
   initialize(fighter1,downKeys);
   t = new Timer(60);
   size(800, 600);
@@ -84,7 +87,6 @@ public void draw(){
   background(255);
   p1.action();
   displayMap();
-
 }
 
 void displayMap(){  
@@ -95,35 +97,31 @@ void displayMap(){
             }
             if (grid[r][c] == 1) {
               TileMap[r][c] = new Tile("steel",false,false,true);
-              TileMap[r][c].showTile("steel",c * per, (r+1) * per - per);
+              image(images.get(1),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 2) {
               TileMap[r][c] = new Tile("metal",false,false,true);
-              TileMap[r][c].showTile("metal",c * per, (r+1) * per - per);
+              image(images.get(0),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 3) {
               TileMap[r][c] = new Tile("wood",false,false,true);
-              TileMap[r][c].showTile("wood",c * per, (r+1) * per - per);
+              image(images.get(3),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 4) {
               TileMap[r][c] = new Tile("floor",false,false,true);
-              TileMap[r][c].showTile("floor",c * per, (r+1) * per - per);
+              image(images.get(4),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 5) {
               TileMap[r][c] = new Tile("blueBrick",false,false,true);
-              TileMap[r][c].showTile("blueBrick",c * per, (r+1) * per - per);
+              image(images.get(6),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 6) {
               TileMap[r][c] = new Tile("redBrick",false,false,true);
-              TileMap[r][c].showTile("redBrick",c * per, (r+1) * per - per);
+              image(images.get(0),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 7) {
               BombMap[r][c] = new Bomb("regular");
-              BombMap[r][c].displayBomb("regular",c * per, (r+1) * per - per);
-              t.run();
-              if(t.time == 2){
-                grid[r][c] = 0;
-              }
+              image(images.get(34),c * per, (r+1) * per - per);
             }
           }
         }
@@ -139,8 +137,7 @@ void displayMap(){
         image(images.get(3), width - 2 * per, 10 * per, 100, 100);
         image(images.get(4), width - 2 * per, 2 * per, 100, 100);
         image(images.get(6), width - 2 * per, 4 * per, 100, 100);
-        image(images.get(8), width - 2 * per, 6 * per, 100, 100);
-      
+        image(images.get(8), width - 2 * per, 6 * per, 100, 100);     
     }
       
     void initialize(String fighter1, boolean[] downKeys) {

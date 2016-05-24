@@ -24,11 +24,6 @@ class Bomb{
   int getLOE(){
     return lengthOfExplosion;
   }
-  void displayBomb(String type, int x, int y){
-    if(type.equals("regular")){
-      image(images.get(1),x,y);
-    }
-  }
   String toString(){
     return bombType;
   }
