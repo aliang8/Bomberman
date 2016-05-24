@@ -4,15 +4,16 @@ Tile [][] TileMap;
 Bomb [][] BombMap;
 Timer t;
 int blockType;
-Sprite s;
+Sprite s,s2,s3,s4;
 PImage bg;
 int per;
 ArrayList<PImage> images;
+AI newBots;
 boolean keyUsed = false;
 String state;
 boolean inGame = false;
 public void setup(){
-  //newBots = new AI();
+  newBots = new AI();
   images = new ArrayList <PImage>();
   for (int i = 1; i < 10; i++){
       String imageName = i + ".jpg";
@@ -23,6 +24,7 @@ public void setup(){
       String imageName = "Red " + "(" + i + ").gif";
       images.add(loadImage(imageName));
   }
+  
   state = "convertMap";
   t = new Timer(60);
   size(800, 600);
@@ -30,6 +32,9 @@ public void setup(){
   //bg.resize(800,600);
   //background(bg);
   s = new Sprite(100,100,"Red");
+  s2 = newBots.bot.get(0);
+  s3 = newBots.bot.get(1);
+  s4 = newBots.bot.get(2);
   per = 50;
   int rows = height/per;
   int cols = width/per - 2;

@@ -47,7 +47,9 @@ public class Tile{
   public String toString(){
     return tileType;
   }
-  
+  public String getTileType(){
+    return tileType;
+  }
   public boolean isOccupied(){
     return isOccupied;
   }
