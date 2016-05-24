@@ -24,7 +24,7 @@ class PlayerOne{
            s.walkMove(10, 14, "walkLeft");
         }
       } else if (downKeys['s'] && s.curMove.equals("") || s.curMove.equals("walkDown")) {
-        if(TileMap[(s.y + 58)/per][s.x/per].isOccupied() == true){
+        if(TileMap[(s.y + 50)/per][s.x/per].isOccupied() == true){
            print("lololol");
         } else {
            s.dir = 'd';

@@ -8,7 +8,7 @@ class Sprite{
     int curFrame = 0;
     char dir;
     int LEFT_BOUND = 30;
-    int RIGHT_BOUND = width - 15;
+    int RIGHT_BOUND = width - 150;
     int UP_BOUND = 0;
     int DOWN_BOUND = height - 50;
     public Sprite(int x, int y, String name){
