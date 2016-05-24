@@ -18,6 +18,21 @@ class Sprite{
         images.add(loadImage(imageName));
         images.get(i-1).resize(25,50);
       }
+      for (int i = 1; i < 25; i++){
+        String imageName = "Blue" + "(" + i + ").gif";
+        images.add(loadImage(imageName));
+        images.get(i+24-1).resize(25,50);
+      }
+      for (int i = 1; i < 25; i++){
+          String imageName = "Yellow" + "(" + i + ").gif";
+          images.add(loadImage(imageName));
+          images.get(i+48-1).resize(25,50);
+      }
+      for (int i = 1; i < 25; i++){
+          String imageName = "Green" + "(" + i + ").gif";
+          images.add(loadImage(imageName));
+          images.get(i+72-1).resize(25,50);
+      }
       this.x = x;
       this.y = y;
       this.name = name;

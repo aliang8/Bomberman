@@ -1,11 +1,11 @@
 boolean[] downKeys = new boolean[260];
 boolean[] downKeys2 = new boolean[260];
 PFont font;
-//Sprite q;
+Sprite q;
 PlayerOne p1;
-//PlayerTwo p2;
-String fighter1 = "fighter1";
-//String fighter2 = "";
+PlayerOne p2;
+String fighter1 = "red";
+String fighter2 = "blue";
 char[] controls = new char[] {'w','a','s','d',
                               'g','h','e','q',
                               'r','f','x','c'}; // player 1
@@ -30,16 +30,12 @@ public void setup(){
       images.add(loadImage(imageName));
       images.get(i-1).resize(50,50);
   }
-  for (int i = 1; i < 25; i++){
-      String imageName = "Red " + "(" + i + ").gif";
-      images.add(loadImage(imageName));
-  }
    for (int i = 1; i < 3; i++){
       String imageName = "Bomb" + i + ".gif";
       images.add(loadImage(imageName));
-      images.get(i+33-1).resize(50,50);
+      images.get(i+9-1).resize(50,50);
   }
-  initialize(fighter1,downKeys);
+  initialize(fighter1,fighter2,downKeys);
   t = new Timer(60);
   size(800, 600);
   s2 = newBots.bot.get(0);
@@ -76,6 +72,7 @@ public void setup(){
 public void draw(){
   background(255);
   p1.action();
+  p2.action();
   displayMap();
 }
 
@@ -119,7 +116,7 @@ void displayMap(){
             if (grid[r][c] == 7) {
               TileMap[r][c] = new Tile("blank",false,false,false);
               BombMap[r][c] = new Bomb("regular",true);
-              image(images.get(34),c * per, (r+1) * per - per);
+              image(images.get(10),c * per, (r+1) * per - per);
             }
           }
         }
@@ -138,25 +135,25 @@ void displayMap(){
         image(images.get(8), width - 2 * per, 6 * per, 100, 100);     
     }
       
-    void initialize(String fighter1, boolean[] downKeys) {
+    void initialize(String fighter1, String fighter2, boolean[] downKeys) {
         // initialize arena
         //font = loadFont("ShowcardGothic-Reg-48.vlw");
         t = new Timer(62); // actually starts at 60 seconds because timer is slightly off
         s = new Sprite(100, 100, fighter1);
-        //q = new Sprite(700, width / 2, fighter2);
+        q = new Sprite(200, 100, fighter2);
         //q.dir = 'l';
         p1 = new PlayerOne(s, downKeys);
-        //p2 = new PlayerTwo(q, downKeys2);
+        p2 = new PlayerOne(q, downKeys);
     }
     void mouseClicked() {
       print(mouseX + " " + mouseY);
-      if(mouseX < width - (3 * per) && BombMap[mouseY/per][mouseX/per].isOccupied() == true){
+      if(mouseX < width - (2 * per) && BombMap[mouseY/per][mouseX/per].isOccupied() == true){
           grid[mouseY/per][mouseX/per] = 0;
       }
-      if(mouseX < width - (3 * per) && TileMap[mouseY/per][mouseX/per].isOccupied() == false){
+      if(mouseX < width - (2 * per) && TileMap[mouseY/per][mouseX/per].isOccupied() == false){
         change(mouseX, mouseY);
       } else {
-        if (mouseX < width - (3 * per)){
+        if (mouseX < width - (2 * per)){
           grid[mouseY/per][mouseX/per] = 0;
         } else {
           change(mouseX,mouseY);
