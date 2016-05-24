@@ -2,13 +2,13 @@ class Sprite{
     private Bomb inHand;
     private int x,y;
     private String state,name;
-    int STEP = 8;
+    int STEP = 6;
     String curMove;
     ArrayList < PImage > images;
     int curFrame = 0;
     char dir;
     int LEFT_BOUND = 30;
-    int RIGHT_BOUND = width - 15;
+    int RIGHT_BOUND = width - 150;
     int UP_BOUND = 0;
     int DOWN_BOUND = height - 50;
     public Sprite(int x, int y, String name){
@@ -17,6 +17,21 @@ class Sprite{
         String imageName = "Red " + "(" + i + ").gif";
         images.add(loadImage(imageName));
         images.get(i-1).resize(25,50);
+      }
+      for (int i = 1; i < 25; i++){
+        String imageName = "Blue" + "(" + i + ").gif";
+        images.add(loadImage(imageName));
+        images.get(i+24-1).resize(25,50);
+      }
+      for (int i = 1; i < 25; i++){
+          String imageName = "Yellow" + "(" + i + ").gif";
+          images.add(loadImage(imageName));
+          images.get(i+48-1).resize(25,50);
+      }
+      for (int i = 1; i < 25; i++){
+          String imageName = "Green" + "(" + i + ").gif";
+          images.add(loadImage(imageName));
+          images.get(i+72-1).resize(25,50);
       }
       this.x = x;
       this.y = y;
