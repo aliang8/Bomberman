@@ -28,17 +28,33 @@ public void setup(){
   for (int i = 1; i < 10; i++){
       String imageName = i + ".jpg";
       images.add(loadImage(imageName));
-      images.get(i-1).resize(50,50);
+      
   }
   for (int i = 1; i < 25; i++){
       String imageName = "Red " + "(" + i + ").gif";
       images.add(loadImage(imageName));
+      
   }
+    for (int i = 1; i < 25; i++){
+      String imageName = "Yellow" + "(" + i + ").gif";
+      images.add(loadImage(imageName));
+      
+  }
+    for (int i = 1; i < 25; i++){
+      String imageName = "Green" + "(" + i + ").gif";
+      images.add(loadImage(imageName));
+      
+  }
+    for (int i = 1; i < 25; i++){
+      String imageName = "Blue" + "(" + i + ").gif";
+      images.add(loadImage(imageName));
+      
+    }
    for (int i = 1; i < 3; i++){
       String imageName = "Bomb" + i + ".gif";
       images.add(loadImage(imageName));
-      images.get(i+33-1).resize(50,50);
-  }
+      //images.get(i+33-1).resize(50,50);
+   }
   initialize(fighter1,downKeys);
   t = new Timer(60);
   size(800, 600);
