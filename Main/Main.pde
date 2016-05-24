@@ -1,4 +1,16 @@
-String lastKey = "";
+boolean[] downKeys = new boolean[260];
+boolean[] downKeys2 = new boolean[260];
+PFont font;
+//Sprite q;
+PlayerOne p1;
+//PlayerTwo p2;
+String fighter1 = "fighter1";
+//String fighter2 = "";
+char[] controls = new char[] {'w','a','s','d',
+                              'g','h','e','q',
+                              'r','f','x','c'}; // player 1
+char[] controls2 = new char[] {',','.','/','m',
+                               'j','k','l','n'};  // player 2 -- does not include the arrow keys
 int [][] grid;
 Tile [][] TileMap;
 Bomb [][] BombMap;
@@ -9,8 +21,6 @@ PImage bg;
 int per;
 ArrayList<PImage> images;
 AI newBots;
-boolean keyUsed = false;
-String state;
 boolean inGame = false;
 public void setup(){
   newBots = new AI();
@@ -24,14 +34,9 @@ public void setup(){
       String imageName = "Red " + "(" + i + ").gif";
       images.add(loadImage(imageName));
   }
-  
-  state = "convertMap";
+  initialize(fighter1,downKeys);
   t = new Timer(60);
   size(800, 600);
-  //bg = loadImage("3.jpg");
-  //bg.resize(800,600);
-  //background(bg);
-  s = new Sprite(100,100,"Red");
   s2 = newBots.bot.get(0);
   s3 = newBots.bot.get(1);
   s4 = newBots.bot.get(2);
@@ -65,24 +70,11 @@ public void setup(){
 
 public void draw(){
   background(255);
-  //newBots.makeMove();
-  //print(TileMap[s.y/per][s.x/per].isOccupied());
-  //print(TileMap[s.y/per][s.x/per]);
-  //print(images.get(20).width + " " + images.get(20).height);
-  if(state.equals("menu")){
-    setupMenu();
-  }
-  if(state.equals("convertMap")){
-    displayMap();
-  }
-  handleUserInput();
-}
-void setState(String newState){
-  state = newState;
-}
-void setupMenu(){
+  p1.action();
   displayMap();
+
 }
+
 void displayMap(){  
         for (int r = 0; r < height/per; r+=1) {
           for (int c = 0; c < width/per - 2; c+=1) {
@@ -139,6 +131,16 @@ void displayMap(){
       
     }
       
+    void initialize(String fighter1, boolean[] downKeys) {
+        // initialize arena
+        //font = loadFont("ShowcardGothic-Reg-48.vlw");
+        t = new Timer(62); // actually starts at 60 seconds because timer is slightly off
+        s = new Sprite(100, 100, fighter1);
+        //q = new Sprite(700, width / 2, fighter2);
+        //q.dir = 'l';
+        p1 = new PlayerOne(s, downKeys);
+        //p2 = new PlayerTwo(q, downKeys2);
+    }
     void mouseClicked() {
         change(mouseX, mouseY);
     }
@@ -189,70 +191,113 @@ void displayMap(){
       output.close();
     }
 
-public void keyPressed() {
-  keyUsed = true;
-  //WASD
-  if (keyCode == 65){ //A
-    lastKey = "A";
-  }
-  if (keyCode == 68) { //D
-    lastKey = "D";
-  }
-  if (keyCode == 87) { //W
-    lastKey = "W";
-  }
-  if (keyCode == 83) { //S
-    lastKey = "S";
-  }
-  if(keyCode == 32){
-    lastKey = "SPACE";
-  }
+void keyPressed() {
+        if (key < 256) {
+            downKeys[key] = true;
+            downKeys2[key] = true;
+        }
+        if (keyCode == RIGHT) {
+            downKeys2[256] = true;
+        }
+        if (keyCode == LEFT) {
+            downKeys2[257] = true;
+        }
+        if (keyCode == DOWN) {
+            downKeys2[258] = true;
+        }
+        if (keyCode == UP) {
+            downKeys2[259] = true;
+        }
+        if (keyCode == SHIFT) {
+            downKeys2[260] = true;
+        }
+        interrupt(downKeys, 1);
+        interrupt(downKeys2, 2);
 }
 
-public void handleUserInput() {
-  if (keyUsed) {
-    if (lastKey.equals("W") && s.curMove.equals("") || s.curMove.equals("walkUp")) {
-      if(TileMap[(s.y - 3)/per][s.x/per].isOccupied() == true){
-        print("lololol");
-      } else {
-         s.dir = 'u';
-         s.walkMove(0, 4, "walkUp");
-      }
-    } else if (lastKey.equals("A") && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
-      if(TileMap[s.y/per][(s.x - 3)/per].isOccupied() == true){
-         print("lololol" + " " + s.getX());
-      } else{ 
-         s.dir = 'l';
-         s.walkMove(10, 14, "walkLeft");
-      }
-    } else if (lastKey.equals("S") && s.curMove.equals("") || s.curMove.equals("walkDown")) {
-      if(TileMap[(s.y + 58)/per][s.x/per].isOccupied() == true){
-         print("lololol");
-      } else {
-         s.dir = 'd';
-         s.walkMove(5, 9, "walkDown");
-      }
-    } else if (lastKey.equals("D") && s.curMove.equals("") || s.curMove.equals("walkRight")) {
-     if(TileMap[s.y/per][(s.x + 25)/per].isOccupied() == true){
-         print("lololol" + " " + s.getX());
-      } else {
-         s.dir = 'r';
-         s.walkMove(15, 19, "walkRight");
-      }
-    } else if(lastKey.equals("SPACE")){
-      grid[s.y/per][s.x/per] = 7;
-    } 
-    //only allow one thing per key press
-    keyUsed = false;
-  } else {
-    if (s.dir == 'u'){
-      s.reset(0);
-    } else if (s.dir == 'l'){
-      s.reset(10);
-    } else if (s.dir == 'r'){
-      s.reset(15);
-    } else {
-      s.reset(5);
+void keyReleased() {
+        if (key < 256) {
+            downKeys[key] = false;
+            downKeys2[key] = false;
+        }
+        if (keyCode == RIGHT) {
+            downKeys2[256] = false;
+        }
+        if (keyCode == LEFT) {
+            downKeys2[257] = false;
+        }
+        if (keyCode == DOWN) {
+            downKeys2[258] = false;
+        }
+        if (keyCode == UP) {
+            downKeys2[259] = false;
+        }
+        if (keyCode == SHIFT) {
+            downKeys2[260] = false;
+        }
+}
+
+// interrupts a command if another key has been pressed
+// i.e. interrups while walking
+void interrupt(boolean[] commands, int playerNum) {
+  if (key == CODED) {
+    if (keyCode == RIGHT) {
+      setCommands(256, commands, playerNum);
+    } else if (keyCode == LEFT) {
+      setCommands(257, commands, playerNum);
+    }
+  } else if (key < 256) {
+    if (key != 's' || key != 'w') {
+      setCommands(key, commands, playerNum);
     }
   }
 }
+
+// makes sure no attack commands are being run simultaneously
+void setCommands(int index, boolean[] commands, int playerNum) {
+  for (int i = 0; i < commands.length; i++) {
+    if (playerNum == 1) {
+      if (validKey(index, controls) && i != index) {
+        if (i == 's' && commands['s'] && !commands['w']) {
+          commands[i] = true;
+        } else if (i == 'w' && commands['w'] && !commands['s']) {
+          commands[i] = true;
+        } else {
+          commands[i] = false;
+        }
+      }
+    } else if (playerNum == 2) {
+      if (validKey(index, controls2) && i != index) {
+        if (i == 258 && commands[258] && !commands[259]) {
+          commands[i] = true;
+        } else if (i == 259 && commands[259] && !commands[258]) {
+          commands[i] = true;
+        } else {
+          commands[i] = false;
+        }
+      }
+    }
+  }
+}
+
+// checks if a key that has been pressed is a valid key for the player
+// i.e. if the arrow keys are pressed, then it should only affect player 2
+boolean validKey(int index, char[] characters) {
+  for (int i = 0; i < characters.length; i++) {
+    if (index == characters[i]) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// resets keys when a new fight has begun
+void resetKeys() {
+        for (int i = 0; i < downKeys.length; i++) {
+            downKeys[i] = false;
+        }
+        for (int i = 0; i < downKeys2.length; i++) {
+            downKeys2[i] = false;
+        }
+    }
+   
