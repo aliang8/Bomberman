@@ -12,31 +12,38 @@ class AI{
   void makeMove(){
      for(Sprite s : bot){
        int rand =(int)random(4);
-       print(rand);
-       frameRate(10);
+       char prev = ' ';
        if(rand ==0){
-         for(int i = 0; i <3; i ++){
              s.dir = 'r';
              s.walkMove(0, 4, "walkRight");
-           }
+             prev = 'r';
        }
         else if(rand==1){
-          for(int i = 0; i <3; i ++){
               s.dir = 'l';
               s.walkMove(10, 14, "walkLeft");
-           }
+              prev = 'l';
         }
         else if(rand ==2){
-          for(int i = 0; i <3; i ++){
               s.dir = 'd';
               s.walkMove(5, 9, "walkDown");
-           } 
+              prev = 'd';
         }
        else{
-         for(int i = 0; i <3; i ++){
               s.dir = 'u';
-              s.walkMove(0, 4, "walkUp");
-       } 
+              s.walkMove(0, 4, "walkUp"); 
+              prev = 'u';
+       }
+       if(prev=='r'){
+         s.reset(15);
+       }
+       else if(prev == 'l'){
+         s.reset(10);
+       }
+       else if(prev == 'u'){
+         s.reset(0);
+       }
+       else{
+         s.reset(5);
        }
      }
 }
