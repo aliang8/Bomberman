@@ -44,6 +44,18 @@ Anthony 5/20/16
 
 -Working on making the tiles destroyable and adding collisions
 
+Matthew 5/22/16
+
+- fixing Ai with collision. Broke the game.
+
+Matthew 5/24/16
+
+- tried to make AI not have shadows follow bots. fixed. movements bugged again.
+
+Matthew 5/25/16
+
+- Single movement possible. Doesn't spazz.
+
 
 ##Project plan/outline including our goals prioritized by importance and chronology (things to do + things already done): ##
 (SUBJECT TO CHANGE)
