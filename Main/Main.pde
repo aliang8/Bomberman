@@ -25,13 +25,13 @@ boolean inGame = false;
 public void setup(){
   newBots = new AI();
   images = new ArrayList <PImage>();
-  for (int i = 1; i < 10; i++){
+  for (int i = 1; i < 11; i++){
       String imageName = i + ".jpg";
       images.add(loadImage(imageName));
       images.get(i-1).resize(50,50);
   }
    for (int i = 1; i < 3; i++){
-      String imageName = "Bomb" + i + ".gif";
+      String imageName = "Bomb" + i + ".jpg";
       images.add(loadImage(imageName));
       images.get(i+9-1).resize(50,50);
   }
@@ -95,9 +95,9 @@ void displayMap(){
               image(images.get(4),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 3) {
-              TileMap[r][c] = new Tile("wood",false,false,true);
+              TileMap[r][c] = new Tile("brick1",false,false,true);
               BombMap[r][c] = new Bomb("nothing",false);
-              image(images.get(6),c * per, (r+1) * per - per);
+              image(images.get(9),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 4) {
               TileMap[r][c] = new Tile("floor",false,false,false);
@@ -132,7 +132,7 @@ void displayMap(){
         image(images.get(1), width - 2 * per, 0, 100, 100);
         image(images.get(3), width - 2 * per, 10 * per, 100, 100);
         image(images.get(4), width - 2 * per, 2 * per, 100, 100);
-        image(images.get(6), width - 2 * per, 4 * per, 100, 100);
+        image(images.get(9), width - 2 * per, 4 * per, 100, 100);
         image(images.get(8), width - 2 * per, 6 * per, 100, 100);     
     }
       
