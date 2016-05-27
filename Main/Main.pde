@@ -35,6 +35,11 @@ public void setup(){
       images.add(loadImage(imageName));
       images.get(i+9-1).resize(50,50);
   }
+  for (int i = 1; i < 9; i++){
+      String imageName = "C" + i + ".gif";
+      images.add(loadImage(imageName));
+      images.get(i+10-1).resize(50,50);
+  }
   initialize(fighter1,fighter2,downKeys);
   t = new Timer(60);
   size(800, 600);
@@ -74,6 +79,7 @@ public void draw(){
   displayMap();
     p1.action();
   p2.action();
+  t.run();
   newBots.makeMove();
 }
 
@@ -82,41 +88,41 @@ void displayMap(){
           for (int c = 0; c < width/per - 2; c+=1) {
             if(grid[r][c] == 0){
               TileMap[r][c] = new Tile("blank",false,false,false);
-              BombMap[r][c] = new Bomb("nothing",false);
+              BombMap[r][c] = new Bomb("nothing",false,0,0);
             }
             if (grid[r][c] == 1) {
               TileMap[r][c] = new Tile("steel",false,false,true);
-              BombMap[r][c] = new Bomb("nothing",false);
+              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
               image(images.get(1),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 2) {
               TileMap[r][c] = new Tile("metal",false,false,true);
-              BombMap[r][c] = new Bomb("nothing",false);
+              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
               image(images.get(4),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 3) {
               TileMap[r][c] = new Tile("brick1",false,false,true);
-              BombMap[r][c] = new Bomb("nothing",false);
+              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
               image(images.get(9),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 4) {
               TileMap[r][c] = new Tile("floor",false,false,false);
-              BombMap[r][c] = new Bomb("nothing",false);
+              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
               image(images.get(8),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 5) {
               TileMap[r][c] = new Tile("blueBrick",false,false,true);
-              BombMap[r][c] = new Bomb("nothing",false);
+              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
               image(images.get(0),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 6) {
               TileMap[r][c] = new Tile("redBrick",false,false,true);
-              BombMap[r][c] = new Bomb("nothing",false);
+              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
               image(images.get(3),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 7) {
               TileMap[r][c] = new Tile("blank",false,false,false);
-              BombMap[r][c] = new Bomb("regular",true);
+              BombMap[r][c] = new Bomb("regular",true,c * per,(r+1) * per - per);
               image(images.get(10),c * per, (r+1) * per - per);
             }
           }
@@ -210,7 +216,12 @@ void displayMap(){
       }
       output.close();
     }
-
+    void explosion(Bomb b){
+      if(t.currentTime - b.dropTime == b.detonateTime){
+        b.bombExplode(0,10,"bombExplode");
+      }
+    }
+        
 void keyPressed() {
         if (key < 256) {
             downKeys[key] = true;
