@@ -4,7 +4,6 @@ class Bomb{
   //List of powerups
   int x, y;
   int lengthOfExplosion;
-  int detonateTime = 3;
   int dropTime;
   int detonateTime = 3;
   String name;
@@ -22,7 +21,6 @@ class Bomb{
       curMove = "";
       curFrame = 0;
       state = "";      
-      dropTime = Main.t.currentTime;
   }
   Bomb(){
     lengthOfExplosion = 1;
@@ -51,6 +49,9 @@ class Bomb{
             curFrame = 0;
             state = "";
         }
+    }
+    void explosion(Bomb b){
+      b.bombExplode(13, 23,"bombExplode");
     }
   
 }

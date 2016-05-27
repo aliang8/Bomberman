@@ -18,7 +18,7 @@ class PlayerOne{
         }
       } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
         if(TileMap[s.y/per][(s.x - 3)/per].isOccupied() == true ||
-           TileMap[(s.y + 40)/per][(s.x - 3)/per].isOccupied() == true){
+           TileMap[(s.y + 41)/per][(s.x - 3)/per].isOccupied() == true){
            s.x += 10;
         } else{ 
            s.dir = 'l';
@@ -33,7 +33,7 @@ class PlayerOne{
         }
       } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
        if(TileMap[s.y/per][(s.x + 25)/per].isOccupied() == true || 
-          TileMap[(s.y + 40)/per][(s.x + 25)/per].isOccupied() == true){
+          TileMap[(s.y + 42)/per][(s.x + 25)/per].isOccupied() == true){
            s.x -= 10;
         } else {
            s.dir = 'r';

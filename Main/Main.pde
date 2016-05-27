@@ -22,6 +22,7 @@ int per;
 ArrayList<PImage> images;
 AI newBots;
 boolean inGame = false;
+int dropTime;
 public void setup(){
   newBots = new AI();
   images = new ArrayList <PImage>();
@@ -77,9 +78,10 @@ public void setup(){
 public void draw(){
   background(255);
   displayMap();
-    p1.action();
+  p1.action();
   p2.action();
   t.run();
+  displayExplosion();
   newBots.makeMove();
 }
 
@@ -216,11 +218,17 @@ void displayMap(){
       }
       output.close();
     }
-    void explosion(Bomb b){
-      if(t.currentTime - b.dropTime == b.detonateTime){
-        b.bombExplode(0,10,"bombExplode");
+    
+    void displayExplosion(){
+      for (int r = 0; r < height/per; r+=1) {
+          for (int c = 0; c < width/per - 2; c+=1) {
+            if (BombMap[r][c].isOccupied() != false) {
+              BombMap[r][c].explosion(BombMap[r][c]);
+              }
+            }
+          }
       }
-    }
+   // }
         
 void keyPressed() {
         if (key < 256) {
