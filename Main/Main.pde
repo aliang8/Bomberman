@@ -27,25 +27,30 @@ int dropTime;
 public void setup(){
   newBots = new AI();
   images = new ArrayList <PImage>();
-  for (int i = 1; i < 11; i++){
+  for (int i = 1; i < 7; i++){
       String imageName = i + ".jpg";
       images.add(loadImage(imageName));
       images.get(i-1).resize(50,50);
   }
+  for (int i = 1; i < 5; i++){
+      String imageName = "Wall " + "(" + i + ")" + ".gif";
+      images.add(loadImage(imageName));
+      images.get(i+5).resize(50,50);
+  }
    for (int i = 1; i < 3; i++){
       String imageName = "Bomb" + i + ".jpg";
       images.add(loadImage(imageName));
-      images.get(i+10-1).resize(50,50);
+      images.get(i+9).resize(50,50);
   }
   for (int i = 1; i < 9; i++){
       String imageName = "C" + i + ".gif";
       images.add(loadImage(imageName));
-      images.get(i+12-1).resize(50,50);
+      images.get(i+11).resize(50,50);
   }
   for (int i = 1; i < 11; i++){
-      String imageName = "PowerUps " + i + ".png";
+      String imageName = "PowerUps " + "(" + i + ")" + ".png";
       images.add(loadImage(imageName));
-      images.get(i+21-1).resize(50,50);
+      images.get(i+19).resize(50,50);
   }
   initialize(fighter1,fighter2,downKeys);
   t = new Timer(60);
@@ -59,7 +64,7 @@ public void setup(){
   grid = new int[height/per][width/per - 2];
   TileMap = new Tile[height/per][width/per - 2];
   BombMap = new Bomb[height/per][width/per - 2];
-  PowerUpMap = new Bomb[height/per][width/per - 2];
+  PowerUpMap = new PowerUp[height/per][width/per - 2];
   String[] vals = new String[rows*cols];
   try {  
     BufferedReader reader = createReader("level.txt");
@@ -88,56 +93,60 @@ public void draw(){
   p1.action();
   p2.action();
   t.run();
+  makePowerUps();
   //displayExplosion();
   newBots.makeMove();
+  collision(s);
 }
 
 void displayMap(){  
         for (int r = 0; r < height/per; r+=1) {
           for (int c = 0; c < width/per - 2; c+=1) {
             if(grid[r][c] == 0){
-              TileMap[r][c] = new Tile("blank",false,false,false);
+              TileMap[r][c] = new Tile("blank",false,c * per,(r+1) * per - per);
               BombMap[r][c] = new Bomb("nothing",false,0,0);
             }
             if (grid[r][c] == 1) {
-              TileMap[r][c] = new Tile("steel",false,false,true);
+              TileMap[r][c] = new Tile("wall",true,c * per,(r+1) * per - per);
+              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
+              image(images.get(6),c * per, (r+1) * per - per);
+            }
+            if (grid[r][c] == 2) {
+              TileMap[r][c] = new Tile("metal",true,c * per,(r+1) * per - per);
               BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
               image(images.get(1),c * per, (r+1) * per - per);
             }
-            if (grid[r][c] == 2) {
-              TileMap[r][c] = new Tile("metal",false,false,true);
-              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
-              image(images.get(4),c * per, (r+1) * per - per);
-            }
             if (grid[r][c] == 3) {
-              TileMap[r][c] = new Tile("brick1",false,false,true);
+              TileMap[r][c] = new Tile("redBrick",true,c * per,(r+1) * per - per);
               BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
-              image(images.get(9),c * per, (r+1) * per - per);
+              image(images.get(2),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 4) {
-              TileMap[r][c] = new Tile("floor",false,false,false);
-              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
-              image(images.get(8),c * per, (r+1) * per - per);
-            }
-            if (grid[r][c] == 5) {
-              TileMap[r][c] = new Tile("blueBrick",false,false,true);
-              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
-              image(images.get(0),c * per, (r+1) * per - per);
-            }
-            if (grid[r][c] == 6) {
-              TileMap[r][c] = new Tile("redBrick",false,false,true);
+              TileMap[r][c] = new Tile("steel",true,c * per,(r+1) * per - per);
               BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
               image(images.get(3),c * per, (r+1) * per - per);
             }
+            if (grid[r][c] == 5) {
+              TileMap[r][c] = new Tile("floor",false,c * per,(r+1) * per - per);
+              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
+              image(images.get(4),c * per, (r+1) * per - per);
+            }
+            if (grid[r][c] == 6) {
+              TileMap[r][c] = new Tile("brick",true,c * per,(r+1) * per - per);
+              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
+              image(images.get(5),c * per, (r+1) * per - per);
+            }
             if (grid[r][c] == 7) {
-              TileMap[r][c] = new Tile("blank",false,false,false);
+              TileMap[r][c] = new Tile("blank",false,c * per,(r+1) * per - per);
               BombMap[r][c] = new Bomb("regular",true,c * per,(r+1) * per - per);
               image(images.get(10),c * per, (r+1) * per - per);
             }
             if (grid[r][c] == 8) {
-              TileMap[r][c] = new Tile("blank",false,false,false);
+              TileMap[r][c] = new Tile("blank",false,c * per,(r+1) * per - per);
               BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
               PowerUpMap[r][c] = new PowerUp("speed",true,c * per,(r+1) * per - per);
+              image(images.get(20),c * per, (r+1) * per - per);
+            }
           }
         }
         rect(width - 2 * per, 0, 2 * per, height);
@@ -147,12 +156,12 @@ void displayMap(){
             
           }
         }
-        image(images.get(0), width - 2 * per, 8 * per, 100, 100);
-        image(images.get(1), width - 2 * per, 0, 100, 100);
-        image(images.get(3), width - 2 * per, 10 * per, 100, 100);
-        image(images.get(4), width - 2 * per, 2 * per, 100, 100);
-        image(images.get(9), width - 2 * per, 4 * per, 100, 100);
-        image(images.get(8), width - 2 * per, 6 * per, 100, 100);     
+        image(images.get(6), width - 2 * per, 0, 100, 100);
+        image(images.get(1), width - 2 * per, 2 * per, 100, 100);
+        image(images.get(2), width - 2 * per, 4 * per, 100, 100);
+        image(images.get(3), width - 2 * per, 6 * per, 100, 100);
+        image(images.get(4), width - 2 * per, 8 * per, 100, 100);
+        image(images.get(5), width - 2 * per, 10 * per, 100, 100);     
     }
       
     void initialize(String fighter1, String fighter2, boolean[] downKeys) {
@@ -240,6 +249,29 @@ void displayMap(){
           }
       }
    // }
+   
+   void makePowerUps(){
+     int numBoosts = (int)(Math.random() * 15);
+     for (int i = 0; i < numBoosts; i++){
+       for (int r = 0; r < height/per; r+=1) {
+          for (int c = 0; c < width/per - 2; c+=1) {
+            if (TileMap[r][c].isOccupied() != false) {
+              PowerUpMap[r][c] = new PowerUp("speed", true, c * per,(r+1) * per - per);
+            }
+          }
+       }
+     }
+   }
+   
+   void collision(Sprite s){
+     for (int r = 0; r < height/per; r+=1) {
+          for (int c = 0; c < width/per - 2; c+=1) {
+               if (TileMap[r][c].name.equals("wall") && TileMap[(s.y - 3)/per][s.x/per].isOccupied() == true){
+                 TileMap[r][c].breakWall(6, 9 ,"breaking");
+               }
+          }
+     }
+   }
         
 void keyPressed() {
         if (key < 256) {

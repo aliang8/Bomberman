@@ -1,32 +1,52 @@
 public class Tile{
-  ArrayList<PImage> images;
-  String tileType;
+  String name;
   Boolean Destroyable;
   Boolean Alive = true;
   Boolean isOccupied = false;
+  int x, y;
+  String state;
+  int curFrame;
+  String curMove;
    
-  public Tile(String name, Boolean destroy, Boolean deader, Boolean filled){
-    tileType = name;
-    Destroyable = destroy;
+  public Tile(String tileType, Boolean filled, int x, int y){
+    name = tileType;
+    this.x = x;
+    this.y = y;
     isOccupied = filled;
-    Alive = deader;
+    state = "";
+    curMove = "";
+    curFrame = 0;
+    state = "";      
   }
-  
   public String getType(){
-    return tileType;
+    return name;
   }
-      
-  public void setType(String name){
-    tileType = name;
+  public void setType(String tileType){
+    name = tileType;
   }
-  
   public String toString(){
-    return tileType;
+    return name;
   }
   public String getTileType(){
-    return tileType;
+    return name;
   }
   public boolean isOccupied(){
     return isOccupied;
   }
+  void breakWall(int startFrame, int endFrame, String moveName) {
+        state = "breaking";
+        if (!curMove.equals(moveName)) {
+            curMove = moveName;
+            curFrame = startFrame;
+        }
+        pushMatrix();
+        image(images.get(curFrame), x, y);
+        popMatrix();
+        curFrame++;
+        if (curFrame > endFrame) {
+            curMove = "";
+            curFrame = 0;
+            state = "";
+        }
+    }
 }
