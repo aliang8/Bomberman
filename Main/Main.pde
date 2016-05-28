@@ -14,6 +14,7 @@ char[] controls2 = new char[] {',','.','/','m',
 int [][] grid;
 Tile [][] TileMap;
 Bomb [][] BombMap;
+PowerUp [][] PowerUpMap;
 Timer t;
 int blockType;
 Sprite s,s2,s3,s4;
@@ -34,12 +35,17 @@ public void setup(){
    for (int i = 1; i < 3; i++){
       String imageName = "Bomb" + i + ".jpg";
       images.add(loadImage(imageName));
-      images.get(i+9-1).resize(50,50);
+      images.get(i+10-1).resize(50,50);
   }
   for (int i = 1; i < 9; i++){
       String imageName = "C" + i + ".gif";
       images.add(loadImage(imageName));
-      images.get(i+10-1).resize(50,50);
+      images.get(i+12-1).resize(50,50);
+  }
+  for (int i = 1; i < 11; i++){
+      String imageName = "PowerUps " + i + ".png";
+      images.add(loadImage(imageName));
+      images.get(i+21-1).resize(50,50);
   }
   initialize(fighter1,fighter2,downKeys);
   t = new Timer(60);
@@ -53,6 +59,7 @@ public void setup(){
   grid = new int[height/per][width/per - 2];
   TileMap = new Tile[height/per][width/per - 2];
   BombMap = new Bomb[height/per][width/per - 2];
+  PowerUpMap = new Bomb[height/per][width/per - 2];
   String[] vals = new String[rows*cols];
   try {  
     BufferedReader reader = createReader("level.txt");
@@ -81,7 +88,7 @@ public void draw(){
   p1.action();
   p2.action();
   t.run();
-  displayExplosion();
+  //displayExplosion();
   newBots.makeMove();
 }
 
@@ -127,6 +134,10 @@ void displayMap(){
               BombMap[r][c] = new Bomb("regular",true,c * per,(r+1) * per - per);
               image(images.get(10),c * per, (r+1) * per - per);
             }
+            if (grid[r][c] == 8) {
+              TileMap[r][c] = new Tile("blank",false,false,false);
+              BombMap[r][c] = new Bomb("nothing",false,c * per,(r+1) * per - per);
+              PowerUpMap[r][c] = new PowerUp("speed",true,c * per,(r+1) * per - per);
           }
         }
         rect(width - 2 * per, 0, 2 * per, height);
@@ -223,7 +234,7 @@ void displayMap(){
       for (int r = 0; r < height/per; r+=1) {
           for (int c = 0; c < width/per - 2; c+=1) {
             if (BombMap[r][c].isOccupied() != false) {
-              BombMap[r][c].explosion(BombMap[r][c]);
+              BombMap[r][c].explosion();
               }
             }
           }

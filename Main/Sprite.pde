@@ -82,22 +82,6 @@ class Sprite{
             state = "";
         }
     }
-    void stopMove(int startFrame, int endFrame, String moveName) {
-        state = "stopMove";
-        if (!curMove.equals(moveName)) {
-            curMove = moveName;
-            curFrame = startFrame;
-        }
-        pushMatrix();
-        image(images.get(curFrame), x, y);
-        popMatrix();
-        curFrame++;
-        if (curFrame > endFrame) {
-            curMove = "";
-            curFrame = 0;
-            state = "";
-        }
-    }
     public float getX(){
         return x;
     }

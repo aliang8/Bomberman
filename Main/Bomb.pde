@@ -1,5 +1,3 @@
-import java.lang.Object;
-import java.util.*;
 class Bomb{
   //List of powerups
   int x, y;
@@ -7,9 +5,9 @@ class Bomb{
   int dropTime;
   int detonateTime = 3;
   String name;
-  Boolean isOccupied = false;
+  Boolean isOccupied;
   String state;
-  int curFrame = 0;
+  int curFrame;
   String curMove;
   
   //general bombs for all players w/o powerups
@@ -50,8 +48,8 @@ class Bomb{
             state = "";
         }
     }
-    void explosion(Bomb b){
-      b.bombExplode(13, 23,"bombExplode");
+    void explosion(){
+      bombExplode(13, 19,"explode");
     }
   
 }
