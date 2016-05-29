@@ -1,55 +1,59 @@
-class Bomb{
+class Bomb {
   //List of powerups
   int x, y;
   int lengthOfExplosion;
   int dropTime;
-  int detonateTime = 3;
+  int detonateTime = millis();
   String name;
   Boolean isOccupied;
   String state;
   int curFrame;
   String curMove;
-  
+
   //general bombs for all players w/o powerups
-  Bomb(String bombType, Boolean filled, int x, int y){
+  Bomb(String bombType, Boolean filled, int x, int y) {
     this.name = bombType;
     isOccupied = filled;
-     this.x = x;
-     this.y = y;
-      curMove = "";
-      curFrame = 0;
-      state = "";      
+    this.x = x;
+    this.y = y;
+    curMove = "";
+    curFrame = 0;
+    state = "";
   }
-  Bomb(){
+  Bomb() {
     lengthOfExplosion = 1;
   }
-  int getLOE(){
+  int getLOE() {
     return lengthOfExplosion;
   }
-  String toString(){
+  String toString() {
     return name;
   }
-  public boolean isOccupied(){
+  public boolean isOccupied() {
     return isOccupied;
   }
   void bombExplode(int startFrame, int endFrame, String moveName) {
-        state = "explode";
-        if (!curMove.equals(moveName)) {
-            curMove = moveName;
-            curFrame = startFrame;
-        }
-        pushMatrix();
-        image(images.get(curFrame), x, y);
-        popMatrix();
-        curFrame++;
-        if (curFrame > endFrame) {
-            curMove = "";
-            curFrame = 0;
-            state = "";
-        }
+    state = "explode";
+    if (!curMove.equals(moveName)) {
+      curMove = moveName;
+      curFrame = startFrame;
     }
-    void explosion(){
-      bombExplode(13, 19,"explode");
+    pushMatrix();
+    image(images.get(curFrame), x, y);
+    popMatrix();
+    curFrame++;
+    if (curFrame > endFrame) {
+      curMove = "";
+      curFrame = 0;
+      state = "";
     }
-  
+  }
+  void explosion() {
+    int curFrame = min((millis()-detonateTime)/200+13, 19);
+    //System.out.println(detonateTime);
+    pushMatrix();
+    image(images.get(curFrame), x, y);
+    popMatrix();
+    //bombExplode(13, 19, "explode");
+  }
 }
