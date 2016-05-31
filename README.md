@@ -56,6 +56,11 @@ Matthew 5/25/16
 
 - Single movement possible. Doesn't spazz.
 
+Matthew 5/30/16
+
+-Bots now drop bombs when surrounded by breakable walls and/ or playerse.
+
+-bots move one tile at a time and moves to a safespot when a bomb is planted.
 
 ##Project plan/outline including our goals prioritized by importance and chronology (things to do + things already done): ##
 (SUBJECT TO CHANGE)
