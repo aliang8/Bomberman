@@ -28,6 +28,10 @@ class Bomb {
     image(images.get(curFrame), x, y);
     if (grid[(y-per)/per][x/per] != 1) {
       image(images.get(curFrame + 31 - 13), x, y - per);
+      if(Sprites.get(0).y + 25 - (y - 25 - per) < 0){
+        print("works");
+        Sprites.get(0).die(20, 24, "dying");
+      }
     } else {
       image(images.get(wallFrame), x, y-per);
     }
