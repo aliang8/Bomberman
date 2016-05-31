@@ -17,7 +17,6 @@ class Timer {
     void run() {
         currentTime = millis();
         time = round((currentTime - startTime) / 1000);
-        println(startTime + " : " + currentTime);
         if (interval - time > 0) {
             text(nf(interval - time, 2), width / 2, 100);
         }
