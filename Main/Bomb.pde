@@ -4,6 +4,7 @@ class Bomb {
   int dropTime;
   int detonateTime = millis();
   String name;
+  int curFrame;
   Boolean isOccupied;
 
 
@@ -21,7 +22,7 @@ class Bomb {
     return isOccupied;
   }
   void explosion() {
-    int curFrame = min((millis()-detonateTime - 200)/200+13, 19);
+    curFrame = min((millis()-detonateTime - 200)/200+13, 19);
     image(images.get(curFrame), x, y);
     if (grid[(y-per)/per][x/per] != 1) {
       image(images.get(curFrame + 31 - 13), x, y - per);
