@@ -51,6 +51,26 @@ public void setup() {
     images.add(loadImage(imageName));
     images.get(i+19).resize(50, 50);
   }
+  for (int i = 1; i < 9; i++) {
+    String imageName = "N" + i + ".gif";
+    images.add(loadImage(imageName));
+    images.get(i+29).resize(50, 50);
+  }
+  for (int i = 1; i < 9; i++) {
+    String imageName = "S" + i + ".gif";
+    images.add(loadImage(imageName));
+    images.get(i+37).resize(50, 50);
+  }
+  for (int i = 1; i < 9; i++) {
+    String imageName = "E" + i + ".gif";
+    images.add(loadImage(imageName));
+    images.get(i+45).resize(50, 50);
+  }
+  for (int i = 1; i < 9; i++) {
+    String imageName = "W" + i + ".gif";
+    images.add(loadImage(imageName));
+    images.get(i+53).resize(50, 50);
+  }
   initialize(fighter1, fighter2, downKeys);
   t = new Timer(60);
   size(800, 600);
@@ -92,7 +112,6 @@ public void draw() {
   t.run();
   displayExplosion();
   newBots.makeMove();
-  //collision(s);
 }
 
 void displayMap() {  
@@ -221,19 +240,13 @@ void displayExplosion() {
   for (Bomb x : BombMap) {
     x.explosion();
   }
-}
-
-/*
-void collision(Sprite s) {
-  for (int r = 0; r < height/per; r+=1) {
-    for (int c = 0; c < width/per - 2; c+=1) {
-      if (TileMap[r][c].name.equals("wall") && TileMap[(s.y - 3)/per][s.x/per].isOccupied() == true) {
-        TileMap[r][c].breakWall(6, 9, "breaking");
-      }
+  for (int i = 0; i < BombMap.size(); i++){
+    if (BombMap.get(i).curFrame == 19){
+      BombMap.remove(i);
+      i--;
     }
   }
 }
-*/
 
 void keyPressed() {
   if (key < 256) {
