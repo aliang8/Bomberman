@@ -4,9 +4,6 @@ Making Bomberman for APCS Spring Final Project
 ##Team Name: Ziggs##
 
 ##Project Name/ Description: ##
-
-Name: BombCraft
-
 Name: Operation BumberMan/ BombCraft
 
 Description: We want to create a replica of the game Bomberman. The objective of the game
@@ -29,33 +26,11 @@ Anthony 5/14/16
 
 -Made it so that sprites and map are displayable
 
-Matthew 5/15/16
- 
-Started up with the basic framework for Bomberman. 
-
-Added some basic methods, classes. 
-
-Working on creating powerups and player movement and AI movements.
-
-Does not compile yet, need to add more methods to our classes and make more classes for other AI, and obstacles and possible special maps.
-
-Need to add sprites and other graphical stuff.
-
 Anthony 5/16/16
 
 -Made a palette on the level editor to select different blocks
 
 -After selecting the blocks you can change the type of individual tiles
-
-Matthew 5/16/16
-
-Created separate Tile collection
-
-Added Methods to bomberman to move/drop bombs.
-
-Matthew 5/17/16
-
-added Images to setup and more used the makeMap(redesigning it)
 
 Anthony 5/18/16
 
@@ -63,41 +38,24 @@ Anthony 5/18/16
 
 -Created the walk function
 
-Matthew 5/18/16
-
-Created Tile Collection to store the different types of tiles
-
 Bug: walking is really laggy, especially when changing directions
 
 Anthony 5/20/16
 
 -Working on making the tiles destroyable and adding collisions
 
-Matthew 5/21/16
-
-Experimenting with different menus and other misc stuff for bomberman.
-
 Matthew 5/22/16
 
-Started working on AI and fixing sprites problems and creating gameplay
+- fixing Ai with collision. Broke the game.
 
-Anthony 5/22/16
+Matthew 5/24/16
 
--Finished the character collision with the bricks
+- tried to make AI not have shadows follow bots. fixed. movements bugged again.
 
--Working on creating the bomb, slight setback because don't know how to remove background
+Matthew 5/25/16
 
-Matthew 5/23/16
+- Single movement possible. Doesn't spazz.
 
-Merged devBranch stuff with master for demo
-
-Added movement to bots, although bots are still bugged in their movements.
-
-Players no longer collide into walls, but bots do.
-
-Anthony 5/25/16
-
--Added sprites for Bomb, made features for Bomb
 
 ##Project plan/outline including our goals prioritized by importance and chronology (things to do + things already done): ##
 (SUBJECT TO CHANGE)
