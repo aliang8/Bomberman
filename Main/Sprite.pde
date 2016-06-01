@@ -82,10 +82,10 @@ class Sprite{
             state = "";
         }
     }
-    public float getX(){
+    public int getX(){
         return x;
     }
-    public float getY(){
+    public int getY(){
         return y;
     }
     public String getState(){
