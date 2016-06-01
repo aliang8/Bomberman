@@ -109,6 +109,7 @@ public void draw() {
   t.run();
   displayExplosion();
   newBots.makeMove();
+//print(s.x + " " + s.y);
 }
 
 void displayMap() {  

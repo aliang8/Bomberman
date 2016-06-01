@@ -2,7 +2,7 @@ class Sprite {
   Bomb inHand;
   int x, y;
   String state, name;
-  int STEP = 6;
+  float STEP = 3;
   String curMove;
   ArrayList < PImage > images;
   int curFrame = 0;
@@ -16,7 +16,7 @@ class Sprite {
     for (int i = 1; i < 26; i++) {
       String imageName = "Red " + "(" + i + ").gif";
       images.add(loadImage(imageName));
-      images.get(i-1).resize(25, 50);
+      images.get(i-1).resize(25, 45);
     }
     for (int i = 1; i < 26; i++) {
       String imageName = "Blue" + "(" + i + ").gif";
