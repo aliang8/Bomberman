@@ -88,9 +88,10 @@ class Sprite {
       curMove = moveName;
       curFrame = startFrame;
     }
-    pushMatrix();
+    print(curFrame);
+    //pushMatrix();
     image(images.get(curFrame), x, y);
-    popMatrix();
+    //popMatrix();
     curFrame++;
     if (curFrame > endFrame) {
       curMove = "";

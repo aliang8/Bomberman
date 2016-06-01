@@ -8,27 +8,27 @@ class PlayerOne {
   }
 
   void action() {
-    if (s.name.equals("red")) {
+    if (s.name.equals("red") && s.curMove != "dying") {
       if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("walkUp")) {
-        if (grid[(s.y - 3)/per][s.x/per] == 1 || grid[(s.y - 3)/per][s.x/per] == 2 || grid[(s.y - 3)/per][s.x/per] == 3 || grid[(s.y - 3)/per][s.x/per] == 4) {
+        if (grid[(s.y - 3)/per][(s.x+10)/per] == 1 || grid[(s.y - 3)/per][s.x/per] == 2 || grid[(s.y - 3)/per][s.x/per] == 3 || grid[(s.y - 3)/per][s.x/per] == 4) {
           s.y += 6;
         }
         s.dir = 'u';
         s.walkMove(0, 4, "walkUp");
       } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
-        if (grid[(s.y + 25)/per][(s.x - 5)/per] == 1 || grid[s.y/per][(s.x - 3)/per] == 2 || grid[s.y/per][(s.x - 3)/per] == 3 || grid[s.y/per][(s.x - 3)/per] == 4) {
+        if (grid[(s.y + 25)/per][(s.x - 7)/per] == 1 || grid[s.y/per][(s.x - 3)/per] == 2 || grid[s.y/per][(s.x - 3)/per] == 3 || grid[s.y/per][(s.x - 3)/per] == 4) {
           s.x += 6;
         }
         s.dir = 'l';
         s.walkMove(10, 14, "walkLeft");
       } else if (downKeys['s'] && s.curMove.equals("") || s.curMove.equals("walkDown")) {
-        if (grid[(s.y + 50)/per][s.x/per] == 1 || grid[(s.y + 50)/per][s.x/per] == 2 || grid[(s.y + 50)/per][s.x/per] == 3 || grid[(s.y + 50)/per][s.x/per] == 4) {
+        if (grid[(s.y + 50)/per][(s.x+10)/per] == 1 || grid[(s.y + 50)/per][s.x/per] == 2 || grid[(s.y + 50)/per][s.x/per] == 3 || grid[(s.y + 50)/per][s.x/per] == 4) {
           s.y -= 6;
         }
         s.dir = 'd';
         s.walkMove(5, 9, "walkDown");
       } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
-        if (grid[s.y/per][(s.x + 25)/per] == 1 || grid[s.y/per][(s.x + 25)/per] == 2 || grid[s.y/per][(s.x + 25)/per] == 3 || grid[s.y/per][(s.x + 25)/per] == 4) {
+        if (grid[(s.y+25)/per][(s.x + 27)/per] == 1 || grid[s.y/per][(s.x + 25)/per] == 2 || grid[s.y/per][(s.x + 25)/per] == 3 || grid[s.y/per][(s.x + 25)/per] == 4) {
           s.x -= 6;
         }
         s.dir = 'r';
