@@ -11,6 +11,7 @@ class Sprite {
   int RIGHT_BOUND = width - 150;
   int UP_BOUND = 0;
   int DOWN_BOUND = height - 50;
+  int t;
   public Sprite(int x, int y, String name) {
     images = new ArrayList<PImage>();
     for (int i = 1; i < 26; i++) {
@@ -82,39 +83,17 @@ class Sprite {
       state = "";
     }
   }
-  void die(int startFrame, int endFrame, String moveName) {
+  void die() {
     state = "dying";
-    if (!curMove.equals(moveName)) {
-      curMove = moveName;
-      curFrame = startFrame;
-    }
+    curFrame = min((millis()-t-200)/200+21, 24);
+    print("works");
     print(curFrame);
-    //pushMatrix();
     image(images.get(curFrame), x, y);
-    //popMatrix();
-    curFrame++;
-    if (curFrame > endFrame) {
-      curMove = "";
-      curFrame = 0;
-      state = "";
-    }
-  }
-  public float getX() {
-    return x;
-  }
-  public float getY() {
-    return y;
   }
   public String getState() {
     return state;
   }
   public void setState(String newState) {
     state = newState;
-  }
-  public int getWidth() {
-    return images.get(curFrame).width;
-  }
-  public int getHeight() {
-    return images.get(curFrame).height;
   }
 }

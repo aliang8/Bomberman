@@ -11,6 +11,7 @@ char[] controls2 = new char[] {',', '.', '/', 'm',
   'j', 'k', 'l', 'n'};  // player 2 -- does not include the arrow keys
 int [][] grid;
 ArrayList<Bomb> BombMap;
+ArrayList<PowerUp> PowerUps;
 ArrayList<Sprite> Sprites;
 Timer t;
 Sprite s, s2, s3, s4;
@@ -78,6 +79,7 @@ public void setup() {
   int cols = width/per - 2;
   grid = new int[rows][cols];
   BombMap = new ArrayList <Bomb>();
+  PowerUps = new ArrayList <PowerUp>();
   Sprites = new ArrayList <Sprite>();
   initialize(fighter1, downKeys);
   String[] vals = new String[rows*cols];
@@ -109,7 +111,7 @@ public void draw() {
   t.run();
   displayExplosion();
   newBots.makeMove();
-//print(s.x + " " + s.y);
+  //print(s.x + " " + s.y);
 }
 
 void displayMap() {  
@@ -136,8 +138,36 @@ void displayMap() {
       if (grid[r][c] == 7) {
         //image(images.get(10), c * per, (r+1) * per - per);
       }
+      //PowerUps
       if (grid[r][c] == 8) {
         image(images.get(20), c * per, (r+1) * per - per);
+      }
+      if (grid[r][c] == 9) {
+        image(images.get(21), c * per, (r+1) * per - per);
+      }
+      if (grid[r][c] == 10) {
+        image(images.get(22), c * per, (r+1) * per - per);
+      }
+      if (grid[r][c] == 11) {
+        image(images.get(23), c * per, (r+1) * per - per);
+      }
+      if (grid[r][c] == 12) {
+        image(images.get(24), c * per, (r+1) * per - per);
+      }
+      if (grid[r][c] == 13) {
+        image(images.get(25), c * per, (r+1) * per - per);
+      }
+      if (grid[r][c] == 14) {
+        image(images.get(26), c * per, (r+1) * per - per);
+      }
+      if (grid[r][c] == 15) {
+        image(images.get(27), c * per, (r+1) * per - per);
+      }
+      if (grid[r][c] == 16) {
+        image(images.get(28), c * per, (r+1) * per - per);
+      }
+      if (grid[r][c] == 17) {
+        image(images.get(29), c * per, (r+1) * per - per);
       }
     }
   }
@@ -243,6 +273,42 @@ void displayExplosion() {
     }
   }
 }
+
+void dropPowerUp(int x, int y) {
+  int index = (int)((Math.random() * 10) + 20);
+  if (index == 20) {
+    PowerUps.add(new PowerUp("boots", true, x/per, y/per));
+    grid[y/per][x/per] = 8;
+  } else if (index == 21) {
+    PowerUps.add(new PowerUp("slow", true, x/per, y/per));
+    grid[y/per][x/per] = 9;
+  } else if (index == 22) {
+    PowerUps.add(new PowerUp("linebomb", true, x/per, y/per));
+    grid[y/per][x/per] = 10;
+  } else if (index == 23) {
+    PowerUps.add(new PowerUp("firedown", true, x/per, y/per));
+    grid[y/per][x/per] = 11;
+  } else if (index == 24) {
+    PowerUps.add(new PowerUp("fireup", true, x/per, y/per));
+    grid[y/per][x/per] = 12;
+  } else if (index == 25) {
+    PowerUps.add(new PowerUp("boots", true, x/per, y/per));
+    grid[y/per][x/per] = 13;
+  } else if (index == 26) {
+    PowerUps.add(new PowerUp("skull", true, x/per, y/per));
+    grid[y/per][x/per] = 14;
+  } else if (index == 27) {
+    PowerUps.add(new PowerUp("boots", true, x/per, y/per));
+    grid[y/per][x/per] = 15;
+  } else if (index == 28) {
+    PowerUps.add(new PowerUp("powerglove", true, x/per, y/per));
+    grid[y/per][x/per] = 16;
+  } else {
+    PowerUps.add(new PowerUp("boxingglove", true, x/per, y/per));
+    grid[y/per][x/per] = 17;
+  }
+}
+
 
 void keyPressed() {
   if (key < 256) {
