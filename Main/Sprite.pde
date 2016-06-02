@@ -1,5 +1,4 @@
 class Sprite {
-  Bomb inHand;
   int x, y;
   String state, name;
   float STEP = 3;
@@ -12,6 +11,7 @@ class Sprite {
   int UP_BOUND = 0;
   int DOWN_BOUND = height - 50;
   int t;
+  int numBombs = 1;
   public Sprite(int x, int y, String name) {
     images = new ArrayList<PImage>();
     for (int i = 1; i < 26; i++) {

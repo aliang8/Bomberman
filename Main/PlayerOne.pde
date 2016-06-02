@@ -10,16 +10,32 @@ class PlayerOne {
     return (x == 1 || x == 2 || x == 3 || x == 4 || x == 6);
   }
   boolean isPowerUp(int x) {
-    return (x == 8 | x == 9 || x == 10 || x == 11 || x == 12 || x == 13 || x == 14 || x == 15 || x == 16 || x == 17);
+    return (x == 8 || x == 9 || x == 10 || x == 11 || x == 12 || x == 13 || x == 14 || x == 15 || x == 16 || x == 17);
   }
+  void obtainPU(int x, int y){
+    int powerUp = grid[y/per][x/per];
+    switch (powerUp) {
+      case 8:
+        print("Picked up boots");
+        s.STEP += 2;
+      case 9:
+        print("Picked up some slime");
+        s.STEP -= 3;
+      case 10:
+        print("More bombs");
+        s.numBombs = 3;
+      case 11:
+        print(
   void action() {
-    if (s.name.equals("red") && s.curMove != "dying") {
+    if (s.name.equals("red") && !s.curMove.equals("dying")) {
       if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("walkUp")) {
         if (isBlock(grid[(s.y - 1)/per][(s.x + 24)/per]) || isBlock(grid[(s.y - 1)/per][s.x/per])) {
           s.y += s.STEP;
         } else if (isPowerUp(grid[(s.y - 1)/per][(s.x + 24)/per])) {
+          s.obtainPU(); 
           grid[(s.y - 1)/per][(s.x + 24)/per] = 5;
         } else if (isPowerUp(grid[(s.y - 1)/per][s.x/per])) {
+          s.obtainPU(); 
           grid[(s.y - 1)/per][s.x/per] = 5;
         }
         s.dir = 'u';
@@ -28,8 +44,10 @@ class PlayerOne {
         if (isBlock(grid[(s.y + 44)/per][(s.x - 3)/per]) || isBlock(grid[(s.y + 4)/per][(s.x - 3)/per])) {
           s.x += s.STEP;
         } else if (isPowerUp(grid[(s.y + 44)/per][(s.x - 3)/per])) {
+          s.obtainPU(); 
           grid[(s.y + 44)/per][(s.x - 3)/per] = 5;
         } else if (isPowerUp(grid[(s.y + 4)/per][(s.x - 3)/per])) {
+          s.obtainPU(); 
           grid[(s.y + 4)/per][(s.x - 3)/per] = 5;
         }
         s.dir = 'l';
@@ -38,8 +56,10 @@ class PlayerOne {
         if (isBlock(grid[(s.y + 47)/per][(s.x + 12)/per]) || isBlock(grid[(s.y + 47)/per][s.x/per])) {
           s.y -= s.STEP;
         } else if (isPowerUp(grid[(s.y + 47)/per][(s.x + 12)/per])) {
+          s.obtainPU(); 
           grid[(s.y + 47)/per][(s.x + 12)/per] = 5;
         } else if (isPowerUp(grid[(s.y + 47)/per][s.x/per])) {
+          s.obtainPU(); 
           grid[(s.y + 47)/per][s.x/per] = 5;
         }
         s.dir = 'd';
@@ -48,8 +68,10 @@ class PlayerOne {
         if (isBlock(grid[(s.y + 44)/per][(s.x + 27)/per]) || isBlock(grid[(s.y + 4)/per][(s.x + 27)/per])) {
           s.x -= s.STEP;
         } else if (isPowerUp(grid[(s.y + 44)/per][(s.x + 27)/per])) {
+          s.obtainPU(); 
           grid[(s.y + 44)/per][(s.x + 27)/per] = 5;
         } else if (isPowerUp(grid[(s.y + 4)/per][(s.x + 27)/per])) {
+          s.obtainPU(); 
           grid[(s.y + 4)/per][(s.x + 27)/per] = 5;
         }
         s.dir = 'r';
@@ -60,6 +82,7 @@ class PlayerOne {
         if (grid[(s.y - 5)/per][s.x/per] == 5 || grid[(s.y - 5)/per][s.x/per] == 1) {
           //print(grid[(s.y + 2)/per][s.x/per]);
           grid[(s.y + 2)/per][s.x/per] = 7;
+          //BombMap.add(new Bomb("bomb", false, s.x/per, s.y/per + per));
         }
         if (s.dir == 'u') {
           s.reset(0);

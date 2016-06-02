@@ -189,7 +189,7 @@ void initialize(String fighter1, boolean[] downKeys) {
   // initialize arena
   //font = loadFont("ShowcardGothic-Reg-48.vlw");
   t = new Timer(62); // actually starts at 60 seconds because timer is slightly off
-  s = new Sprite(100, 100, fighter1);
+  s = new Sprite(52, 52, fighter1);
   Sprites.add(s);
   p1 = new PlayerOne(Sprites.get(0), downKeys);
   s2 = newBots.bot.get(0);
@@ -279,7 +279,6 @@ void dropPowerUp(int x, int y) {
   if (index == 20) {
     PowerUps.add(new PowerUp("boots", true, x/per, y/per));
     grid[y/per][x/per] = 8;
-    //s.STEP += 2;
   } else if (index == 21) {
     PowerUps.add(new PowerUp("slow", true, x/per, y/per));
     grid[y/per][x/per] = 9;
