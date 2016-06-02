@@ -9,29 +9,48 @@ class PlayerOne {
   boolean isBlock(int x) {
     return (x == 1 || x == 2 || x == 3 || x == 4 || x == 6);
   }
+  boolean isPowerUp(int x) {
+    return (x == 8 | x == 9 || x == 10 || x == 11 || x == 12 || x == 13 || x == 14 || x == 15 || x == 16 || x == 17);
+  }
   void action() {
     if (s.name.equals("red") && s.curMove != "dying") {
       if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("walkUp")) {
-        if (isBlock(grid[(s.y - 1)/per][(s.x + 24)/per]) || isBlock(grid[(s.y - 1)/per][(s.x - 1)/per])){
+        if (isBlock(grid[(s.y - 1)/per][(s.x + 24)/per]) || isBlock(grid[(s.y - 1)/per][s.x/per])) {
           s.y += 3;
+        } else if (isPowerUp(grid[(s.y - 1)/per][(s.x + 24)/per])) {
+          grid[(s.y - 1)/per][(s.x + 24)/per] = 5;
+        } else if (isPowerUp(grid[(s.y - 1)/per][s.x/per])) {
+          grid[(s.y - 1)/per][s.x/per] = 5;
         }
         s.dir = 'u';
         s.walkMove(0, 4, "walkUp");
       } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
         if (isBlock(grid[(s.y + 44)/per][(s.x - 3)/per]) || isBlock(grid[(s.y + 4)/per][(s.x - 3)/per])) {
           s.x += 3;
+        } else if (isPowerUp(grid[(s.y + 44)/per][(s.x - 3)/per])) {
+          grid[(s.y + 44)/per][(s.x - 3)/per] = 5;
+        } else if (isPowerUp(grid[(s.y + 4)/per][(s.x - 3)/per])) {
+          grid[(s.y + 4)/per][(s.x - 3)/per] = 5;
         }
         s.dir = 'l';
         s.walkMove(10, 14, "walkLeft");
       } else if (downKeys['s'] && s.curMove.equals("") || s.curMove.equals("walkDown")) {
-        if (isBlock(grid[(s.y + 47)/per][(s.x + 12)/per]) || isBlock(grid[(s.y + 47)/per][(s.x - 1)/per])) {
+        if (isBlock(grid[(s.y + 47)/per][(s.x + 12)/per]) || isBlock(grid[(s.y + 47)/per][s.x/per])) {
           s.y -= 3;
+        } else if (isPowerUp(grid[(s.y + 47)/per][(s.x + 12)/per])) {
+          grid[(s.y + 47)/per][(s.x + 12)/per] = 5;
+        } else if (isPowerUp(grid[(s.y + 47)/per][s.x/per])) {
+         grid[(s.y + 47)/per][s.x/per] = 5;
         }
         s.dir = 'd';
         s.walkMove(5, 9, "walkDown");
       } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
         if (isBlock(grid[(s.y + 44)/per][(s.x + 27)/per]) || isBlock(grid[(s.y + 4)/per][(s.x + 27)/per])) {
           s.x -= 3;
+        } else if (isPowerUp(grid[(s.y + 44)/per][(s.x + 27)/per])) {
+          grid[(s.y + 44)/per][(s.x + 27)/per] = 5;
+        } else if (isPowerUp(grid[(s.y + 4)/per][(s.x + 27)/per])) {
+          grid[(s.y + 4)/per][(s.x + 27)/per] = 5;
         }
         s.dir = 'r';
         s.walkMove(15, 19, "walkRight");
