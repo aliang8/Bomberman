@@ -136,7 +136,7 @@ void displayMap() {
         image(images.get(5), c * per, (r+1) * per - per);
       }
       if (grid[r][c] == 7) {
-        //image(images.get(10), c * per, (r+1) * per - per);
+        BombMap.add(new Bomb("bomb", false, c * per, (r+1) * per - per));
       }
       //PowerUps
       if (grid[r][c] == 8) {
@@ -279,6 +279,7 @@ void dropPowerUp(int x, int y) {
   if (index == 20) {
     PowerUps.add(new PowerUp("boots", true, x/per, y/per));
     grid[y/per][x/per] = 8;
+    //s.STEP += 2;
   } else if (index == 21) {
     PowerUps.add(new PowerUp("slow", true, x/per, y/per));
     grid[y/per][x/per] = 9;
