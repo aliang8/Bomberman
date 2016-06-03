@@ -4,7 +4,7 @@ class PowerUp {
   String name;
   Boolean isOccupied;
 
-  //general bombs for all players w/o powerups
+  //POWERUP CONSTRUCTOR 
   PowerUp(String powerUpType, Boolean filled, int x, int y) {
     this.name = powerUpType;
     isOccupied = filled;

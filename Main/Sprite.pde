@@ -12,6 +12,9 @@ class Sprite {
   int DOWN_BOUND = height - 50;
   int t;
   int numBombs = 1;
+  
+  //SPRITE CONSTRUCTORS
+  //LOAD IMAGES FOR SPRITES 
   public Sprite(int x, int y, String name) {
     images = new ArrayList<PImage>();
     for (int i = 1; i < 26; i++) {
@@ -40,13 +43,18 @@ class Sprite {
     curMove = "";
     curFrame = 0;
     state = "";
+    t = 0;
   }
+  
+  //RESET MOVE
   void reset(int resetFrame) {
     curFrame = resetFrame;
     pushMatrix();
     image(images.get(curFrame), x, y);
     popMatrix();
   }
+  
+  //WALKING ANIMATION
   void walkMove(int startFrame, int endFrame, String moveName) {
     state = "walk";
     if (!curMove.equals(moveName)) {
@@ -83,17 +91,43 @@ class Sprite {
       state = "";
     }
   }
+  
+  //DIE ANIMATION
   void die() {
     state = "dying";
     curFrame = min((millis()-t-200)/200+21, 24);
     //print("works");
-    //print(curFrame);
+    print(curFrame);
     image(images.get(curFrame), x, y);
   }
-  public String getState() {
-    return state;
-  }
-  public void setState(String newState) {
-    state = newState;
+  
+  //GET THE TYPE OF POWERUP ON GRID
+  void obtainPU(int x, int y) {
+    int powerUp = grid[y/per][x/per];
+    switch (powerUp) {
+    case 8:
+      print("Picked up boots");
+      s.STEP += 2;
+    case 9:
+      print("Picked up some slime");
+      s.STEP -= 3;
+    case 10:
+      print("More bombs");
+      s.numBombs = 3;
+    case 11:
+      print("Lower fire range");
+    case 12:
+      print("Increase fire range");
+    case 13:
+      print("IDEK yet");
+    case 14:
+      print("Get poisoned");
+    case 15:
+      print("IDEK yet");
+    case 16:
+      print("Chuck bombs");
+    case 17:
+      print("Push bombs");
+    }
   }
 }

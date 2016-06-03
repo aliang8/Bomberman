@@ -1,3 +1,4 @@
+//*---------------------------VARIABLES------------------------------------*
 boolean[] downKeys = new boolean[260];
 boolean[] downKeys2 = new boolean[260];
 PFont font;
@@ -21,6 +22,8 @@ AI newBots;
 boolean inGame = false;
 int blockType;
 
+
+//*--------------------------LOAD IMAGES AND INIT VARIABLES-------------------------*
 public void setup() {
   newBots = new AI();
   images = new ArrayList <PImage>();
@@ -115,8 +118,10 @@ public void draw() {
 }
 
 void displayMap() {  
+  //ITERATE THROUGH GRID AND DISPLAY TILE BASED ON NUMBER
   for (int r = 0; r < height/per; r+=1) {
     for (int c = 0; c < width/per - 2; c+=1) {
+      //WALLS
       if (grid[r][c] == 1) {
         image(images.get(6), c * per, (r+1) * per - per);
       }
@@ -135,10 +140,11 @@ void displayMap() {
       if (grid[r][c] == 6) {
         image(images.get(5), c * per, (r+1) * per - per);
       }
+      //BOMB
       if (grid[r][c] == 7) {
-        BombMap.add(new Bomb("bomb", false, c * per, (r+1) * per - per));
+//        BombMap.add(new Bomb("bomb", false, c * per, (r+1) * per - per));
       }
-      //PowerUps
+      //POWERUPS
       if (grid[r][c] == 8) {
         image(images.get(20), c * per, (r+1) * per - per);
       }
@@ -171,6 +177,7 @@ void displayMap() {
       }
     }
   }
+  //SIDE SELECTION BAR
   rect(width - 2 * per, 0, 2 * per, height);
   for (int r = 0; r < height/per; r+=2) {
     for (int c = width/per - 2; c < width/per; c+=1) {
@@ -186,7 +193,6 @@ void displayMap() {
 }
 
 void initialize(String fighter1, boolean[] downKeys) {
-  // initialize arena
   //font = loadFont("ShowcardGothic-Reg-48.vlw");
   t = new Timer(62); // actually starts at 60 seconds because timer is slightly off
   s = new Sprite(52, 52, fighter1);
@@ -199,7 +205,7 @@ void initialize(String fighter1, boolean[] downKeys) {
 
 
 void mouseClicked() {
-  print(mouseX + " " + mouseY);
+  //MAP GENERATOR/ LEVEL EDITOR
   if (mouseX < width - (2 * per) && grid[mouseY/per][mouseX/per] == 7) {
     grid[mouseY/per][mouseX/per] = 0;
   }
@@ -214,6 +220,7 @@ void mouseClicked() {
   }
 }
 
+//CHANGE BLOCKTYPE AFTER CLICK
 void change(int x, int y) {
   x = x / per;
   y = y / per;
@@ -261,6 +268,7 @@ void exit() {
   output.close();
 }
 
+//SHOW EXPLOSIONS AND REMOVES BOMB AFTERWARDS
 void displayExplosion() {
   for (Bomb x : BombMap) {
     x.explosion();
@@ -274,6 +282,7 @@ void displayExplosion() {
   }
 }
 
+//GENERATES A RANDOM POWERUP BASED ON GRID##
 void dropPowerUp(int x, int y) {
   int index = (int)((Math.random() * 10) + 20);
   if (index == 20) {
@@ -309,7 +318,7 @@ void dropPowerUp(int x, int y) {
   }
 }
 
-
+//*-------------------------MOVEMENT AND KEY/MAKES MORE SMOOTH----------------------------*
 void keyPressed() {
   if (key < 256) {
     downKeys[key] = true;
