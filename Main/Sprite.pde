@@ -12,7 +12,7 @@ class Sprite {
   int DOWN_BOUND = height - 50;
   int t;
   int numBombs = 1;
-  int range = 2;
+  int range = 1;
   
   //SPRITE CONSTRUCTORS
   //LOAD IMAGES FOR SPRITES 
