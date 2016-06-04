@@ -21,7 +21,7 @@ class PlayerOne {
   //PLAYERONE DOES THIS:
   void action() {
     //ONLY FOR RED PLAYER!
-    if (s.name.equals("red") && !s.curMove.equals("dying")) {
+    if (s.name.equals("red") && !s.state.equals("dying")) {
       if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("walkUp")) {
         //WALK UP
         //OBJECT COLLISION CHECK FOR A BLOCK ABOVE CHARACTER

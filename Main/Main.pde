@@ -72,6 +72,16 @@ public void setup() {
     images.add(loadImage(imageName));
     images.get(i+53).resize(50, 50);
   }
+  for (int i = 1; i < 9; i++) {
+    String imageName = "H" + i + ".gif";
+    images.add(loadImage(imageName));
+    images.get(i+61).resize(50, 50);
+  }
+  for (int i = 1; i < 9; i++) {
+    String imageName = "V" + i + ".gif";
+    images.add(loadImage(imageName));
+    images.get(i+69).resize(50, 50);
+  }
   t = new Timer(60);
   size(800, 600);
   s2 = newBots.bot.get(0);
