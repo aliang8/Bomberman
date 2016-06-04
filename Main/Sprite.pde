@@ -97,8 +97,6 @@ class Sprite {
   void die() {
     state = "dying";
     curFrame = min((millis()-t-200)/200+21, 24);
-    //print("works");
-    print(curFrame);
     image(images.get(curFrame), x, y);
   }
   

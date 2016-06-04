@@ -3,6 +3,7 @@ class Bomb {
   int x, y;
   int dropTime;
   int detonateTime;
+  int wallTime;
   String name;
   int curFrame;
   int wallFrame;
@@ -16,13 +17,14 @@ class Bomb {
     this.x = x;
     this.y = y;
     detonateTime = millis();
+    wallTime = millis();
   }
 
   //EXPLOSION 
   void explosion() {
     //ITERATES THROUGH FRAMES
     curFrame = min((millis()-detonateTime-1000)/200+13, 19);
-    wallFrame = min((millis()-detonateTime-1000)/200+7, 9);
+    wallFrame = min((int)((millis()-wallTime-1000)/(200*(7.0/3))+7), 9);
     //STARTS WITH BOMB
     if (curFrame < 13) {
       image(images.get(10), x, y);
@@ -36,6 +38,7 @@ class Bomb {
           //IF EXPLOSION NEXT TO A WALL, IT BREAKS
           image(images.get(wallFrame), x, y - i * per + 2);
           if (wallFrame == 9) {
+            wallTime = millis();
             if (Math.random() < .33) {
               dropPowerUp(x, y - i * per);
             } else {
@@ -47,22 +50,12 @@ class Bomb {
           //CHECK BOUNDS
           break;
         } else if (i != s.range) {
-          print("hi");
           image(images.get(curFrame + 71 - 13), x, y - i * per);
         }
         //FOR TAIL PIECE AND WALL ANIMATION
-        if (i == s.range && grid[(y - i * per - 2)/per][x/per] == 5) {
+        else if (i == s.range && grid[(y - i * per)/per][x/per] == 5) {
           image(images.get(curFrame + 31 - 13), x, y - i * per);
-        } else if (i == s.range && isBreakableBlock(grid[(y - i * per - 4)/per][x/per])) {
-          image(images.get(wallFrame), x, y - i * per);
-          if (wallFrame == 9) {
-            if (Math.random() < .33) {
-              dropPowerUp(x, y - i * per);
-            } else {
-              grid[(y - i * per)/per][x/per] = 5;
-            }
-          }
-        }
+        } 
       }
       //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
       if (Sprites.size() > 0 && Sprites.get(0).y + 45 + per > y && abs(Sprites.get(0).x - x) < 10) {
@@ -75,7 +68,7 @@ class Bomb {
           Sprites.remove(0);
         }
       }
-      
+
       //*-------------------------------SOUTH ARM---------------------------------*
       //DISPLAY HORIZONTAL OR VERTICAL EXTENSIONS FOR LONGER RANGE BOMBS
       for (int i = 1; i < s.range + 1; i++) {
