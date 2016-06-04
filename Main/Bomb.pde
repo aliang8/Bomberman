@@ -27,131 +27,182 @@ class Bomb {
     if (curFrame < 13) {
       image(images.get(10), x, y);
     } else {
+      //*-------------------------------NORTH ARM---------------------------------*
       //CENTER OF EXPLOSION
       image(images.get(curFrame), x, y);
-      //DISPLAY ARMS OF EXPLOSION IF IT IS NOT NEXT TO A WALL
-      if (grid[(y - s.range * per)/per][x/per] == 1) {
-        //DISPLAY HORIZONTAL OR VERTICAL EXTENSIONS FOR LONGER RANGE BOMBS
-        for (int i = 1; i < s.range; i++) {
-          if (grid[(y - s.range * per)/per][x/per] != 1) {
-            if (s.range > 1) {
-              image(images.get(curFrame + 71 - 13), x, y - (s.range - 1) * per);
+      //DISPLAY HORIZONTAL OR VERTICAL EXTENSIONS FOR LONGER RANGE BOMBS
+      for (int i = 1; i < s.range + 1; i++) {
+        if (grid[(y - i * per + 2)/per][x/per] == 1) {
+          //IF EXPLOSION NEXT TO A WALL, IT BREAKS
+          image(images.get(wallFrame), x, y - i * per + 2);
+          if (wallFrame == 9) {
+            if (Math.random() < .33) {
+              dropPowerUp(x, y - i * per);
+            } else {
+              grid[(y - i * per)/per][x/per] = 5;
+            }
+          }
+          break;
+        } else if (y - i * per < 0 || grid[(y - i * per)/per][x/per] == 2) {
+          //CHECK BOUNDS
+          break;
+        } else if (i != s.range) {
+          print("hi");
+          image(images.get(curFrame + 71 - 13), x, y - i * per);
+        }
+        //FOR TAIL PIECE AND WALL ANIMATION
+        if (i == s.range && grid[(y - i * per - 2)/per][x/per] == 5) {
+          image(images.get(curFrame + 31 - 13), x, y - i * per);
+        } else if (i == s.range && isBreakableBlock(grid[(y - i * per - 4)/per][x/per])) {
+          image(images.get(wallFrame), x, y - i * per);
+          if (wallFrame == 9) {
+            if (Math.random() < .33) {
+              dropPowerUp(x, y - i * per);
+            } else {
+              grid[(y - i * per)/per][x/per] = 5;
             }
           }
         }
-        //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
-        if (Sprites.size() > 0 && Sprites.get(0).y + 45 + per > y && abs(Sprites.get(0).x - x) < 10) {
-          if (Sprites.get(0).t == 0) {
-            Sprites.get(0).t = millis();
-          }
-          //REMOVE SPRITE AFTER DIE ANIMATION
-          Sprites.get(0).die();
-          if (Sprites.get(0).curFrame == 24) {
-            Sprites.remove(0);
-          }
+      }
+      //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
+      if (Sprites.size() > 0 && Sprites.get(0).y + 45 + per > y && abs(Sprites.get(0).x - x) < 10) {
+        if (Sprites.get(0).t == 0) {
+          Sprites.get(0).t = millis();
         }
-        //DISPLAY WALL CRACKING ANIMATION 
-        image(images.get(wallFrame), x, y - s.range * per);
-        //AFTER WALL DISAPPEARS, HAS 1/3 CHANCE OF DROPPING A POWERUP
-        if (wallFrame == 9) {
-          if (Math.random() < .33) {
-            dropPowerUp(x, y - s.range * per);
-          } else {
-            grid[(y - s.range * per)/per][x/per] = 5;
-          }
+        //REMOVE SPRITE AFTER DIE ANIMATION
+        Sprites.get(0).die();
+        if (Sprites.get(0).curFrame == 24) {
+          Sprites.remove(0);
         }
-      } else {
-        image(images.get(curFrame + 31 - 13), x, y - s.range * per);
-        for (int i = 1; i < s.range; i++) {
-          if (grid[(y - s.range * per)/per][x/per] != 1) {
-            if (s.range > 1) {
-              image(images.get(curFrame + 71 - 13), x, y - (s.range - 1) * per);
+      }
+      
+      //*-------------------------------SOUTH ARM---------------------------------*
+      //DISPLAY HORIZONTAL OR VERTICAL EXTENSIONS FOR LONGER RANGE BOMBS
+      for (int i = 1; i < s.range + 1; i++) {
+        if (grid[(y + i * per - 2)/per][x/per] == 1) {
+          //IF EXPLOSION NEXT TO A WALL, IT BREAKS
+          image(images.get(wallFrame), x, y - i * per);
+          if (wallFrame == 9) {
+            if (Math.random() < .33) {
+              dropPowerUp(x, y + i * per);
+            } else {
+              grid[(y + i * per)/per][x/per] = 5;
+            }
+          }
+          break;
+        } else if (y + i * per < 0 || grid[(y + i * per - 2)/per][x/per] == 2) {
+          //CHECK BOUNDS
+          break;
+        } else if (i != s.range) {
+          image(images.get(curFrame + 71 - 13), x, y + i * per);
+        }
+        //FOR TAIL PIECE AND WALL ANIMATION
+        if (i == s.range && grid[(y + i * per)/per][x/per] == 5) {
+          image(images.get(curFrame + 39 - 13), x, y + i * per);
+        } else if (i == s.range && isBreakableBlock(grid[(y + i * per)/per][x/per])) {
+          image(images.get(wallFrame), x, y + i * per);
+          if (wallFrame == 9) {
+            if (Math.random() < .33) {
+              dropPowerUp(x, y + i * per);
+            } else {
+              grid[(y + i * per)/per][x/per] = 5;
             }
           }
         }
-        //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
-        if (Sprites.size() > 0 && Sprites.get(0).y + 45 + per > y && abs(Sprites.get(0).x - x) < 10) {
-          if (Sprites.get(0).t == 0) {
-            Sprites.get(0).t = millis();
+      }
+      //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
+      if (Sprites.size() > 0 && Sprites.get(0).y - per < y && abs(Sprites.get(0).x - x) < 10) {
+        Sprites.get(0).t = millis();
+        Sprites.get(0).die();
+        //REMOVE SPRITE AFTER DIE ANIMATION
+        if (Sprites.get(0).curFrame == 24) {
+          Sprites.remove(0);
+        }
+      }
+
+      //*-------------------------------EAST ARM---------------------------------*
+      //DISPLAY HORIZONTAL OR VERTICAL EXTENSIONS FOR LONGER RANGE BOMBS
+      for (int i = 1; i < s.range + 1; i++) {
+        if (grid[y/per][(x + i * per)/per] == 1) {
+          //IF EXPLOSION NEXT TO A WALL, IT BREAKS
+          image(images.get(wallFrame), x + i * per, y);
+          if (wallFrame == 9) {
+            if (Math.random() < .33) {
+              dropPowerUp(x + i * per, y);
+            } else {
+              grid[y/per][(x + i * per)/per] = 5;
+            }
           }
-          //REMOVE SPRITE AFTER DIE ANIMATION
-          Sprites.get(0).die();
-          if (Sprites.get(0).curFrame == 24) {
-            Sprites.remove(0);
+          break;
+        } else if (x + i * per < 0 || grid[y/per][(x + i * per)/per] == 2) {
+          //CHECK BOUNDS
+          break;
+        } else if (i != s.range) {
+          image(images.get(curFrame + 63 - 13), x + i * per, y);
+        }
+        //FOR TAIL PIECE AND WALL ANIMATION
+        if (i == s.range && grid[y/per][(x + i * per)/per] == 5) {
+          image(images.get(curFrame + 47 - 13), x + i * per, y);
+        } else if (i == s.range && isBreakableBlock(grid[y/per][(x + i * per)/per])) {
+          image(images.get(wallFrame), x + i * per, y);
+          if (wallFrame == 9) {
+            if (Math.random() < .33) {
+              dropPowerUp(x + i * per, y);
+            } else {
+              grid[y/per][(x + i * per)/per] = 5;
+            }
           }
         }
       }
-      if (grid[(y+per)/per][x/per] != 1) {
-        image(images.get(curFrame + 39 - 13), x, y + s.range * per);
-        if (s.range > 1) {
-          for (int i = s.range; i > 1; i--) {
-            image(images.get(curFrame + 71 - 13), x, y + (s.range - 1) * per);
-          }
+      //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
+      if (Sprites.size() > 0 && Sprites.get(0).y - per < y && abs(Sprites.get(0).x - x) < 10) {
+        Sprites.get(0).t = millis();
+        Sprites.get(0).die();
+        if (Sprites.get(0).curFrame == 24) {
+          Sprites.remove(0);
         }
-        if (Sprites.size() > 0 && Sprites.get(0).y - per < y && abs(Sprites.get(0).x - x) < 10) {
-          Sprites.get(0).t = millis();
-          Sprites.get(0).die();
-          if (Sprites.get(0).curFrame == 24) {
-            Sprites.remove(0);
+      }
+
+      //*-------------------------------WEST ARM---------------------------------*
+      //DISPLAY HORIZONTAL OR VERTICAL EXTENSIONS FOR LONGER RANGE BOMBS
+      for (int i = 1; i < s.range + 1; i++) {
+        if (grid[y/per][(x - i * per)/per] == 1) {
+          //IF EXPLOSION NEXT TO A WALL, IT BREAKS
+          image(images.get(wallFrame), x - i * per, y);
+          if (wallFrame == 9) {
+            if (Math.random() < .33) {
+              dropPowerUp(x - i * per, y);
+            } else {
+              grid[y/per][(x - i * per)/per] = 5;
+            }
           }
+          break;
+        } else if (x - i * per < 0 || grid[y/per][(x - i * per)/per] == 2) {
+          //CHECK BOUNDS
+          break;
+        } else if (i != s.range) {
+          image(images.get(curFrame + 63 - 13), x - i * per, y);
         }
-      } else {
-        image(images.get(wallFrame), x, y + s.range *per);
-        if (wallFrame == 9) {
-          if (Math.random() < .33) {
-            dropPowerUp(x, y+per);
-          } else {
-            grid[(y+per)/per][x/per] = 5;
+        //FOR TAIL PIECE AND WALL ANIMATION
+        if (i == s.range && grid[y/per][(x - i * per)/per] == 5) {
+          image(images.get(curFrame + 55 - 13), x - i * per, y);
+        } else if (i == s.range && isBreakableBlock(grid[y/per][(x - i * per)/per])) {
+          image(images.get(wallFrame), x - i * per, y);
+          if (wallFrame == 9) {
+            if (Math.random() < .33) {
+              dropPowerUp(x - i * per, y);
+            } else {
+              grid[y/per][(x - i * per)/per] = 5;
+            }
           }
         }
       }
-      if (grid[y/per][(x+per)/per] != 1) {
-        image(images.get(curFrame + 47 - 13), x + s.range * per, y);
-        if (s.range > 1) {
-          for (int i = s.range; i > 1; i--) {
-            image(images.get(curFrame + 63 - 13), x + (s.range - 1) * per, y);
-          }
-        }
-        if (Sprites.size() > 0 && Sprites.get(0).x - per < x && abs(Sprites.get(0).y - y) < 10) {
-          Sprites.get(0).t = millis();
-          Sprites.get(0).die();
-          if (Sprites.get(0).curFrame == 24) {
-            Sprites.remove(0);
-          }
-        }
-      } else {
-        image(images.get(wallFrame), x + s.range * per, y);
-        if (wallFrame == 9) {
-          if (Math.random() < .33) {
-            dropPowerUp(x+per, y);
-          } else {
-            grid[y/per][(x+per)/per] = 5;
-          }
-        }
-      }
-      if (grid[y/per][(x-per)/per] != 1) {
-        image(images.get(curFrame + 55 - 13), x - s.range * per, y);
-        if (s.range > 1) {
-          for (int i = s.range; i > 1; i--) {
-            image(images.get(curFrame + 63 - 13), x - (s.range - 1) * per, y);
-          }
-        }
-        if (Sprites.size() > 0 && Sprites.get(0).x + per > x && abs(Sprites.get(0).y - y) < 10) {
-          //  print("works");
-          Sprites.get(0).t = millis();
-          Sprites.get(0).die();
-          if (Sprites.get(0).curFrame == 24) {
-            Sprites.remove(0);
-          }
-        }
-      } else {
-        image(images.get(wallFrame), x - s.range * per, y);
-        if (wallFrame == 9) {
-          if (Math.random() < .33) {
-            dropPowerUp(x-per, y);
-          } else {
-            grid[y/per][(x-per)/per] = 5;
-          }
+      //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
+      if (Sprites.size() > 0 && Sprites.get(0).x + per > x && abs(Sprites.get(0).y - y) < 10) {
+        Sprites.get(0).t = millis();
+        Sprites.get(0).die();
+        if (Sprites.get(0).curFrame == 24) {
+          Sprites.remove(0);
         }
       }
     }

@@ -152,7 +152,7 @@ void displayMap() {
       }
       //BOMB
       if (grid[r][c] == 7) {
-//        BombMap.add(new Bomb("bomb", false, c * per, (r+1) * per - per));
+        //        BombMap.add(new Bomb("bomb", false, c * per, (r+1) * per - per));
       }
       //POWERUPS
       if (grid[r][c] == 8) {
@@ -327,6 +327,21 @@ void dropPowerUp(int x, int y) {
     grid[y/per][x/per] = 17;
   }
 }
+
+//IF IT IS A BLOCK
+boolean isBlock(int x) {
+  return (x == 1 || x == 2 || x == 3 || x == 4 || x == 6);
+}
+
+boolean isBreakableBlock(int x) {
+  return (x == 1);
+}
+
+//IF IT IS A POWERUP
+boolean isPowerUp(int x) {
+  return (x == 8 || x == 9 || x == 10 || x == 11 || x == 12 || x == 13 || x == 14 || x == 15 || x == 16 || x == 17);
+}
+
 
 //*-------------------------MOVEMENT AND KEY/MAKES MORE SMOOTH----------------------------*
 void keyPressed() {

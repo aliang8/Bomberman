@@ -7,17 +7,7 @@ class PlayerOne {
     this.s = s;
     downKeys = commands;
   }
-
-  //IF IT IS A BLOCK
-  boolean isBlock(int x) {
-    return (x == 1 || x == 2 || x == 3 || x == 4 || x == 6);
-  }
-
-  //IF IT IS A POWERUP
-  boolean isPowerUp(int x) {
-    return (x == 8 || x == 9 || x == 10 || x == 11 || x == 12 || x == 13 || x == 14 || x == 15 || x == 16 || x == 17);
-  }
-
+  
   //PLAYERONE DOES THIS:
   void action() {
     //ONLY FOR RED PLAYER!
