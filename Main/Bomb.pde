@@ -63,10 +63,12 @@ class Bomb {
         //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
         if (Sprites.size() > 0 
           && s.y + i * per + per > y
+          && s.y < y
           && abs(Sprites.get(0).x - x) < 10) {
           if (s.t == 0) {
             s.t = millis();
           }
+          print(s.x + " " + (i * per) + " " + x + " " + " north");
           s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24) {
@@ -107,10 +109,12 @@ class Bomb {
         //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
         if (Sprites.size() > 0 
           && s.y - i * per - per < y 
+          && s.y > y
           && abs(Sprites.get(0).x - x) < 10) {
           if (s.t == 0) {
             s.t = millis();
           }
+          print(s.x + " " + (i * per) + " " + x + " " + " south");
           s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24) {
@@ -151,10 +155,12 @@ class Bomb {
         //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
         if (Sprites.size() > 0
           && s.x - i * per - per < x 
+          && s.x > x
           && abs(Sprites.get(0).y - y) < 20) {
           if (s.t == 0) {
             s.t = millis();
           }
+          print(s.x + " " + (i * per) + " " + x + " " + " east");
           s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24) {
@@ -194,11 +200,13 @@ class Bomb {
         }
         //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
         if (Sprites.size() > 0 
-          && s.x + i * per > x 
+          && s.x + i * per > x
+          && s.x < x
           && abs(Sprites.get(0).y - y) < 20) {
           if (s.t == 0) {
             s.t = millis();
           }
+          print(s.x + " " + (i * per) + " " + x + " " + " west");
           s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24) {

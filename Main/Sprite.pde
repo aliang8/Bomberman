@@ -15,6 +15,7 @@ class Sprite {
   int numBombs;
   int range = 1;
   int time;
+  boolean canPushBomb;
 
   //SPRITE CONSTRUCTORS
   //LOAD IMAGES FOR SPRITES 
@@ -48,6 +49,7 @@ class Sprite {
     curFrame = 0;
     state = "";
     numBombs = 10;
+    canPushBomb = false;
   }
 
   //RESET MOVE
@@ -101,7 +103,6 @@ class Sprite {
     state = "dying";
     curFrame = min((millis()-t-100)/200+21, 24);
     image(images.get(curFrame), x, y);
-    print(curFrame);
   }
 
   //GET THE TYPE OF POWERUP ON GRID
@@ -175,7 +176,8 @@ class Sprite {
       break;
     case 17:
       print("Push bombs");
-      //Boosts.add(17);
+      Boosts.add(new int[]{17, millis()});
+      canPushBomb = true;
       break;
     }
   }
@@ -198,6 +200,9 @@ class Sprite {
         }
         if (Boosts.get(i)[0] == 13 && maxBombsOnBoard >= 1) {
           maxBombsOnBoard--;
+        }
+        if (Boosts.get(i)[0] == 17 && canPushBomb == true) {
+          canPushBomb = false;
         }
         Boosts.remove(Boosts.get(i));
         i--;

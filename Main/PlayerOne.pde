@@ -18,7 +18,7 @@ class PlayerOne {
         //OBJECT COLLISION CHECK FOR A BLOCK ABOVE CHARACTER
         if (isBlock(grid[(s.y - 1)/per][(s.x + 22)/per]) 
           || isBlock(grid[(s.y - 1)/per][(s.x + 3)/per]) 
-          && (millis() - closestBomb().detonateTime < 1000)) {
+          || (closestBomb() != null && (millis() - closestBomb().detonateTime < 1000))) {
           s.y += s.STEP;
           //CHECK TO SEE IF TILE CONTAINS POWERUP
         } else if (isPowerUp(grid[(s.y - 1)/per][(s.x + 24)/per])) {
@@ -36,7 +36,7 @@ class PlayerOne {
         //OBJECT COLLISION CHECK FOR A BLOCK TO THE LEFT OF CHARACTER
         if (isBlock(grid[(s.y + 42)/per][(s.x - 1)/per]) 
           || isBlock(grid[(s.y + 3)/per][(s.x - 1)/per])
-          && (millis() - closestBomb().detonateTime < 1000)) {
+          || (closestBomb() != null && (millis() - closestBomb().detonateTime < 1000))) {
           s.x += s.STEP;
         } else if (isPowerUp(grid[(s.y + 44)/per][(s.x - 3)/per])) {
           s.obtainPU(s.x - 3, s.y + 44); 
@@ -52,7 +52,7 @@ class PlayerOne {
         //OBJECT COLLISION CHECK FOR A BLOCK BELOW CHARACTER
         if (isBlock(grid[(s.y + 47)/per][(s.x + 12)/per]) 
           || isBlock(grid[(s.y + 47)/per][(s.x + 3)/per])
-          && (millis() - closestBomb().detonateTime < 1000)) {
+          || (closestBomb() != null && (millis() - closestBomb().detonateTime < 1000))) {
           s.y -= s.STEP;
         } else if (isPowerUp(grid[(s.y + 47)/per][(s.x + 12)/per])) {
           s.obtainPU(s.x + 12, s.y + 47); 
@@ -66,19 +66,19 @@ class PlayerOne {
       } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
         //WALK RIGHT
         //OBJECT COLLISION CHECK FOR A BLOCK TO THE RIGHT OF CHARACTER
-        if (isBlock(grid[(s.y + 42)/per][(s.x + 27)/per]) 
-          || isBlock(grid[(s.y + 3)/per][(s.x + 27)/per])
-          && (millis() - closestBomb().detonateTime < 1000)) {
-          s.x -= s.STEP;
-        } else if (isPowerUp(grid[(s.y + 44)/per][(s.x + 27)/per])) {
-          s.obtainPU(s.x + 27, s.y + 44); 
-          grid[(s.y + 44)/per][(s.x + 27)/per] = 5;
-        } else if (isPowerUp(grid[(s.y + 4)/per][(s.x + 27)/per])) {
-          s.obtainPU(s.x + 27, s.y + 44); 
-          grid[(s.y + 4)/per][(s.x + 27)/per] = 5;
-        }
-        s.dir = 'r';
-        s.walkMove(15, 19, "walkRight");
+          if (isBlock(grid[(s.y + 42)/per][(s.x + 27)/per]) 
+            || isBlock(grid[(s.y + 3)/per][(s.x + 27)/per])
+            || (closestBomb() != null && (millis() - closestBomb().detonateTime < 1000))) {
+            s.x -= s.STEP;
+          } else if (isPowerUp(grid[(s.y + 44)/per][(s.x + 27)/per])) {
+            s.obtainPU(s.x + 27, s.y + 44); 
+            grid[(s.y + 44)/per][(s.x + 27)/per] = 5;
+          } else if (isPowerUp(grid[(s.y + 4)/per][(s.x + 27)/per])) {
+            s.obtainPU(s.x + 27, s.y + 44); 
+            grid[(s.y + 4)/per][(s.x + 27)/per] = 5;
+          }
+          s.dir = 'r';
+          s.walkMove(15, 19, "walkRight");
       } else if (downKeys['x']) {
         //DROP BOMB WHEN PRESS X
         //CHECK TO MAKE SURE YOU ARE DROPPING ON FLOOR 

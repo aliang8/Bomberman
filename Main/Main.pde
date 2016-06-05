@@ -89,8 +89,6 @@ public void setup() {
     images.add(loadImage(imageName));
     images.get(i+77).resize(200, 299);
   }
-  background = loadImage("background.png");
-  background.resize(800,600);
   t = new Timer(60);
   size(800, 600);
   s2 = newBots.bot.get(0);
@@ -127,6 +125,8 @@ public void setup() {
 }
 
 public void draw() {
+  background = loadImage("background.png");
+  background.resize(800, 600);
   background(background);
   if (gameState.equals("menu")) {
     menu = loadImage("Menu.jpg");
@@ -140,7 +140,9 @@ public void draw() {
     p1.action();
     t.run();
     displayExplosion();
-    moveBomb();
+    if (s.canPushBomb) {
+      moveBomb();
+    }
     newBots.makeMove();
   } else if (gameState.equals("gameOver")) {
     background(255);
@@ -277,7 +279,7 @@ void initialize(String name, boolean[] downKeys) {
 
 
 void mouseClicked() {
-  print(mouseX + " " + mouseY);
+  //print(mouseX + " " + mouseY);
   //GO TO SELECT COLOR SCREEN
   if (gameState.equals("menu")) {
     if (mouseX > 237 && mouseX < 562 && mouseY > 393 && mouseY < 427) {
