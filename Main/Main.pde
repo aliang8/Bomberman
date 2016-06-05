@@ -18,8 +18,9 @@ Timer t;
 Sprite s, s2, s3, s4;
 int per;
 ArrayList<PImage> images;
+PImage menu;
 AI newBots;
-boolean inGame = false;
+String gameState;
 int blockType;
 int maxBombsOnBoard = 1;
 
@@ -83,12 +84,20 @@ public void setup() {
     images.add(loadImage(imageName));
     images.get(i+69).resize(50, 50);
   }
+  for (int i = 1; i < 5; i++) {
+    String imageName = "Victory " + "(" + i + ")" + ".png";
+    images.add(loadImage(imageName));
+    images.get(i+73).resize(50, 50);
+  }
+  menu = loadImage("Menu.jpg");
+  menu.resize(800,600);
   t = new Timer(60);
   size(800, 600);
   s2 = newBots.bot.get(0);
   s3 = newBots.bot.get(1);
   s4 = newBots.bot.get(2);
   per = 50;
+  gameState = "menu";
   int rows = height/per;
   int cols = width/per - 2;
   grid = new int[rows][cols];
@@ -120,11 +129,41 @@ public void setup() {
 
 public void draw() {
   background(255);
-  displayMap();
-  p1.action();
-  t.run();
-  displayExplosion();
-  newBots.makeMove();
+  if (gameState.equals("menu")) {
+    displayMenu();
+  } else if (gameState.equals("inGame")) {
+    displayMap();
+    p1.action();
+    t.run();
+    displayExplosion();
+    //moveBomb();
+    newBots.makeMove();
+  } else if (gameState.equals("gameOver")) {
+    displayVictoryScreen();
+  }
+}
+
+//ALLOW PLAYER TO PUSH THE BOMBS
+void moveBomb() {
+  for (Bomb b : BombMap) {
+    if (s.dir == 'l' && grid[s.y/per][(s.x - 3)/per] == 7) {
+      while (!isBlock(grid[b.y/per][(b.x-3)/per])) {
+        b.x -= 2;
+      }
+    } else if (s.dir == 'r' && grid[s.y/per][(s.x + 22)/per] == 7) {
+      while (!isBlock(grid[b.y/per][(b.x + 22)/per])) {
+        b.x += 2;
+      }
+    } else if (s.dir == 'u' && grid[(s.y - 1)/per][s.x/per] == 7) {
+      while (!isBlock(grid[(b.y - 1)/per][b.x/per])) {
+        b.y += 2;
+      }
+    } else if (s.dir == 'd' && grid[(s.y + 47)/per][s.x/per] == 7) {
+      while (!isBlock(grid[(b.y + 47)/per][(b.x + 22)/per])) {
+        b.y -= 2;
+      }
+    }
+  }
 }
 
 void displayMap() {  
@@ -215,6 +254,11 @@ void initialize(String fighter1, boolean[] downKeys) {
 
 
 void mouseClicked() {
+  print(mouseX + " " + mouseY);
+  //LOAD GAME
+  if(mouseX > 237 && mouseX < 562 && mouseY > 393 && mouseY < 427){
+    gameState = "inGame";
+  }
   //MAP GENERATOR/ LEVEL EDITOR
   if (mouseX < width - (2 * per) && grid[mouseY/per][mouseX/per] == 7) {
     grid[mouseY/per][mouseX/per] = 0;
@@ -296,35 +340,45 @@ void displayExplosion() {
 void dropPowerUp(int x, int y) {
   int index = (int)((Math.random() * 10) + 20);
   if (index == 20) {
-    PowerUps.add(new PowerUp("boots", true, x/per, y/per));
+    PowerUps.add(new PowerUp("boots", x/per, y/per));
     grid[y/per][x/per] = 8;
   } else if (index == 21) {
-    PowerUps.add(new PowerUp("slow", true, x/per, y/per));
+    PowerUps.add(new PowerUp("slow", x/per, y/per));
     grid[y/per][x/per] = 9;
   } else if (index == 22) {
-    PowerUps.add(new PowerUp("linebomb", true, x/per, y/per));
+    PowerUps.add(new PowerUp("linebomb", x/per, y/per));
     grid[y/per][x/per] = 10;
   } else if (index == 23) {
-    PowerUps.add(new PowerUp("firedown", true, x/per, y/per));
+    PowerUps.add(new PowerUp("firedown", x/per, y/per));
     grid[y/per][x/per] = 11;
   } else if (index == 24) {
-    PowerUps.add(new PowerUp("fireup", true, x/per, y/per));
+    PowerUps.add(new PowerUp("fireup", x/per, y/per));
     grid[y/per][x/per] = 12;
   } else if (index == 25) {
-    PowerUps.add(new PowerUp("boots", true, x/per, y/per));
+    PowerUps.add(new PowerUp("boots", x/per, y/per));
     grid[y/per][x/per] = 13;
   } else if (index == 26) {
-    PowerUps.add(new PowerUp("skull", true, x/per, y/per));
+    PowerUps.add(new PowerUp("skull", x/per, y/per));
     grid[y/per][x/per] = 14;
   } else if (index == 27) {
-    PowerUps.add(new PowerUp("boots", true, x/per, y/per));
+    PowerUps.add(new PowerUp("boots", x/per, y/per));
     grid[y/per][x/per] = 15;
   } else if (index == 28) {
-    PowerUps.add(new PowerUp("powerglove", true, x/per, y/per));
+    PowerUps.add(new PowerUp("powerglove", x/per, y/per));
     grid[y/per][x/per] = 16;
   } else {
-    PowerUps.add(new PowerUp("boxingglove", true, x/per, y/per));
+    PowerUps.add(new PowerUp("boxingglove", x/per, y/per));
     grid[y/per][x/per] = 17;
+  }
+}
+
+void displayMenu(){
+  image(menu, 0, 0);
+}
+  
+void displayVictoryScreen(){
+  if (s.name.equals("red")){
+    image(images.get(73), 0, 0);
   }
 }
 

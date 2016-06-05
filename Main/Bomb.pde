@@ -7,13 +7,11 @@ class Bomb {
   String name;
   int curFrame;
   int wallFrame;
-  Boolean isOccupied;
 
 
   //BOMB CONSTRUCTOR
-  Bomb(String bombType, Boolean filled, int x, int y) {
+  Bomb(String bombType, int x, int y) {
     this.name = bombType;
-    isOccupied = filled;
     this.x = x;
     this.y = y;
     detonateTime = millis();
@@ -71,6 +69,7 @@ class Bomb {
           Sprites.get(0).die();
           if (Sprites.get(0).curFrame == 24) {
             Sprites.remove(0);
+            gameState = "gameOver";
           }
         }
       }
@@ -110,6 +109,7 @@ class Bomb {
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (Sprites.get(0).curFrame == 24) {
             Sprites.remove(0);
+            gameState = "gameOver";
           }
         }
       }
@@ -148,6 +148,7 @@ class Bomb {
           Sprites.get(0).die();
           if (Sprites.get(0).curFrame == 24) {
             Sprites.remove(0);
+            gameState = "gameOver";
           }
         }
       }
@@ -184,8 +185,10 @@ class Bomb {
         if (Sprites.size() > 0 && Sprites.get(0).x + 25 + i * per > x && abs(Sprites.get(0).y - y) < 20) {
           Sprites.get(0).t = millis();
           Sprites.get(0).die();
+           //         print(curFrame);
           if (Sprites.get(0).curFrame == 24) {
             Sprites.remove(0);
+            gameState = "gameOver";
           }
         }
       }

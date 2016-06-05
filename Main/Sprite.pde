@@ -99,8 +99,9 @@ class Sprite {
   //DIE ANIMATION
   void die() {
     state = "dying";
-    curFrame = min((millis()-t-200)/200+21, 24);
+    curFrame = min((millis()-t-100)/200+21, 24);
     image(images.get(curFrame), x, y);
+    print(curFrame);
   }
 
   //GET THE TYPE OF POWERUP ON GRID
