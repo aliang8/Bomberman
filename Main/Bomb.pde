@@ -61,14 +61,16 @@ class Bomb {
           image(images.get(curFrame + 31 - 13), x, y - i * per);
         }
         //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
-        if (Sprites.size() > 0 && Sprites.get(0).y + 50 + i * per > y && abs(Sprites.get(0).x - x) < 10) {
-          if (Sprites.get(0).t == 0) {
-            Sprites.get(0).t = millis();
+        if (Sprites.size() > 0 
+          && s.y + i * per + per > y
+          && abs(Sprites.get(0).x - x) < 10) {
+          if (s.t == 0) {
+            s.t = millis();
           }
+          s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
-          Sprites.get(0).die();
-          if (Sprites.get(0).curFrame == 24) {
-            Sprites.remove(0);
+          if (s.curFrame == 24) {
+            Sprites.remove(s);
             gameState = "gameOver";
           }
         }
@@ -103,12 +105,16 @@ class Bomb {
           image(images.get(curFrame + 39 - 13), x, y + i * per);
         }
         //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
-        if (Sprites.size() > 0 && Sprites.get(0).y - 50 - i * per < y && abs(Sprites.get(0).x - x) < 10) {
-          Sprites.get(0).t = millis();
-          Sprites.get(0).die();
+        if (Sprites.size() > 0 
+          && s.y - i * per - per < y 
+          && abs(Sprites.get(0).x - x) < 10) {
+          if (s.t == 0) {
+            s.t = millis();
+          }
+          s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
-          if (Sprites.get(0).curFrame == 24) {
-            Sprites.remove(0);
+          if (s.curFrame == 24) {
+            Sprites.remove(s);
             gameState = "gameOver";
           }
         }
@@ -143,11 +149,16 @@ class Bomb {
           image(images.get(curFrame + 47 - 13), x + i * per, y);
         }
         //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
-        if (Sprites.size() > 0 && Sprites.get(0).x - 50 - i * per < x && abs(Sprites.get(0).y - y) < 20) {
-          Sprites.get(0).t = millis();
-          Sprites.get(0).die();
-          if (Sprites.get(0).curFrame == 24) {
-            Sprites.remove(0);
+        if (Sprites.size() > 0
+          && s.x - i * per - per < x 
+          && abs(Sprites.get(0).y - y) < 20) {
+          if (s.t == 0) {
+            s.t = millis();
+          }
+          s.die();
+          //REMOVE SPRITE AFTER DIE ANIMATION
+          if (s.curFrame == 24) {
+            Sprites.remove(s);
             gameState = "gameOver";
           }
         }
@@ -182,12 +193,16 @@ class Bomb {
           image(images.get(curFrame + 55 - 13), x - i * per, y);
         }
         //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
-        if (Sprites.size() > 0 && Sprites.get(0).x + 25 + i * per > x && abs(Sprites.get(0).y - y) < 20) {
-          Sprites.get(0).t = millis();
-          Sprites.get(0).die();
-           //         print(curFrame);
-          if (Sprites.get(0).curFrame == 24) {
-            Sprites.remove(0);
+        if (Sprites.size() > 0 
+          && s.x + i * per + per > x 
+          && abs(Sprites.get(0).y - y) < 20) {
+          if (s.t == 0) {
+            s.t = millis();
+          }
+          s.die();
+          //REMOVE SPRITE AFTER DIE ANIMATION
+          if (s.curFrame == 24) {
+            Sprites.remove(s);
             gameState = "gameOver";
           }
         }

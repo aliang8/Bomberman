@@ -19,6 +19,7 @@ Sprite s, s2, s3, s4;
 int per;
 ArrayList<PImage> images;
 PImage menu;
+PImage victoryBanner;
 AI newBots;
 String gameState;
 int blockType;
@@ -87,10 +88,8 @@ public void setup() {
   for (int i = 1; i < 5; i++) {
     String imageName = "Victory " + "(" + i + ")" + ".png";
     images.add(loadImage(imageName));
-    images.get(i+73).resize(50, 50);
+    images.get(i+77).resize(200, 299);
   }
-  menu = loadImage("Menu.jpg");
-  menu.resize(800,600);
   t = new Timer(60);
   size(800, 600);
   s2 = newBots.bot.get(0);
@@ -130,6 +129,8 @@ public void setup() {
 public void draw() {
   background(255);
   if (gameState.equals("menu")) {
+    menu = loadImage("Menu.jpg");
+    menu.resize(800, 600);
     displayMenu();
   } else if (gameState.equals("inGame")) {
     displayMap();
@@ -139,6 +140,8 @@ public void draw() {
     //moveBomb();
     newBots.makeMove();
   } else if (gameState.equals("gameOver")) {
+    victoryBanner = loadImage("VictoryBanner.png");
+    victoryBanner.resize(victoryBanner.width * 3, victoryBanner.height * 3);
     displayVictoryScreen();
   }
 }
@@ -256,7 +259,7 @@ void initialize(String fighter1, boolean[] downKeys) {
 void mouseClicked() {
   print(mouseX + " " + mouseY);
   //LOAD GAME
-  if(mouseX > 237 && mouseX < 562 && mouseY > 393 && mouseY < 427){
+  if (mouseX > 237 && mouseX < 562 && mouseY > 393 && mouseY < 427) {
     gameState = "inGame";
   }
   //MAP GENERATOR/ LEVEL EDITOR
@@ -372,13 +375,26 @@ void dropPowerUp(int x, int y) {
   }
 }
 
-void displayMenu(){
+//MENU IMAGE
+void displayMenu() {
   image(menu, 0, 0);
 }
-  
-void displayVictoryScreen(){
-  if (s.name.equals("red")){
-    image(images.get(73), 0, 0);
+
+//VICTORY SPRITES
+void displayVictoryScreen() {
+  image(victoryBanner, 400, 120);
+  if (s.name.equals("green")) {
+    imageMode(CENTER);
+    image(images.get(78), 400, 300 + 70);
+  } else if (s.name.equals("yellow")) {
+    imageMode(CENTER);
+    image(images.get(79), 400, 300 + 70);
+  } else if (s.name.equals("red")) {
+    imageMode(CENTER);
+    image(images.get(80), 400, 300 + 70);
+  } else {
+    imageMode(CENTER);
+    image(images.get(81), 400, 300 + 70);
   }
 }
 

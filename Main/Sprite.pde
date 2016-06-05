@@ -47,7 +47,7 @@ class Sprite {
     curMove = "";
     curFrame = 0;
     state = "";
-    numBombs = 3;
+    numBombs = 10;
   }
 
   //RESET MOVE
