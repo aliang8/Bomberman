@@ -21,6 +21,7 @@ ArrayList<PImage> images;
 AI newBots;
 boolean inGame = false;
 int blockType;
+int maxBombsOnBoard = 1;
 
 
 //*--------------------------LOAD IMAGES AND INIT VARIABLES-------------------------*

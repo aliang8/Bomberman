@@ -23,8 +23,11 @@ class Bomb {
   //EXPLOSION 
   void explosion() {
     //ITERATES THROUGH FRAMES
-    curFrame = min((millis()-detonateTime-3000)/200+13, 19);
-    wallFrame = min((millis()-detonateTime-3800)/200 + 7, 9);
+    //Difference between # of frames * divisor = difference between delay time
+    //increasing the delay time causes bomb to start exploding later
+    //decreasing the divisor decreases the explosion speed
+    curFrame = min((millis()-detonateTime-3000)/150+13, 19);
+    wallFrame = min((millis()-detonateTime-3600)/150 + 7, 9);
     //STARTS WITH BOMB
     if (curFrame < 13) {
       image(images.get(10), x, y);

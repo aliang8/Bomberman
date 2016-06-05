@@ -1,7 +1,7 @@
 class Sprite {
   int x, y;
   String state, name;
-  float STEP = 2;
+  float STEP = 3;
   String curMove;
   ArrayList < PImage > images;
   ArrayList <int[]> Boosts;
@@ -12,7 +12,7 @@ class Sprite {
   int UP_BOUND = 0;
   int DOWN_BOUND = height - 50;
   int t;
-  int numBombs = 1;
+  int numBombs;
   int range = 1;
   int time;
 
@@ -47,7 +47,7 @@ class Sprite {
     curMove = "";
     curFrame = 0;
     state = "";
-    t = 0;
+    numBombs = 3;
   }
 
   //RESET MOVE
@@ -107,43 +107,58 @@ class Sprite {
   void obtainPU(int x, int y) {
     int powerUp = grid[y/per][x/per];
     /*for (int[] boost : Boosts) {
-      if (boost[0] == powerUp) {
-        if (powerUp == 8){
-          s.STEP +=2;
-        }
-        boost[2] += 1;
-        boost[1] += 5000;
-        return;
-      }
-    }  
-    */
+     if (boost[0] == powerUp) {
+     if (powerUp == 8){
+     s.STEP +=2;
+     }
+     boost[2] += 1;
+     boost[1] += 5000;
+     return;
+     }
+     }  
+     */
     switch (powerUp) {
     case 8:
       print("Picked up boots");
-      Boosts.add(new int[]{8, millis()});        
-      s.STEP += 2;
+      Boosts.add(new int[]{8, millis()}); 
+      if (s.STEP <= 6) {
+        s.STEP += 1;
+      }
       break;
     case 9:
       print("Picked up some slime");
-      //Boosts.add(9);
-      s.STEP -= 3;
+      Boosts.add(new int[]{9, millis()}); 
+      if (s.STEP >= 1) {
+        s.STEP -= 1;
+      }
       break;
     case 10:
       print("More bombs");
-      //Boosts.add(9);
-      s.numBombs = 3;
+      Boosts.add(new int[]{10, millis()}); 
+      if (s.numBombs <= 5) {
+        s.numBombs += 1;
+      }
       break;
     case 11:
       print("Lower firerange");
-      //Boosts.add(11);
+      Boosts.add(new int[]{11, millis()}); 
+      if (s.range > 1){
+        s.range -= 1;
+      }
       break;
     case 12:
       print("Increase fire range");
-      //Boosts.add(12);
+      Boosts.add(new int[]{12, millis()}); 
+      if (s.range <= 6){
+        s.range += 1;
+      }
       break;
     case 13:
-      print("IDEK yet");
-      //Boosts.add(13);
+      print("Place more bombs");
+      Boosts.add(new int[]{13, millis()}); 
+      if (maxBombsOnBoard <= 5){
+        maxBombsOnBoard += 1;
+      }
       break;
     case 14:
       print("Get poisoned");
@@ -164,11 +179,24 @@ class Sprite {
     }
   }
 
+  //GETTING RID OF THE EFFECTS OF POWERUP/ STACKS
   void losePowerUp() {
     for (int i = 0; i < Boosts.size(); i++) {
-      if (millis() - Boosts.get(i)[1] >= 5000) { 
-        if (Boosts.get(i)[0] == 8) {
-          s.STEP -= 2; //* Boosts.get(i)[2];
+      if (millis() - Boosts.get(i)[1] >= 10000) { 
+        if (Boosts.get(i)[0] == 8 && s.STEP >= 3) {
+          s.STEP--; //* Boosts.get(i)[2];
+        }
+        if (Boosts.get(i)[0] == 9 && s.STEP <= 3) {
+          s.STEP++; //* Boosts.get(i)[2];
+        }
+        if (Boosts.get(i)[0] == 10 && s.numBombs >= 3) {
+          s.numBombs--;
+        }
+        if (Boosts.get(i)[0] == 12 && s.range > 1) {
+          s.range--;
+        }
+        if (Boosts.get(i)[0] == 13 && maxBombsOnBoard >= 1) {
+          maxBombsOnBoard--;
         }
         Boosts.remove(Boosts.get(i));
         i--;

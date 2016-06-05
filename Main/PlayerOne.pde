@@ -13,7 +13,7 @@ class PlayerOne {
     //ONLY FOR RED PLAYER!
     if (s.name.equals("red") && !s.state.equals("dying")) {
       s.losePowerUp();
-      print(s.STEP);
+      //print(s.STEP);
       if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("walkUp")) {
         //WALK UP
         //OBJECT COLLISION CHECK FOR A BLOCK ABOVE CHARACTER
@@ -75,9 +75,12 @@ class PlayerOne {
       } else if (downKeys['x']) {
         //DROP BOMB WHEN PRESS X
         //CHECK TO MAKE SURE YOU ARE DROPPING ON FLOOR 
-        if (grid[(s.y + 25)/per][(s.x + 25)/per] == 5 || grid[(s.y + 25)/per][(s.x + 25)/per] == 1) {
-          grid[(s.y + 25)/per][(s.x + 25)/per] = 7;
-          BombMap.add(new Bomb("bomb", false, (s.x + 25)/per*per, (s.y + 25)/per*per));
+        if (s.numBombs > 0 && BombMap.size() < maxBombsOnBoard) {
+          if (grid[(s.y + 25)/per][(s.x + 25)/per] == 5 || grid[(s.y + 25)/per][(s.x + 25)/per] == 1) {
+            grid[(s.y + 25)/per][(s.x + 25)/per] = 7;
+            BombMap.add(new Bomb("bomb", false, (s.x + 25)/per*per, (s.y + 25)/per*per));
+            s.numBombs--;
+          }
         }
         //RESETS CHARACTER DIRECTION
         if (s.dir == 'u') {
