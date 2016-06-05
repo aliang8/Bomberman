@@ -18,6 +18,7 @@ int per;
 ArrayList<PImage> images;
 PImage menu;
 PImage victoryBanner;
+PImage background;
 AI newBots;
 String gameState;
 int blockType;
@@ -88,6 +89,8 @@ public void setup() {
     images.add(loadImage(imageName));
     images.get(i+77).resize(200, 299);
   }
+  background = loadImage("background.png");
+  background.resize(800,600);
   t = new Timer(60);
   size(800, 600);
   s2 = newBots.bot.get(0);
@@ -124,12 +127,13 @@ public void setup() {
 }
 
 public void draw() {
-  background(255);
+  background(background);
   if (gameState.equals("menu")) {
     menu = loadImage("Menu.jpg");
     menu.resize(800, 600);
     displayMenu();
   } else if (gameState.equals("selectColor")) {
+    background(255);
     displayColorSelect();
   } else if (gameState.equals("inGame")) {
     displayMap();
@@ -139,6 +143,7 @@ public void draw() {
     moveBomb();
     newBots.makeMove();
   } else if (gameState.equals("gameOver")) {
+    background(255);
     victoryBanner = loadImage("VictoryBanner.png");
     victoryBanner.resize(victoryBanner.width * 3, victoryBanner.height * 3);
     displayVictoryScreen();
