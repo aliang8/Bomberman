@@ -12,6 +12,8 @@ class PlayerOne {
   void action() {
     //ONLY FOR RED PLAYER!
     if (s.name.equals("red") && !s.state.equals("dying")) {
+      s.losePowerUp();
+      print(s.STEP);
       if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("walkUp")) {
         //WALK UP
         //OBJECT COLLISION CHECK FOR A BLOCK ABOVE CHARACTER
@@ -20,12 +22,10 @@ class PlayerOne {
           //CHECK TO SEE IF TILE CONTAINS POWERUP
         } else if (isPowerUp(grid[(s.y - 1)/per][(s.x + 24)/per])) {
           s.obtainPU(s.x + 24, s.y - 1); 
-          s.losePowerUp();
           //CHANGE IT BACK TO FLOOR TILE
           grid[(s.y - 1)/per][(s.x + 24)/per] = 5;
         } else if (isPowerUp(grid[(s.y - 1)/per][s.x/per])) {
           s.obtainPU(s.x + 24, s.y - 1); 
-          s.losePowerUp();
           grid[(s.y - 1)/per][s.x/per] = 5;
         }
         s.dir = 'u';
@@ -37,11 +37,9 @@ class PlayerOne {
           s.x += s.STEP;
         } else if (isPowerUp(grid[(s.y + 44)/per][(s.x - 3)/per])) {
           s.obtainPU(s.x - 3, s.y + 44); 
-          s.losePowerUp();
           grid[(s.y + 44)/per][(s.x - 3)/per] = 5;
         } else if (isPowerUp(grid[(s.y + 4)/per][(s.x - 3)/per])) {
           s.obtainPU(s.x - 3, s.y + 44); 
-          s.losePowerUp();
           grid[(s.y + 4)/per][(s.x - 3)/per] = 5;
         }
         s.dir = 'l';
@@ -53,11 +51,9 @@ class PlayerOne {
           s.y -= s.STEP;
         } else if (isPowerUp(grid[(s.y + 47)/per][(s.x + 12)/per])) {
           s.obtainPU(s.x + 12, s.y + 47); 
-          s.losePowerUp();
           grid[(s.y + 47)/per][(s.x + 12)/per] = 5;
         } else if (isPowerUp(grid[(s.y + 47)/per][s.x/per])) {
           s.obtainPU(s.x + 12, s.y + 47); 
-          s.losePowerUp();
           grid[(s.y + 47)/per][s.x/per] = 5;
         }
         s.dir = 'd';
@@ -69,11 +65,9 @@ class PlayerOne {
           s.x -= s.STEP;
         } else if (isPowerUp(grid[(s.y + 44)/per][(s.x + 27)/per])) {
           s.obtainPU(s.x + 27, s.y + 44); 
-          s.losePowerUp();
           grid[(s.y + 44)/per][(s.x + 27)/per] = 5;
         } else if (isPowerUp(grid[(s.y + 4)/per][(s.x + 27)/per])) {
           s.obtainPU(s.x + 27, s.y + 44); 
-          s.losePowerUp();
           grid[(s.y + 4)/per][(s.x + 27)/per] = 5;
         }
         s.dir = 'r';
@@ -84,7 +78,6 @@ class PlayerOne {
         if (grid[(s.y + 25)/per][(s.x + 25)/per] == 5 || grid[(s.y + 25)/per][(s.x + 25)/per] == 1) {
           grid[(s.y + 25)/per][(s.x + 25)/per] = 7;
           BombMap.add(new Bomb("bomb", false, (s.x + 25)/per*per, (s.y + 25)/per*per));
-          print(BombMap.size());
         }
         //RESETS CHARACTER DIRECTION
         if (s.dir == 'u') {

@@ -4,7 +4,7 @@ class Sprite {
   float STEP = 2;
   String curMove;
   ArrayList < PImage > images;
-  ArrayList <Integer> Boosts;
+  ArrayList <int[]> Boosts;
   int curFrame = 0;
   char dir;
   int LEFT_BOUND = 30;
@@ -40,7 +40,7 @@ class Sprite {
       images.add(loadImage(imageName));
       images.get(i+73-1).resize(25, 50);
     }
-    Boosts = new ArrayList<Integer>(); 
+    Boosts = new ArrayList<int[]>(); 
     this.x = x;
     this.y = y;
     this.name = name;
@@ -106,59 +106,72 @@ class Sprite {
   //GET THE TYPE OF POWERUP ON GRID
   void obtainPU(int x, int y) {
     int powerUp = grid[y/per][x/per];
+    /*for (int[] boost : Boosts) {
+      if (boost[0] == powerUp) {
+        if (powerUp == 8){
+          s.STEP +=2;
+        }
+        boost[2] += 1;
+        boost[1] += 5000;
+        return;
+      }
+    }  
+    */
     switch (powerUp) {
     case 8:
       print("Picked up boots");
-      Boosts.add(8);
+      Boosts.add(new int[]{8, millis()});        
       s.STEP += 2;
-      print (s.STEP);
       break;
     case 9:
       print("Picked up some slime");
-      Boosts.add(9);
+      //Boosts.add(9);
       s.STEP -= 3;
       break;
     case 10:
       print("More bombs");
-      Boosts.add(9);
+      //Boosts.add(9);
       s.numBombs = 3;
       break;
     case 11:
       print("Lower firerange");
-      Boosts.add(11);
+      //Boosts.add(11);
       break;
     case 12:
       print("Increase fire range");
-      Boosts.add(12);
+      //Boosts.add(12);
       break;
     case 13:
       print("IDEK yet");
-      Boosts.add(13);
+      //Boosts.add(13);
       break;
     case 14:
       print("Get poisoned");
-      Boosts.add(14);
+      //Boosts.add(14);
       break;
     case 15:
       print("IDEK yet");
-      Boosts.add(15);
+      //Boosts.add(15);
       break;
     case 16:
       print("Chuck bombs");
-      Boosts.add(16);
+      //Boosts.add(16);
       break;
     case 17:
       print("Push bombs");
-      Boosts.add(17);
+      //Boosts.add(17);
       break;
     }
   }
 
   void losePowerUp() {
-    time = millis();
-    if (millis() - time == 3000) {
-      if (Boosts.contains(1)) {
-        s.STEP = 3;
+    for (int i = 0; i < Boosts.size(); i++) {
+      if (millis() - Boosts.get(i)[1] >= 5000) { 
+        if (Boosts.get(i)[0] == 8) {
+          s.STEP -= 2; //* Boosts.get(i)[2];
+        }
+        Boosts.remove(Boosts.get(i));
+        i--;
       }
     }
   }
