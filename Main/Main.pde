@@ -132,6 +132,8 @@ public void draw() {
     menu = loadImage("Menu.jpg");
     menu.resize(800, 600);
     displayMenu();
+  } else if (gameState.equals("selectColor")) {
+    displayColorSelect();
   } else if (gameState.equals("inGame")) {
     displayMap();
     p1.action();
@@ -260,7 +262,7 @@ void mouseClicked() {
   print(mouseX + " " + mouseY);
   //LOAD GAME
   if (mouseX > 237 && mouseX < 562 && mouseY > 393 && mouseY < 427) {
-    gameState = "inGame";
+    gameState = "selectColor";
   }
   //MAP GENERATOR/ LEVEL EDITOR
   if (mouseX < width - (2 * per) && grid[mouseY/per][mouseX/per] == 7) {
@@ -378,6 +380,30 @@ void dropPowerUp(int x, int y) {
 //MENU IMAGE
 void displayMenu() {
   image(menu, 0, 0);
+}
+
+//SELECT THE COLOR OF SPRITE
+void displayColorSelect() {
+  fill(#FF3333);
+  rect(40, 40, 340, 240);
+  fill(#000000);
+  textSize(120);
+  text("RED", 80, 80, 300, 200);
+  fill(#3399FF);
+  rect(420, 40, 340, 240);
+  fill(#000000);
+  textSize(110);
+  text("BLUE", 450, 80, 300, 200);
+  fill(#00CC66);
+  rect(40, 320, 340, 240);
+  fill(#000000);
+  textSize(80);
+  text("GREEN", 65, 390, 300, 200);
+  fill(#FFFF33);
+  rect(420, 320, 340, 240);
+  fill(#000000);
+  textSize(75);
+  text("YELLOW", 435, 390, 340, 200);
 }
 
 //VICTORY SPRITES
