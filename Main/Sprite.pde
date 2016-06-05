@@ -1,9 +1,10 @@
 class Sprite {
   int x, y;
   String state, name;
-  float STEP = 3;
+  float STEP = 2;
   String curMove;
   ArrayList < PImage > images;
+  ArrayList <Integer> Boosts;
   int curFrame = 0;
   char dir;
   int LEFT_BOUND = 30;
@@ -13,7 +14,8 @@ class Sprite {
   int t;
   int numBombs = 1;
   int range = 1;
-  
+  int time;
+
   //SPRITE CONSTRUCTORS
   //LOAD IMAGES FOR SPRITES 
   public Sprite(int x, int y, String name) {
@@ -38,6 +40,7 @@ class Sprite {
       images.add(loadImage(imageName));
       images.get(i+73-1).resize(25, 50);
     }
+    Boosts = new ArrayList<Integer>(); 
     this.x = x;
     this.y = y;
     this.name = name;
@@ -46,7 +49,7 @@ class Sprite {
     state = "";
     t = 0;
   }
-  
+
   //RESET MOVE
   void reset(int resetFrame) {
     curFrame = resetFrame;
@@ -54,7 +57,7 @@ class Sprite {
     image(images.get(curFrame), x, y);
     popMatrix();
   }
-  
+
   //WALKING ANIMATION
   void walkMove(int startFrame, int endFrame, String moveName) {
     state = "walk";
@@ -92,41 +95,71 @@ class Sprite {
       state = "";
     }
   }
-  
+
   //DIE ANIMATION
   void die() {
     state = "dying";
     curFrame = min((millis()-t-200)/200+21, 24);
     image(images.get(curFrame), x, y);
   }
-  
+
   //GET THE TYPE OF POWERUP ON GRID
   void obtainPU(int x, int y) {
     int powerUp = grid[y/per][x/per];
     switch (powerUp) {
     case 8:
       print("Picked up boots");
+      Boosts.add(8);
       s.STEP += 2;
+      print (s.STEP);
+      break;
     case 9:
       print("Picked up some slime");
+      Boosts.add(9);
       s.STEP -= 3;
+      break;
     case 10:
       print("More bombs");
+      Boosts.add(9);
       s.numBombs = 3;
+      break;
     case 11:
-      print("Lower fire range");
+      print("Lower firerange");
+      Boosts.add(11);
+      break;
     case 12:
       print("Increase fire range");
+      Boosts.add(12);
+      break;
     case 13:
       print("IDEK yet");
+      Boosts.add(13);
+      break;
     case 14:
       print("Get poisoned");
+      Boosts.add(14);
+      break;
     case 15:
       print("IDEK yet");
+      Boosts.add(15);
+      break;
     case 16:
       print("Chuck bombs");
+      Boosts.add(16);
+      break;
     case 17:
       print("Push bombs");
+      Boosts.add(17);
+      break;
+    }
+  }
+
+  void losePowerUp() {
+    time = millis();
+    if (millis() - time == 3000) {
+      if (Boosts.contains(1)) {
+        s.STEP = 3;
+      }
     }
   }
 }
