@@ -194,7 +194,7 @@ class Bomb {
         }
         //CHECKS TO SEE IF ARMS HIT THE CHARACTER, RUN SPRITE DIE FUNCTION
         if (Sprites.size() > 0 
-          && s.x + i * per + per > x 
+          && s.x + i * per > x 
           && abs(Sprites.get(0).y - y) < 20) {
           if (s.t == 0) {
             s.t = millis();

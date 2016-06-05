@@ -13,11 +13,12 @@ class PlayerOne {
     //ONLY FOR RED PLAYER!
     if (!s.state.equals("dying")) {
       s.losePowerUp();
-      //print(s.STEP);
       if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("walkUp")) {
         //WALK UP
         //OBJECT COLLISION CHECK FOR A BLOCK ABOVE CHARACTER
-        if (isBlock(grid[(s.y - 1)/per][(s.x + 22)/per]) || isBlock(grid[(s.y - 1)/per][(s.x + 3)/per]) ) {
+        if (isBlock(grid[(s.y - 1)/per][(s.x + 22)/per]) 
+          || isBlock(grid[(s.y - 1)/per][(s.x + 3)/per]) 
+          && (millis() - closestBomb().detonateTime < 1000)) {
           s.y += s.STEP;
           //CHECK TO SEE IF TILE CONTAINS POWERUP
         } else if (isPowerUp(grid[(s.y - 1)/per][(s.x + 24)/per])) {
@@ -33,7 +34,9 @@ class PlayerOne {
       } else if (downKeys['a'] && s.curMove.equals("") || s.curMove.equals("walkLeft")) {
         //WALK LEFT
         //OBJECT COLLISION CHECK FOR A BLOCK TO THE LEFT OF CHARACTER
-        if (isBlock(grid[(s.y + 42)/per][(s.x - 1)/per]) || isBlock(grid[(s.y + 3)/per][(s.x - 1)/per])) {
+        if (isBlock(grid[(s.y + 42)/per][(s.x - 1)/per]) 
+          || isBlock(grid[(s.y + 3)/per][(s.x - 1)/per])
+          && (millis() - closestBomb().detonateTime < 1000)) {
           s.x += s.STEP;
         } else if (isPowerUp(grid[(s.y + 44)/per][(s.x - 3)/per])) {
           s.obtainPU(s.x - 3, s.y + 44); 
@@ -47,7 +50,9 @@ class PlayerOne {
       } else if (downKeys['s'] && s.curMove.equals("") || s.curMove.equals("walkDown")) {
         //WALK DOWN 
         //OBJECT COLLISION CHECK FOR A BLOCK BELOW CHARACTER
-        if (isBlock(grid[(s.y + 47)/per][(s.x + 12)/per]) || isBlock(grid[(s.y + 47)/per][(s.x + 3)/per])) {
+        if (isBlock(grid[(s.y + 47)/per][(s.x + 12)/per]) 
+          || isBlock(grid[(s.y + 47)/per][(s.x + 3)/per])
+          && (millis() - closestBomb().detonateTime < 1000)) {
           s.y -= s.STEP;
         } else if (isPowerUp(grid[(s.y + 47)/per][(s.x + 12)/per])) {
           s.obtainPU(s.x + 12, s.y + 47); 
@@ -61,7 +66,9 @@ class PlayerOne {
       } else if (downKeys['d'] && s.curMove.equals("") || s.curMove.equals("walkRight")) {
         //WALK RIGHT
         //OBJECT COLLISION CHECK FOR A BLOCK TO THE RIGHT OF CHARACTER
-        if (isBlock(grid[(s.y + 42)/per][(s.x + 27)/per]) || isBlock(grid[(s.y + 3)/per][(s.x + 27)/per])) {
+        if (isBlock(grid[(s.y + 42)/per][(s.x + 27)/per]) 
+          || isBlock(grid[(s.y + 3)/per][(s.x + 27)/per])
+          && (millis() - closestBomb().detonateTime < 1000)) {
           s.x -= s.STEP;
         } else if (isPowerUp(grid[(s.y + 44)/per][(s.x + 27)/per])) {
           s.obtainPU(s.x + 27, s.y + 44); 

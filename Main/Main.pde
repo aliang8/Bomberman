@@ -136,7 +136,7 @@ public void draw() {
     p1.action();
     t.run();
     displayExplosion();
-    //moveBomb();
+    moveBomb();
     newBots.makeMove();
   } else if (gameState.equals("gameOver")) {
     victoryBanner = loadImage("VictoryBanner.png");
@@ -149,20 +149,36 @@ public void draw() {
 void moveBomb() {
   for (Bomb b : BombMap) {
     if (s.dir == 'l' && grid[s.y/per][(s.x - 3)/per] == 7) {
-      while (!isBlock(grid[b.y/per][(b.x-3)/per])) {
-        b.x -= 2;
+      if (!isBlock(grid[b.y/per][(b.x - 1)/per])) {
+        b.x -= s.STEP; 
+        if (b.x/per == (s.x - 3)/per - 1) {
+          grid[b.y/per][b.x/per] = 7;
+          grid[b.y/per][b.x/per + 1] = 5;
+        }
       }
     } else if (s.dir == 'r' && grid[s.y/per][(s.x + 22)/per] == 7) {
-      while (!isBlock(grid[b.y/per][(b.x + 22)/per])) {
-        b.x += 2;
+      if (!isBlock(grid[b.y/per][(b.x + 51)/per])) {
+        b.x += s.STEP;
+        if (b.x/per == (s.x - 3)/per + 1) {
+          grid[b.y/per][b.x/per] = 7;
+          grid[b.y/per][b.x/per - 1] = 5;
+        }
       }
     } else if (s.dir == 'u' && grid[(s.y - 1)/per][s.x/per] == 7) {
-      while (!isBlock(grid[(b.y - 1)/per][b.x/per])) {
-        b.y += 2;
+      if (!isBlock(grid[(b.y - 1)/per][b.x/per])) {
+        b.y += s.STEP;
+        if (b.y/per == (s.y - 3)/per - 1) {
+          grid[b.y/per][b.x/per] = 7;
+          grid[b.y/per + 1][b.x/per] = 5;
+        }
       }
     } else if (s.dir == 'd' && grid[(s.y + 47)/per][s.x/per] == 7) {
-      while (!isBlock(grid[(b.y + 47)/per][(b.x + 22)/per])) {
-        b.y -= 2;
+      if (!isBlock(grid[(b.y + 51)/per][b.x/per])) {
+        b.y -= s.STEP;
+        if (b.y/per == (s.y - 3)/per + 1) {
+          grid[b.y/per][b.x/per] = 7;
+          grid[b.y/per - 1][b.x/per] = 5;
+        }
       }
     }
   }
@@ -264,7 +280,7 @@ void mouseClicked() {
     }
   }
   //LOAD GAME
-  if (gameState.equals("selectColor")) {
+  else if (gameState.equals("selectColor")) {
     if (mouseX > 40 && mouseX < 380 && mouseY > 40 && mouseY < 280) {
       gameState = "inGame";
       initialize("red", downKeys);
@@ -278,8 +294,7 @@ void mouseClicked() {
       gameState = "inGame";
       initialize("yellow", downKeys);
     }
-  }
-  if (gameState.equals("inGame")) {
+  } else if (gameState.equals("inGame")) {
     //MAP GENERATOR/ LEVEL EDITOR
     if (mouseX < width - (2 * per) && grid[mouseY/per][mouseX/per] == 7) {
       grid[mouseY/per][mouseX/per] = 0;
@@ -439,6 +454,21 @@ void displayVictoryScreen() {
     imageMode(CENTER);
     image(images.get(81), 400, 300 + 70);
   }
+}
+
+Bomb closestBomb() {
+  for (int i = 0; i < BombMap.size(); i++) {
+    if (s.dir == 'u' && (BombMap.get(i).y + per + 1 - s.y < 5 && abs(BombMap.get(i).x - s.x) < 10)) {
+      return BombMap.get(i);
+    } else if (s.dir == 'd' && (BombMap.get(i).y + 1 - s.y < 5 && abs(BombMap.get(i).x - s.x) < 10)) {
+      return BombMap.get(i);
+    } else if (s.dir == 'l' && (BombMap.get(i).x + per + 1- s.x < 5 && abs(BombMap.get(i).y - s.y) < 20)) {
+      return BombMap.get(i);
+    } else if (s.dir == 'r' && (BombMap.get(i).x - 1 - s.x < 5 && abs(BombMap.get(i).y - s.y) < 20)) {
+      return BombMap.get(i);
+    }
+  }
+  return null;
 }
 
 //IF IT IS A BLOCK
