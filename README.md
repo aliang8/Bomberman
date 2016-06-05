@@ -16,33 +16,33 @@ Lastly, we will TRY to implement a 3-D version of the game.
 ##Development Log: ##
 Anthony 5/12/16:
 
--Started working on level editor
+- Started working on level editor
 
--Made the Tile class and added functionality
+- Made the Tile class and added functionality
 
 Anthony 5/14/16
 
--Found and resized the necessary sprites
+- Found and resized the necessary sprites
 
--Made it so that sprites and map are displayable
+- Made it so that sprites and map are displayable
 
 Anthony 5/16/16
 
--Made a palette on the level editor to select different blocks
+- Made a palette on the level editor to select different blocks
 
--After selecting the blocks you can change the type of individual tiles
+- After selecting the blocks you can change the type of individual tiles
 
 Anthony 5/18/16
 
--Imported the sprites
+- Imported the sprites
 
--Created the walk function
+- Created the walk function
 
-Bug: walking is really laggy, especially when changing directions
+- Bug: walking is really laggy, especially when changing directions
 
 Anthony 5/20/16
 
--Working on making the tiles destroyable and adding collisions
+- Working on making the tiles destroyable and adding collisions
 
 Matthew 5/22/16
 
@@ -50,21 +50,21 @@ Matthew 5/22/16
 
 Anthony 5/22/16
 
--Revised entire code, took out all the maps and used grid
+- Revised entire code, took out all the maps and used grid
 
--It was easier to do it that way, using ArrayLists
+- It was easier to do it that way, using ArrayLists
 
--collisions perfect, working on making the Sprite die
+- collisions perfect, working on making the Sprite die
 
 Anthony 5/24/16
 
--Incorporated bomb range, made bombs have longer range
+- Incorporated bomb range, made bombs have longer range
 
--Fixed dropping bomb mechanic 
+- Fixed dropping bomb mechanic 
 
--Commented my code, fixed the frames for explosion, making it slower and adding
+- Commented my code, fixed the frames for explosion, making it slower and adding
 
--a delay time between the bomb and explosion
+- a delay time between the bomb and explosion
 
 Matthew 5/24/16
 
