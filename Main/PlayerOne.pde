@@ -11,7 +11,7 @@ class PlayerOne {
   //PLAYERONE DOES THIS:
   void action() {
     //ONLY FOR RED PLAYER!
-    if (s.name.equals("red") && !s.state.equals("dying")) {
+    if (!s.state.equals("dying")) {
       s.losePowerUp();
       //print(s.STEP);
       if (downKeys['w'] && s.curMove.equals("") || s.curMove.equals("walkUp")) {

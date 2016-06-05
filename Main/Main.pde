@@ -3,8 +3,6 @@ boolean[] downKeys = new boolean[260];
 boolean[] downKeys2 = new boolean[260];
 PFont font;
 PlayerOne p1;
-String fighter1 = "red";
-String fighter2 = "blue";
 char[] controls = new char[] {'w', 'a', 's', 'd', 
   'g', 'h', 'e', 'q', 
   'r', 'f', 'x', 'c'}; // player 1
@@ -103,7 +101,6 @@ public void setup() {
   BombMap = new ArrayList <Bomb>();
   PowerUps = new ArrayList <PowerUp>();
   Sprites = new ArrayList <Sprite>();
-  initialize(fighter1, downKeys);
   String[] vals = new String[rows*cols];
   try {  
     BufferedReader reader = createReader("level.txt");
@@ -246,10 +243,10 @@ void displayMap() {
   image(images.get(5), width - 2 * per, 10 * per, 100, 100);
 }
 
-void initialize(String fighter1, boolean[] downKeys) {
+void initialize(String name, boolean[] downKeys) {
   //font = loadFont("ShowcardGothic-Reg-48.vlw");
   t = new Timer(62); // actually starts at 60 seconds because timer is slightly off
-  s = new Sprite(52, 52, fighter1);
+  s = new Sprite(52, 52, name);
   Sprites.add(s);
   p1 = new PlayerOne(Sprites.get(0), downKeys);
   s2 = newBots.bot.get(0);
@@ -260,21 +257,41 @@ void initialize(String fighter1, boolean[] downKeys) {
 
 void mouseClicked() {
   print(mouseX + " " + mouseY);
+  //GO TO SELECT COLOR SCREEN
+  if (gameState.equals("menu")) {
+    if (mouseX > 237 && mouseX < 562 && mouseY > 393 && mouseY < 427) {
+      gameState = "selectColor";
+    }
+  }
   //LOAD GAME
-  if (mouseX > 237 && mouseX < 562 && mouseY > 393 && mouseY < 427) {
-    gameState = "selectColor";
+  if (gameState.equals("selectColor")) {
+    if (mouseX > 40 && mouseX < 380 && mouseY > 40 && mouseY < 280) {
+      gameState = "inGame";
+      initialize("red", downKeys);
+    } else if (mouseX > 420 && mouseX < 760 && mouseY > 40 && mouseY < 280) {
+      gameState = "inGame";
+      initialize("blue", downKeys);
+    } else if (mouseX > 40 && mouseX < 380 && mouseY > 320 && mouseY < 560) {
+      gameState = "inGame";
+      initialize("green", downKeys);
+    } else if (mouseX > 420 && mouseX < 760 && mouseY > 320 && mouseY < 560) {
+      gameState = "inGame";
+      initialize("yellow", downKeys);
+    }
   }
-  //MAP GENERATOR/ LEVEL EDITOR
-  if (mouseX < width - (2 * per) && grid[mouseY/per][mouseX/per] == 7) {
-    grid[mouseY/per][mouseX/per] = 0;
-  }
-  if (mouseX < width - (2 * per) && (grid[mouseY/per][mouseX/per] == 5 || grid[mouseY/per][mouseX/per] == 0)) {
-    change(mouseX, mouseY);
-  } else {
-    if (mouseX < width - (2 * per)) {
+  if (gameState.equals("inGame")) {
+    //MAP GENERATOR/ LEVEL EDITOR
+    if (mouseX < width - (2 * per) && grid[mouseY/per][mouseX/per] == 7) {
       grid[mouseY/per][mouseX/per] = 0;
-    } else {
+    }
+    if (mouseX < width - (2 * per) && (grid[mouseY/per][mouseX/per] == 5 || grid[mouseY/per][mouseX/per] == 0)) {
       change(mouseX, mouseY);
+    } else {
+      if (mouseX < width - (2 * per)) {
+        grid[mouseY/per][mouseX/per] = 0;
+      } else {
+        change(mouseX, mouseY);
+      }
     }
   }
 }
