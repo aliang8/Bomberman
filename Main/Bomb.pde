@@ -64,11 +64,11 @@ class Bomb {
         if (Sprites.size() > 0 
           && s.y + i * per + per > y
           && s.y < y
-          && abs(Sprites.get(0).x - x) < 10) {
+          && abs(s.x - x) < 30) {
           if (s.t == 0) {
             s.t = millis();
           }
-          print(s.x + " " + (i * per) + " " + x + " " + " north");
+          //print(s.x + " " + (i * per) + " " + x + " " + " north");
           s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24) {
@@ -110,11 +110,11 @@ class Bomb {
         if (Sprites.size() > 0 
           && s.y - i * per - per < y 
           && s.y > y
-          && abs(Sprites.get(0).x - x) < 10) {
+          && abs(s.x - x) < 10) {
           if (s.t == 0) {
             s.t = millis();
           }
-          print(s.x + " " + (i * per) + " " + x + " " + " south");
+          //print(s.x + " " + (i * per) + " " + x + " " + " south");
           s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24) {
@@ -156,11 +156,11 @@ class Bomb {
         if (Sprites.size() > 0
           && s.x - i * per - per < x 
           && s.x > x
-          && abs(Sprites.get(0).y - y) < 20) {
+          && abs(s.y - y) < 20) {
           if (s.t == 0) {
             s.t = millis();
           }
-          print(s.x + " " + (i * per) + " " + x + " " + " east");
+          //print(s.x + " " + (i * per) + " " + x + " " + " east");
           s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24) {
@@ -202,11 +202,11 @@ class Bomb {
         if (Sprites.size() > 0 
           && s.x + i * per > x
           && s.x < x
-          && abs(Sprites.get(0).y - y) < 20) {
+          && abs(s.y - y) < 20) {
           if (s.t == 0) {
             s.t = millis();
           }
-          print(s.x + " " + (i * per) + " " + x + " " + " west");
+          //print(s.x + " " + (i * per) + " " + x + " " + " west");
           s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24) {

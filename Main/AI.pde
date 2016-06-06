@@ -1,3 +1,4 @@
+/*
 import java.lang.Object;
 class AI{
   ArrayList<Sprite> bot = new ArrayList<Sprite>();
@@ -210,3 +211,4 @@ class AI{
        }
   }
 }
+*/
