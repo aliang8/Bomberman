@@ -91,51 +91,31 @@ public void setup() {
   }
   t = new Timer(60);
   size(800, 600);
+  surface.setResizable(true);
   s2 = newBots.bot.get(0);
   s3 = newBots.bot.get(1);
   s4 = newBots.bot.get(2);
   per = 50;
   gameState = "menu";
-  int rows = height/per;
-  int cols = width/per - 2;
-  grid = new int[rows][cols];
-  BombMap = new ArrayList <Bomb>();
-  PowerUps = new ArrayList <PowerUp>();
-  Sprites = new ArrayList <Sprite>();
-  String[] vals = new String[rows*cols];
-  try {  
-    BufferedReader reader = createReader("level.txt");
-    String line = reader.readLine();
-    vals = line.split(" ");
-    println("Read a file");
-    for (int i = 0; i < rows*cols; i++) {
-      if (vals[i] != null) {
-        int n =Integer.parseInt(vals[i]);
-        grid[i/cols][i%cols] = n;
-      }
-    }
-  }
-  catch(Exception e) {
-    e.printStackTrace();
-    println("No file, or other error in setup");
-    for (int i = 0; i < vals.length; i++) {
-      vals[i]="0";
-    }
-  }
 }
 
 public void draw() {
   background = loadImage("background.png");
-  background.resize(800, 600);
-  background(background);
+  if (gameState.equals("inGame")) {
+    background.resize(700, 600);
+    background(background);
+  } else {
+    background.resize(800, 600);
+    background(background);
+  }
   if (gameState.equals("menu")) {
     menu = loadImage("Menu.jpg");
     menu.resize(800, 600);
     displayMenu();
-  } else if (gameState.equals("selectColor")) {
+  } else if (gameState.equals("selectColor") || gameState.equals("selectColorLE")) {
     background(255);
     displayColorSelect();
-  } else if (gameState.equals("inGame")) {
+  } else if (gameState.equals("levelEditor") || gameState.equals("inGame")) {
     displayMap();
     p1.action();
     t.run();
@@ -193,81 +173,188 @@ void moveBomb() {
 
 void displayMap() {  
   //ITERATE THROUGH GRID AND DISPLAY TILE BASED ON NUMBER
-  for (int r = 0; r < height/per; r+=1) {
-    for (int c = 0; c < width/per - 2; c+=1) {
-      //WALLS
-      if (grid[r][c] == 1) {
-        image(images.get(6), c * per, (r+1) * per - per);
+  if (gameState.equals("levelEditor")) {
+    for (int r = 0; r < height/per; r+=1) {
+      for (int c = 0; c < width/per - 2; c+=1) {
+        //WALLS
+        if (grid[r][c] == 1) {
+          image(images.get(6), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 2) {
+          image(images.get(1), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 3) {
+          image(images.get(2), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 4) {
+          image(images.get(3), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 5) {
+          image(images.get(4), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 6) {
+          image(images.get(5), c * per, (r+1) * per - per);
+        }
+        //BOMB
+        if (grid[r][c] == 7) {
+          //        BombMap.add(new Bomb("bomb", false, c * per, (r+1) * per - per));
+        }
+        //POWERUPS
+        if (grid[r][c] == 8) {
+          image(images.get(20), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 9) {
+          image(images.get(21), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 10) {
+          image(images.get(22), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 11) {
+          image(images.get(23), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 12) {
+          image(images.get(24), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 13) {
+          image(images.get(25), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 14) {
+          image(images.get(26), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 15) {
+          image(images.get(27), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 16) {
+          image(images.get(28), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 17) {
+          image(images.get(29), c * per, (r+1) * per - per);
+        }
       }
-      if (grid[r][c] == 2) {
-        image(images.get(1), c * per, (r+1) * per - per);
+    }
+
+    //SIDE SELECTION BAR
+    rect(width - 2 * per, 0, 2 * per, height);
+    for (int r = 0; r < height/per; r+=2) {
+      for (int c = width/per - 2; c < width/per; c+=1) {
+        line(width - 2 * per, r * per, width * per, r * per);
       }
-      if (grid[r][c] == 3) {
-        image(images.get(2), c * per, (r+1) * per - per);
-      }
-      if (grid[r][c] == 4) {
-        image(images.get(3), c * per, (r+1) * per - per);
-      }
-      if (grid[r][c] == 5) {
-        image(images.get(4), c * per, (r+1) * per - per);
-      }
-      if (grid[r][c] == 6) {
-        image(images.get(5), c * per, (r+1) * per - per);
-      }
-      //BOMB
-      if (grid[r][c] == 7) {
-        //        BombMap.add(new Bomb("bomb", false, c * per, (r+1) * per - per));
-      }
-      //POWERUPS
-      if (grid[r][c] == 8) {
-        image(images.get(20), c * per, (r+1) * per - per);
-      }
-      if (grid[r][c] == 9) {
-        image(images.get(21), c * per, (r+1) * per - per);
-      }
-      if (grid[r][c] == 10) {
-        image(images.get(22), c * per, (r+1) * per - per);
-      }
-      if (grid[r][c] == 11) {
-        image(images.get(23), c * per, (r+1) * per - per);
-      }
-      if (grid[r][c] == 12) {
-        image(images.get(24), c * per, (r+1) * per - per);
-      }
-      if (grid[r][c] == 13) {
-        image(images.get(25), c * per, (r+1) * per - per);
-      }
-      if (grid[r][c] == 14) {
-        image(images.get(26), c * per, (r+1) * per - per);
-      }
-      if (grid[r][c] == 15) {
-        image(images.get(27), c * per, (r+1) * per - per);
-      }
-      if (grid[r][c] == 16) {
-        image(images.get(28), c * per, (r+1) * per - per);
-      }
-      if (grid[r][c] == 17) {
-        image(images.get(29), c * per, (r+1) * per - per);
+    }
+    image(images.get(6), width - 2 * per, 0, 100, 100);
+    image(images.get(1), width - 2 * per, 2 * per, 100, 100);
+    image(images.get(2), width - 2 * per, 4 * per, 100, 100);
+    image(images.get(3), width - 2 * per, 6 * per, 100, 100);
+    image(images.get(4), width - 2 * per, 8 * per, 100, 100);
+    image(images.get(5), width - 2 * per, 10 * per, 100, 100);
+  }
+  //IN GAME DISPLAY
+  if (gameState.equals("inGame")) {
+    for (int r = 0; r < height/per; r+=1) {
+      for (int c = 0; c < width/per; c+=1) {
+        //WALLS
+        if (grid[r][c] == 1) {
+          image(images.get(6), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 2) {
+          image(images.get(1), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 3) {
+          image(images.get(2), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 4) {
+          image(images.get(3), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 5) {
+          image(images.get(4), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 6) {
+          image(images.get(5), c * per, (r+1) * per - per);
+        }
+        //BOMB
+        if (grid[r][c] == 7) {
+          //        BombMap.add(new Bomb("bomb", false, c * per, (r+1) * per - per));
+        }
+        //POWERUPS
+        if (grid[r][c] == 8) {
+          image(images.get(20), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 9) {
+          image(images.get(21), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 10) {
+          image(images.get(22), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 11) {
+          image(images.get(23), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 12) {
+          image(images.get(24), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 13) {
+          image(images.get(25), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 14) {
+          image(images.get(26), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 15) {
+          image(images.get(27), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 16) {
+          image(images.get(28), c * per, (r+1) * per - per);
+        }
+        if (grid[r][c] == 17) {
+          image(images.get(29), c * per, (r+1) * per - per);
+        }
       }
     }
   }
-  //SIDE SELECTION BAR
-  rect(width - 2 * per, 0, 2 * per, height);
-  for (int r = 0; r < height/per; r+=2) {
-    for (int c = width/per - 2; c < width/per; c+=1) {
-      line(width - 2 * per, r * per, width * per, r * per);
-    }
-  }
-  image(images.get(6), width - 2 * per, 0, 100, 100);
-  image(images.get(1), width - 2 * per, 2 * per, 100, 100);
-  image(images.get(2), width - 2 * per, 4 * per, 100, 100);
-  image(images.get(3), width - 2 * per, 6 * per, 100, 100);
-  image(images.get(4), width - 2 * per, 8 * per, 100, 100);
-  image(images.get(5), width - 2 * per, 10 * per, 100, 100);
 }
 
 void initialize(String name, boolean[] downKeys) {
-  //font = loadFont("ShowcardGothic-Reg-48.vlw");
+  surface.setSize(700, 600);
+  int rows = height/per;
+  int cols = width/per;
+  grid = new int[rows][cols];
+  BombMap = new ArrayList <Bomb>();
+  PowerUps = new ArrayList <PowerUp>();
+  Sprites = new ArrayList <Sprite>();
+  t = new Timer(62); // actually starts at 60 seconds because timer is slightly off
+  s = new Sprite(52, 52, name);
+  Sprites.add(s);
+  s.RIGHT_BOUND = width;
+  p1 = new PlayerOne(Sprites.get(0), downKeys);
+  s2 = newBots.bot.get(0);
+  s3 = newBots.bot.get(1);
+  s4 = newBots.bot.get(2);
+  String[] vals = new String[rows*cols];
+  try {  
+    BufferedReader reader = createReader("level.txt");
+    String line = reader.readLine();
+    vals = line.split(" ");
+    println("Read a file");
+    for (int i = 0; i < rows*cols; i++) {
+      if (vals[i] != null) {
+        int n =Integer.parseInt(vals[i]);
+        grid[i/cols][i%cols] = n;
+      }
+    }
+  }
+  catch(Exception e) {
+    e.printStackTrace();
+    println("No file, or other error in setup");
+    for (int i = 0; i < vals.length; i++) {
+      vals[i]="0";
+    }
+  }
+}
+
+void initializeLE(String name, boolean[] downKeys) {
+  int rows = height/per;
+  int cols = width/per - 2;
+  grid = new int[rows][cols];
+  BombMap = new ArrayList <Bomb>();
+  PowerUps = new ArrayList <PowerUp>();
+  Sprites = new ArrayList <Sprite>();
   t = new Timer(62); // actually starts at 60 seconds because timer is slightly off
   s = new Sprite(52, 52, name);
   Sprites.add(s);
@@ -275,18 +362,39 @@ void initialize(String name, boolean[] downKeys) {
   s2 = newBots.bot.get(0);
   s3 = newBots.bot.get(1);
   s4 = newBots.bot.get(2);
+  String[] vals = new String[rows*cols];
+  try {  
+    BufferedReader reader = createReader("level.txt");
+    String line = reader.readLine();
+    vals = line.split(" ");
+    println("Read a file");
+    for (int i = 0; i < rows*cols; i++) {
+      if (vals[i] != null) {
+        int n =Integer.parseInt(vals[i]);
+        grid[i/cols][i%cols] = n;
+      }
+    }
+  }
+  catch(Exception e) {
+    e.printStackTrace();
+    println("No file, or other error in setup");
+    for (int i = 0; i < vals.length; i++) {
+      vals[i]="0";
+    }
+  }
 }
 
-
 void mouseClicked() {
-  //print(mouseX + " " + mouseY);
+  print(mouseX + " " + mouseY);
   //GO TO SELECT COLOR SCREEN
   if (gameState.equals("menu")) {
     if (mouseX > 237 && mouseX < 562 && mouseY > 393 && mouseY < 427) {
       gameState = "selectColor";
     }
-  }
-  //LOAD GAME
+    if (mouseX > 237 && mouseX < 562 && mouseY > 437 && mouseY < 469) {
+      gameState = "selectColorLE";
+    }
+  } //LOAD GAME
   else if (gameState.equals("selectColor")) {
     if (mouseX > 40 && mouseX < 380 && mouseY > 40 && mouseY < 280) {
       gameState = "inGame";
@@ -301,7 +409,22 @@ void mouseClicked() {
       gameState = "inGame";
       initialize("yellow", downKeys);
     }
-  } else if (gameState.equals("inGame")) {
+  } //LOAD FOR LEVEL EDITOR
+  else if (gameState.equals("selectColorLE")) {
+    if (mouseX > 40 && mouseX < 380 && mouseY > 40 && mouseY < 280) {
+      gameState = "levelEditor";
+      initializeLE("red", downKeys);
+    } else if (mouseX > 420 && mouseX < 760 && mouseY > 40 && mouseY < 280) {
+      gameState = "levelEditor";
+      initializeLE("blue", downKeys);
+    } else if (mouseX > 40 && mouseX < 380 && mouseY > 320 && mouseY < 560) {
+      gameState = "levelEditor";
+      initializeLE("green", downKeys);
+    } else if (mouseX > 420 && mouseX < 760 && mouseY > 320 && mouseY < 560) {
+      gameState = "levelEditor";
+      initializeLE("yellow", downKeys);
+    }
+  } else if (gameState.equals("levelEditor")) {
     //MAP GENERATOR/ LEVEL EDITOR
     if (mouseX < width - (2 * per) && grid[mouseY/per][mouseX/per] == 7) {
       grid[mouseY/per][mouseX/per] = 0;
@@ -357,13 +480,24 @@ void change(int x, int y) {
 
 void exit() {
   print("Write a file");
-  PrintWriter output = createWriter("level.txt");
-  for (int r = 0; r < height/per; r+=1) {
-    for (int c = 0; c < width/per - 2; c+=1) {
-      output.print(Integer.toString(grid[r][c])+" ");
+  if (gameState.equals("inGame")) {
+    PrintWriter output = createWriter("inGame.txt");
+    for (int r = 0; r < height/per; r+=1) {
+      for (int c = 0; c < width/per; c+=1) {
+        output.print(Integer.toString(grid[r][c])+" ");
+      }
     }
+    output.close();
+  } 
+  if (gameState.equals("levelEditor")) {
+    PrintWriter output = createWriter("level.txt");
+    for (int r = 0; r < height/per; r+=1) {
+      for (int c = 0; c < width/per - 2; c+=1) {
+        output.print(Integer.toString(grid[r][c])+" ");
+      }
+    }
+    output.close();
   }
-  output.close();
 }
 
 //SHOW EXPLOSIONS AND REMOVES BOMB AFTERWARDS
