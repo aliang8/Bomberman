@@ -63,6 +63,20 @@ Matthew 5/30/16
 
 -bots move one tile at a time and moves to a safespot when a bomb is planted.
 
+Matthew 6/1/16
+
+-Added bomb detection and player detection for bots and using these for better decision making
+-bots are a bit buggy using this 
+
+Matthew 6/3/16
+
+-Added detection of the nearest bomb so it's easier for bots to avoid these bombs. For ex, if there's 2 or more bombs within its radius, it'll take care of the nearest bomb first.
+
+Matthew 6/5/16
+
+-Added a method for bots to avoid it's own placed bombs and other explosions more effectively.
+-Bug where it will not always make the best actions to avoid bombs. Sometimes run into other bombs and die.
+
 ##Project plan/outline including our goals prioritized by importance and chronology (things to do + things already done): ##
 (SUBJECT TO CHANGE)
 
