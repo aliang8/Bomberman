@@ -19,7 +19,7 @@ ArrayList<PImage> images;
 PImage menu;
 PImage victoryBanner;
 PImage background;
-//AI newBots;
+AI newBots;
 String gameState;
 int blockType;
 int maxBombsOnBoard = 1;
@@ -27,7 +27,7 @@ int maxBombsOnBoard = 1;
 
 //*--------------------------LOAD IMAGES AND INIT VARIABLES-------------------------*
 public void setup() {
-  //newBots = new AI();
+  newBots = new AI();
   images = new ArrayList <PImage>();
   for (int i = 1; i < 7; i++) {
     String imageName = i + ".jpg";
@@ -40,7 +40,7 @@ public void setup() {
     images.get(i+5).resize(50, 50);
   }
   for (int i = 1; i < 3; i++) {
-    String imageName = "Bomb" + i + ".gif";
+    String imageName = "Bomb" + i + ".jpg";
     images.add(loadImage(imageName));
     images.get(i+9).resize(50, 50);
   }
@@ -92,9 +92,9 @@ public void setup() {
   t = new Timer(60);
   size(800, 600);
   surface.setResizable(true);
-  //s2 = newBots.bot.get(0);
-  //s3 = newBots.bot.get(1);
-  //s4 = newBots.bot.get(2);
+    s2 =new Sprite(52,548,"Yellow");
+  s3 = new Sprite(748,52,"Green");
+  s4 =new Sprite(748,548,"Blue");
   per = 50;
   gameState = "menu";
 }
@@ -104,8 +104,8 @@ public void draw() {
   if (gameState.equals("inGame")) {
     background.resize(700, 600);
     background(background);
-  } else if (gameState.equals("levelEditor")) {
-    background.resize(800, 600);
+  } else if(gameState.equals("levelEditor")){
+    background.resize(800,600);
     background(background);
   }
   if (gameState.equals("menu")) {
@@ -119,11 +119,12 @@ public void draw() {
     displayMap();
     p1.action();
     t.run();
+    newBots.makeMove();
     displayExplosion();
     if (s.canPushBomb) {
       moveBomb();
     }
-    //newBots.makeMove();
+
   } else if (gameState.equals("gameOver")) {
     background(255);
     victoryBanner = loadImage("VictoryBanner.png");
@@ -323,9 +324,10 @@ void initialize(String name, boolean[] downKeys) {
   Sprites.add(s);
   s.RIGHT_BOUND = width;
   p1 = new PlayerOne(Sprites.get(0), downKeys);
-  //s2 = newBots.bot.get(0);
-  //s3 = newBots.bot.get(1);
-  //s4 = newBots.bot.get(2);
+   s2 =(new Sprite(52,488,"Yellow"));
+   s3=(new Sprite(615,52,"Green"));
+   s4=(new Sprite(615,488,"Blue"));
+  
   String[] vals = new String[rows*cols];
   try {  
     BufferedReader reader = createReader("level.txt");
@@ -359,9 +361,9 @@ void initializeLE(String name, boolean[] downKeys) {
   s = new Sprite(52, 52, name);
   Sprites.add(s);
   p1 = new PlayerOne(Sprites.get(0), downKeys);
-  //s2 = newBots.bot.get(0);
-  //s3 = newBots.bot.get(1);
-  //s4 = newBots.bot.get(2);
+  s2 =new Sprite(52,548,"Yellow");
+  s3 = new Sprite(748,52,"Green");
+  s4 =new Sprite(748,548,"Blue");
   String[] vals = new String[rows*cols];
   try {  
     BufferedReader reader = createReader("level.txt");
@@ -581,7 +583,6 @@ void displayColorSelect() {
 
 //VICTORY SPRITES
 void displayVictoryScreen() {
-  surface.setSize(800, 600);
   image(victoryBanner, 400, 120);
   if (s.name.equals("green")) {
     imageMode(CENTER);
