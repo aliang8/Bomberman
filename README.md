@@ -13,6 +13,21 @@ to allow players to create their own maps. We will also implement AI to create b
 can practice against. There will be three different AI difficulty levels: easy, normal, hard. 
 Lastly, we will TRY to implement a 3-D version of the game. 
 
+##How To Use/Play: ##
+1) Click on Normal Game on the start up menu.
+2) Player One then chooses a color he/she wants.
+3) Player Two then chooses a color he/she wants.
+4) Game will start, the player who lives, wins the game.
+
+##Controls##
+Player One :
+
+w,a,s,d are movement for up,left,down,right respectively, x is to drop the bomb.
+
+Player Two:
+
+arrow keys are for the movement and '/' is to drop the bomb.
+
 ##Development Log: ##
 Anthony 5/12/16:
 
