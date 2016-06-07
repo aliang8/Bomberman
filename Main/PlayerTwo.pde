@@ -129,7 +129,7 @@ class PlayerTwo {
         if (s2.numBombs > 0 && BombMap.size() < maxBombsOnBoard) {
           if (grid[(s2.y + 25)/per][(s2.x + 25)/per] == 5 || grid[(s2.y + 25)/per][(s2.x + 25)/per] == 1) {
             grid[(s2.y + 25)/per][(s2.x + 25)/per] = 7;
-            BombMap.add(new Bomb("bomb", (s2.x + 25)/per*per, (s2.y + 25)/per*per));
+            BombMap.add(new Bomb("bomb", "PlayerTwo", (s2.x + 25)/per*per, (s2.y + 25)/per*per));
             s2.numBombs--;
           }
         }

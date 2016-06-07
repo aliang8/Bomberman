@@ -8,7 +8,7 @@ class Timer {
     Timer(int countdown) {
         interval = countdown;
         textSize(100);
-        font = createFont("Waree", 32);
+        font = createFont("Waree", 24);
         textFont(font);
         fill(0);
         startTime = millis();
@@ -18,7 +18,7 @@ class Timer {
         currentTime = millis();
         time = round((currentTime - startTime) / 1000);
         if (interval - time > 0) {
-            text(nf(interval - time, 2), width / 2, 100);
+            text(nf(interval - time, 2), 270, 60);
         }
     }
     

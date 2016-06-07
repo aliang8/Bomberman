@@ -342,7 +342,7 @@ void initialize(String name, String name2, boolean[] downKeys, boolean[] downKey
   //s4 = newBots.bot.get(2);
   String[] vals = new String[rows*cols];
   try {  
-    BufferedReader reader = createReader("level.txt");
+    BufferedReader reader = createReader("inGame.txt");
     String line = reader.readLine();
     vals = line.split(" ");
     println("Read a file");
@@ -547,7 +547,11 @@ void exit() {
 //SHOW EXPLOSIONS AND REMOVES BOMB AFTERWARDS
 void displayExplosion() {
   for (Bomb x : BombMap) {
-    x.explosion();
+    if(x.owner.equals("PlayerTwo")){
+      x.explosion2();
+    } else if(x.owner.equals("PlayerOne")){
+      x.explosion();
+    }
   }
   for (int i = 0; i < BombMap.size(); i++) {
     if (BombMap.get(i).curFrame == 19) {
@@ -663,6 +667,7 @@ void displayRestartButton() {
 
 String winner() {
   String winner = "";
+  //IF WE HAVE BOTS
   /*
   for (int i = 0; i < bot.size() + 1; i++) {
    if (bot.get(i).score > bot.get(i + 1).score && bot.get(i).score > s.score) {
@@ -674,7 +679,8 @@ String winner() {
    }
    }
    */
-  return "red";
+  winner = Integer.toString(max(s.score, t1.score));
+  return winner;
 }
 
 Bomb closestBomb() {

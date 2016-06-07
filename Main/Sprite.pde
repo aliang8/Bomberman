@@ -100,10 +100,26 @@ class Sprite {
   }
 
   //DIE ANIMATION
-  void die() {
+  void die(String player) {
     state = "dying";
     curFrame = min((millis()-t-100)/200+21, 24);
-    image(images.get(curFrame), x, y);
+    if (player.equals("p1") && s.name.equals("red")) {
+      image(images.get(curFrame), x, y);
+    } else if (player.equals("p1") && s.name.equals("blue")) {
+      image(images.get(curFrame + 25), x, y);
+    } else if (player.equals("p1") && s.name.equals("yellow")) {
+      image(images.get(curFrame + 50), x, y);
+    } else if (player.equals("p1") && s.name.equals("green")) {
+      image(images.get(curFrame + 75), x, y);
+    } else if (player.equals("p2") && t1.name.equals("red")) {
+      image(images.get(curFrame), x, y);
+    } else if (player.equals("p2") && t1.name.equals("blue")) {
+      image(images.get(curFrame + 25), x, y);
+    } else if (player.equals("p2") && t1.name.equals("yellow")) {
+      image(images.get(curFrame + 50), x, y);
+    } else if (player.equals("p2") && t1.name.equals("green")) {
+      image(images.get(curFrame + 75), x, y);
+    }
   }
 
   //GET THE TYPE OF POWERUP ON GRID
@@ -127,12 +143,18 @@ class Sprite {
       if (s.STEP <= 6) {
         s.STEP += 1;
       }
+      if (t1.STEP <= 6) {
+        t1.STEP += 1;
+      }
       break;
     case 9:
       println("Picked up some slime");
       Boosts.add(new int[]{9, millis()}); 
       if (s.STEP >= 1) {
         s.STEP -= 1;
+      }
+      if (t1.STEP >= 1) {
+        t1.STEP -= 1;
       }
       break;
     case 10:
@@ -141,25 +163,34 @@ class Sprite {
       if (s.numBombs <= 5) {
         s.numBombs += 1;
       }
+      if (t1.numBombs <= 5) {
+        t1.numBombs += 1;
+      }
       break;
     case 11:
       println("Lower firerange");
       Boosts.add(new int[]{11, millis()}); 
-      if (s.range > 1){
+      if (s.range > 1) {
         s.range -= 1;
+      }
+        if (t1.range > 1) {
+        t1.range -= 1;
       }
       break;
     case 12:
       println("Increase fire range");
       Boosts.add(new int[]{12, millis()}); 
-      if (s.range <= 6){
+      if (s.range <= 6) {
         s.range += 1;
+      }
+      if (t1.range <= 6) {
+        t1.range += 1;
       }
       break;
     case 13:
       println("Place more bombs");
       Boosts.add(new int[]{13, millis()}); 
-      if (maxBombsOnBoard <= 5){
+      if (maxBombsOnBoard <= 5) {
         maxBombsOnBoard += 1;
       }
       break;
