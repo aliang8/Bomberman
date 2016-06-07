@@ -128,6 +128,17 @@ Anthony 6/4/16
 
 - found the images for them (took forever)
 
+Anthony 6/5/16
+
+- Made victory screen and separated the level editor and actual game
+
+- More graphics stuff, fixed the bomb image
+
+- Found new bug: Moving bomb function doesn't work properly
+
+Anthony 6/6/16
+
+- Working on fixing the bug 
 
 ##Project plan/outline including our goals prioritized by importance and chronology (things to do + things already done): ##
 (SUBJECT TO CHANGE)
