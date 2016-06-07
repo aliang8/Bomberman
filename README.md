@@ -152,6 +152,42 @@ Anthony 6/6/16
 
 - Added the tie game screen, fixed up code, sorry for the crappy makeshift multiplayer mode
 
+Matthew 5/22/16
+
+- fixing Ai with collision. Broke the game.
+
+Matthew 5/24/16
+
+- tried to make AI not have shadows follow bots. fixed. movements bugged again.
+
+Matthew 5/25/16
+
+- Single movement possible. Doesn't spazz.
+
+Matthew 5/30/16
+
+-Bots now drop bombs when surrounded by breakable walls and/ or playerse.
+
+-bots move one tile at a time and moves to a safespot when a bomb is planted.
+
+Matthew 6/1/16
+
+-Added bomb detection and player detection for bots and using these for better decision making
+-bots are a bit buggy using this 
+
+Matthew 6/3/16
+
+-Added detection of the nearest bomb so it's easier for bots to avoid these bombs. For ex, if there's 2 or more bombs within its radius, it'll take care of the nearest bomb first.
+
+Matthew 6/5/16
+
+-Added a method for bots to avoid it's own placed bombs and other explosions more effectively.
+-Bug where it will not always make the best actions to avoid bombs. Sometimes run into other bombs and die.
+
+Matthew 6/6/16
+
+-Bots move in a weird way. probably conflicts with p2 on multiplayer mode.
+
 
 Anthony:
 
