@@ -173,7 +173,7 @@ class Sprite {
       if (s.range > 1) {
         s.range -= 1;
       }
-        if (t1.range > 1) {
+      if (t1.range > 1) {
         t1.range -= 1;
       }
       break;
@@ -212,6 +212,7 @@ class Sprite {
       canPushBomb = true;
       break;
     }
+    println(Boosts.size());
   }
 
   //GETTING RID OF THE EFFECTS OF POWERUP/ STACKS

@@ -90,7 +90,7 @@ class Bomb {
           }
           s.score += 50;
           println("Player Score = " + s.score);
-          t1.die("p1");
+          t1.die("p2");
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24 || s.curFrame == 49 || s.curFrame == 74 || s.curFrame == 99) {
             Sprites.remove(t1);
@@ -155,7 +155,7 @@ class Bomb {
           }
           s.score += 50;
           println("Player Score = " + s.score);
-          t1.die("p1");
+          t1.die("p2");
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24 || s.curFrame == 49 || s.curFrame == 74 || s.curFrame == 99) {
             Sprites.remove(t1);
@@ -220,7 +220,7 @@ class Bomb {
           }
           s.score += 50;
           println("Player Score = " + s.score);
-          t1.die("p1");
+          t1.die("p2");
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24 || s.curFrame == 49 || s.curFrame == 74 || s.curFrame == 99) {
             Sprites.remove(t1);
@@ -285,7 +285,7 @@ class Bomb {
           }
           s.score += 50;
           println("Player Score = " + s.score);
-          t1.die("p1");
+          t1.die("p2");
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24 || s.curFrame == 49 || s.curFrame == 74 || s.curFrame == 99) {
             Sprites.remove(t1);
@@ -366,7 +366,7 @@ class Bomb {
           }
           s.score += 50;
           println("Player Score = " + s.score);
-          t1.die("p1");
+          t1.die("p2");
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24 || s.curFrame == 49 || s.curFrame == 74 || s.curFrame == 99) {
             Sprites.remove(t1);
@@ -387,7 +387,7 @@ class Bomb {
           }
           if (wallFrame == 9) {
             t1.score += 10;
-            println("PlayerTwo Score = " + s.score);
+            println("PlayerTwo Score = " + t1.score);
             if (Math.random() < .33) {
               dropPowerUp(x, y + i * per);
             } else {
@@ -431,7 +431,7 @@ class Bomb {
           }
           s.score += 50;
           println("Player Score = " + s.score);
-          t1.die("p1");
+          t1.die("p2");
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24 || s.curFrame == 49 || s.curFrame == 74 || s.curFrame == 99) {
             Sprites.remove(t1);
@@ -496,7 +496,7 @@ class Bomb {
           }
           s.score += 50;
           println("Player Score = " + s.score);
-          t1.die("p1");
+          t1.die("p2");
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24 || s.curFrame == 49 || s.curFrame == 74 || s.curFrame == 99) {
             Sprites.remove(t1);
@@ -561,7 +561,7 @@ class Bomb {
           }
           s.score += 50;
           println("Player Score = " + s.score);
-          t1.die("p1");
+          t1.die("p2");
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24 || s.curFrame == 49 || s.curFrame == 74 || s.curFrame == 99) {
             Sprites.remove(t1);
