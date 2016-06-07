@@ -127,7 +127,7 @@ class PlayerOne {
       } else if (downKeys['x']) {
         //DROP BOMB WHEN PRESS X
         //CHECK TO MAKE SURE YOU ARE DROPPING ON FLOOR 
-        if (s.numBombs > 0 && BombMap.size() < maxBombsOnBoard) {
+        if (s.numBombs > 0 && BombMap.size() < s.maxBombsOnBoard) {
           if (grid[(s.y + 25)/per][(s.x + 25)/per] == 5 || grid[(s.y + 25)/per][(s.x + 25)/per] == 1) {
             grid[(s.y + 25)/per][(s.x + 25)/per] = 7;
             BombMap.add(new Bomb("bomb", "PlayerOne", (s.x + 25)/per*per, (s.y + 25)/per*per));

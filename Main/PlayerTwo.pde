@@ -12,21 +12,21 @@ class PlayerTwo {
   void action() {
     //ONLY FOR RED PLAYER!
     if (!s2.state.equals("dying")) {
-      s2.losePowerUp();
+      s2.losePowerUp2();
       if (downKeys2[259] && s2.curMove.equals("") || s2.curMove.equals("walkUp")) {
         //WALK UP
         //OBJECT COLLISION CHECK FOR A BLOCK ABOVE CHARACTER
         if (isBlock(grid[(s2.y - 1)/per][(s2.x + 22)/per]) 
           || isBlock(grid[(s2.y - 1)/per][(s2.x + 3)/per]) 
-          || (closestBomb() != null && (millis() - closestBomb().detonateTime >= 1000))) {
+          || (closestBomb2() != null && (millis() - closestBomb2().detonateTime >= 1000))) {
           s2.y += s2.STEP;
           //CHECK TO SEE IF TILE CONTAINS POWERUP
         } else if (isPowerUp(grid[(s2.y - 1)/per][(s2.x + 24)/per])) {
-          s2.obtainPU(s2.x + 24, s2.y - 1); 
+          s2.obtainPU2(s2.x + 24, s2.y - 1); 
           //CHANGE IT BACK TO FLOOR TILE
           grid[(s2.y - 1)/per][(s2.x + 24)/per] = 5;
         } else if (isPowerUp(grid[(s2.y - 1)/per][s2.x/per])) {
-          s2.obtainPU(s2.x + 24, s2.y - 1); 
+          s2.obtainPU2(s2.x + 24, s2.y - 1); 
           grid[(s2.y - 1)/per][s2.x/per] = 5;
         }
         if (s2.name.equals("red")) {
@@ -47,13 +47,13 @@ class PlayerTwo {
         //OBJECT COLLISION CHECK FOR A BLOCK TO THE LEFT OF CHARACTER
         if (isBlock(grid[(s2.y + 42)/per][(s2.x - 1)/per]) 
           || isBlock(grid[(s2.y + 3)/per][(s2.x - 1)/per])
-          || (closestBomb() != null && (millis() - closestBomb().detonateTime >= 1000))) {
+          || (closestBomb2() != null && (millis() - closestBomb2().detonateTime >= 1000))) {
           s2.x += s2.STEP;
         } else if (isPowerUp(grid[(s2.y + 44)/per][(s2.x - 3)/per])) {
-          s2.obtainPU(s2.x - 3, s2.y + 44); 
+          s2.obtainPU2(s2.x - 3, s2.y + 44); 
           grid[(s2.y + 44)/per][(s2.x - 3)/per] = 5;
         } else if (isPowerUp(grid[(s2.y + 4)/per][(s2.x - 3)/per])) {
-          s2.obtainPU(s2.x - 3, s2.y + 44); 
+          s2.obtainPU2(s2.x - 3, s2.y + 44); 
           grid[(s2.y + 4)/per][(s2.x - 3)/per] = 5;
         }
         if (s2.name.equals("red")) {
@@ -74,13 +74,13 @@ class PlayerTwo {
         //OBJECT COLLISION CHECK FOR A BLOCK BELOW CHARACTER
         if (isBlock(grid[(s2.y + 47)/per][(s2.x + 12)/per]) 
           || isBlock(grid[(s2.y + 47)/per][(s2.x + 3)/per])
-          || (closestBomb() != null && (millis() - closestBomb().detonateTime >= 1000))) {
+          || (closestBomb2() != null && (millis() - closestBomb2().detonateTime >= 1000))) {
           s2.y -= s2.STEP;
         } else if (isPowerUp(grid[(s2.y + 47)/per][(s2.x + 12)/per])) {
-          s2.obtainPU(s2.x + 12, s2.y + 47); 
+          s2.obtainPU2(s2.x + 12, s2.y + 47); 
           grid[(s2.y + 47)/per][(s2.x + 12)/per] = 5;
         } else if (isPowerUp(grid[(s2.y + 47)/per][s2.x/per])) {
-          s2.obtainPU(s2.x + 12, s2.y + 47); 
+          s2.obtainPU2(s2.x + 12, s2.y + 47); 
           grid[(s2.y + 47)/per][s2.x/per] = 5;
         }
         if (s2.name.equals("red")) {
@@ -101,13 +101,13 @@ class PlayerTwo {
         //OBJECT COLLISION CHECK FOR A BLOCK TO THE RIGHT OF CHARACTER
         if (isBlock(grid[(s2.y + 42)/per][(s2.x + 27)/per]) 
           || isBlock(grid[(s2.y + 3)/per][(s2.x + 27)/per])
-          || (closestBomb() != null && (millis() - closestBomb().detonateTime >= 1000))) {
+          || (closestBomb2() != null && (millis() - closestBomb2().detonateTime >= 1000))) {
           s2.x -= s2.STEP;
         } else if (isPowerUp(grid[(s2.y + 44)/per][(s2.x + 27)/per])) {
-          s2.obtainPU(s2.x + 27, s2.y + 44); 
+          s2.obtainPU2(s2.x + 27, s2.y + 44); 
           grid[(s2.y + 44)/per][(s2.x + 27)/per] = 5;
         } else if (isPowerUp(grid[(s2.y + 4)/per][(s2.x + 27)/per])) {
-          s2.obtainPU(s2.x + 27, s2.y + 44); 
+          s2.obtainPU2(s2.x + 27, s2.y + 44); 
           grid[(s2.y + 4)/per][(s2.x + 27)/per] = 5;
         }
         if (s2.name.equals("red")) {
@@ -126,7 +126,7 @@ class PlayerTwo {
       } else if (downKeys2['/']) {
         //DROP BOMB WHEN PRESS
         //CHECK TO MAKE SURE YOU ARE DROPPING ON FLOOR 
-        if (s2.numBombs > 0 && BombMap.size() < maxBombsOnBoard) {
+        if (s2.numBombs > 0 && BombMap.size() < t1.maxBombsOnBoard) {
           if (grid[(s2.y + 25)/per][(s2.x + 25)/per] == 5 || grid[(s2.y + 25)/per][(s2.x + 25)/per] == 1) {
             grid[(s2.y + 25)/per][(s2.x + 25)/per] = 7;
             BombMap.add(new Bomb("bomb", "PlayerTwo", (s2.x + 25)/per*per, (s2.y + 25)/per*per));

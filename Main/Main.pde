@@ -22,10 +22,10 @@ ArrayList<PImage> images;
 PImage menu;
 PImage victoryBanner;
 PImage background;
+PImage tie;
 //AI newBots;
 String gameState;
 int blockType;
-int maxBombsOnBoard = 1;
 String p1Color;
 
 
@@ -129,55 +129,21 @@ public void draw() {
     t.run();
     displayExplosion();
     if (s.canPushBomb) {
-      moveBomb();
+      s.moveBomb();
+    }
+    if (t1.canPushBomb) {
+      t1.moveBomb2();
     }
     //newBots.makeMove();
   } else if (gameState.equals("gameOver")) {
     background(255);
     victoryBanner = loadImage("VictoryBanner.png");
     victoryBanner.resize(victoryBanner.width * 3, victoryBanner.height * 3);
+    tie = loadImage("Tie.png");
+    tie.resize(800, 600);
     displayVictoryScreen();
   } else if (gameState.equals("restart")) {
     displayRestartButton();
-  }
-}
-
-//ALLOW PLAYER TO PUSH THE BOMBS
-void moveBomb() {
-  for (Bomb b : BombMap) {
-    if (s.dir == 'l' && grid[s.y/per][(s.x - 3)/per] == 7) {
-      if (!isBlock(grid[b.y/per][(b.x - 1)/per])) {
-        b.x -= s.STEP; 
-        if (b.x/per == (s.x - 3)/per - 1) {
-          grid[b.y/per][b.x/per] = 7;
-          grid[b.y/per][b.x/per + 1] = 5;
-        }
-      }
-    } else if (s.dir == 'r' && grid[s.y/per][(s.x + 22)/per] == 7) {
-      if (!isBlock(grid[b.y/per][(b.x + 51)/per])) {
-        b.x += s.STEP;
-        if (b.x/per == (s.x - 3)/per + 1) {
-          grid[b.y/per][b.x/per] = 7;
-          grid[b.y/per][b.x/per - 1] = 5;
-        }
-      }
-    } else if (s.dir == 'u' && grid[(s.y - 3)/per][s.x/per] == 7) {
-      if (!isBlock(grid[(b.y - 3)/per][b.x/per])) {
-        b.y += s.STEP;
-        if (b.y/per == (s.y - 3)/per - 1) {
-          grid[b.y/per][b.x/per] = 7;
-          grid[b.y/per + 1][b.x/per] = 5;
-        }
-      }
-    } else if (s.dir == 'd' && grid[(s.y + 47)/per][s.x/per] == 7) {
-      if (!isBlock(grid[(b.y + 51)/per][b.x/per])) {
-        b.y -= s.STEP;
-        if (b.y/per == (s.y - 3)/per + 1) {
-          grid[b.y/per][b.x/per] = 7;
-          grid[b.y/per - 1][b.x/per] = 5;
-        }
-      }
-    }
   }
 }
 
@@ -547,9 +513,9 @@ void exit() {
 //SHOW EXPLOSIONS AND REMOVES BOMB AFTERWARDS
 void displayExplosion() {
   for (Bomb x : BombMap) {
-    if(x.owner.equals("PlayerTwo")){
+    if (x.owner.equals("PlayerTwo")) {
       x.explosion2();
-    } else if(x.owner.equals("PlayerOne")){
+    } else if (x.owner.equals("PlayerOne")) {
       x.explosion();
     }
   }
@@ -638,19 +604,23 @@ void displayColorSelect() {
 //VICTORY SPRITES
 void displayVictoryScreen() {
   surface.setSize(800, 600);
-  image(victoryBanner, 400, 120);
-  if (winner().equals("green")) {
-    imageMode(CENTER);
-    image(images.get(78), 400, 370);
-  } else if (winner().equals("yellow")) {
-    imageMode(CENTER);
-    image(images.get(79), 400, 370);
-  } else if (winner().equals("red")) {
-    imageMode(CENTER);
-    image(images.get(80), 400, 370);
+  if (s.score == t1.score) {
+    image(tie, 0, 0);
   } else {
-    imageMode(CENTER);
-    image(images.get(81), 400, 370);
+    image(victoryBanner, 400, 120);
+    if (winner().equals("green")) {
+      imageMode(CENTER);
+      image(images.get(78), 400, 370);
+    } else if (winner().equals("yellow")) {
+      imageMode(CENTER);
+      image(images.get(79), 400, 370);
+    } else if (winner().equals("red")) {
+      imageMode(CENTER);
+      image(images.get(80), 400, 370);
+    } else {
+      imageMode(CENTER);
+      image(images.get(81), 400, 370);
+    }
   }
 }
 
@@ -679,7 +649,11 @@ String winner() {
    }
    }
    */
-  winner = Integer.toString(max(s.score, t1.score));
+  if (max(s.score, t1.score) == s.score) {
+    winner = s.name;
+  } else if (max(s.score, t1.score) == t1.score) {
+    winner = t1.name;
+  }
   return winner;
 }
 
@@ -688,11 +662,25 @@ Bomb closestBomb() {
     if (s.dir == 'u' && (abs(s.y - per - BombMap.get(i).y) < 5 && abs(BombMap.get(i).x - s.x) < 23)) {
       return BombMap.get(i);
     } else if (s.dir == 'd' && (abs(BombMap.get(i).y - per - s.y) < 5 && abs(BombMap.get(i).x - s.x) < 23)) {
-      print(BombMap.get(i).y + 1 - s.y);
       return BombMap.get(i);
     } else if (s.dir == 'l' && (abs(BombMap.get(i).x + per + 1 - s.x)< 5 && abs(BombMap.get(i).y - s.y) < 20)) {
       return BombMap.get(i);
     } else if (s.dir == 'r' && (abs(BombMap.get(i).x - 1 - (s.x + 20)) < 5 && abs(BombMap.get(i).y - s.y) < 20)) {
+      return BombMap.get(i);
+    }
+  }
+  return null;
+}
+
+Bomb closestBomb2() {
+  for (int i = 0; i < BombMap.size(); i++) {
+    if (t1.dir == 'u' && (abs(t1.y - per - BombMap.get(i).y) < 5 && abs(BombMap.get(i).x - t1.x) < 23)) {
+      return BombMap.get(i);
+    } else if (t1.dir == 'd' && (abs(BombMap.get(i).y - per - t1.y) < 5 && abs(BombMap.get(i).x - t1.x) < 23)) {
+      return BombMap.get(i);
+    } else if (t1.dir == 'l' && (abs(BombMap.get(i).x + per + 1 - t1.x)< 5 && abs(BombMap.get(i).y - t1.y) < 20)) {
+      return BombMap.get(i);
+    } else if (t1.dir == 'r' && (abs(BombMap.get(i).x - 1 - (t1.x + 20)) < 5 && abs(BombMap.get(i).y - t1.y) < 20)) {
       return BombMap.get(i);
     }
   }

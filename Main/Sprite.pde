@@ -14,10 +14,11 @@ class Sprite {
   int t;
   int numBombs;
   int range = 1;
+  int maxBombsOnBoard = 1;
   int time;
   int score;
   boolean canPushBomb;
-
+  
   //SPRITE CONSTRUCTORS
   //LOAD IMAGES FOR SPRITES 
   public Sprite(int x, int y, String name) {
@@ -49,7 +50,8 @@ class Sprite {
     curMove = "";
     curFrame = 0;
     state = "";
-    numBombs = 10;
+    score = 0;
+    numBombs = 15;
     canPushBomb = false;
   }
 
@@ -139,60 +141,42 @@ class Sprite {
     switch (powerUp) {
     case 8:
       println("Picked up boots");
-      Boosts.add(new int[]{8, millis()}); 
+      s.Boosts.add(new int[]{8, millis()}); 
       if (s.STEP <= 6) {
         s.STEP += 1;
-      }
-      if (t1.STEP <= 6) {
-        t1.STEP += 1;
       }
       break;
     case 9:
       println("Picked up some slime");
-      Boosts.add(new int[]{9, millis()}); 
+      s.Boosts.add(new int[]{9, millis()}); 
       if (s.STEP >= 1) {
         s.STEP -= 1;
-      }
-      if (t1.STEP >= 1) {
-        t1.STEP -= 1;
       }
       break;
     case 10:
       println("More bombs");
-      Boosts.add(new int[]{10, millis()}); 
+      s.Boosts.add(new int[]{10, millis()}); 
       if (s.numBombs <= 5) {
         s.numBombs += 1;
-      }
-      if (t1.numBombs <= 5) {
-        t1.numBombs += 1;
       }
       break;
     case 11:
       println("Lower firerange");
-      Boosts.add(new int[]{11, millis()}); 
+      s.Boosts.add(new int[]{11, millis()}); 
       if (s.range > 1) {
         s.range -= 1;
-      }
-      if (t1.range > 1) {
-        t1.range -= 1;
       }
       break;
     case 12:
       println("Increase fire range");
-      Boosts.add(new int[]{12, millis()}); 
+      s.Boosts.add(new int[]{12, millis()}); 
       if (s.range <= 6) {
         s.range += 1;
-      }
-      if (t1.range <= 6) {
-        t1.range += 1;
       }
       break;
     case 13:
       println("Place more bombs");
-      Boosts.add(new int[]{13, millis()}); 
-      if (maxBombsOnBoard <= 5) {
-        maxBombsOnBoard += 1;
-      }
+      s.Boosts.add(new int[]{13, millis()}); 
       break;
     case 14:
       println("Get poisoned");
@@ -208,11 +192,84 @@ class Sprite {
       break;
     case 17:
       println("Push bombs");
-      Boosts.add(new int[]{17, millis()});
-      canPushBomb = true;
+      s.Boosts.add(new int[]{17, millis()});
+      s.canPushBomb = true;
       break;
     }
-    println(Boosts.size());
+  }
+
+  //GET THE TYPE OF POWERUP ON GRID PLAYER 2
+  void obtainPU2(int x, int y) {
+    int powerUp = grid[y/per][x/per];
+    /*for (int[] boost : Boosts) {
+     if (boost[0] == powerUp) {
+     if (powerUp == 8){
+     s.STEP +=2;
+     }
+     boost[2] += 1;
+     boost[1] += 5000;
+     return;
+     }
+     }  
+     */
+    switch (powerUp) {
+    case 8:
+      println("Picked up boots");
+      t1.Boosts.add(new int[]{8, millis()}); 
+      if (t1.STEP <= 6) {
+        t1.STEP += 1;
+      }
+      break;
+    case 9:
+      println("Picked up some slime");
+      t1.Boosts.add(new int[]{9, millis()}); 
+      if (t1.STEP >= 1) {
+        t1.STEP -= 1;
+      }
+      break;
+    case 10:
+      println("More bombs");
+      t1.Boosts.add(new int[]{10, millis()}); 
+      if (t1.numBombs <= 5) {
+        t1.numBombs += 1;
+      }
+      break;
+    case 11:
+      println("Lower firerange");
+      t1.Boosts.add(new int[]{11, millis()}); 
+      if (t1.range > 1) {
+        t1.range -= 1;
+      }
+      break;
+    case 12:
+      println("Increase fire range");
+      t1.Boosts.add(new int[]{12, millis()}); 
+      if (t1.range <= 6) {
+        t1.range += 1;
+      }
+      break;
+    case 13:
+      println("Place more bombs");
+      t1.Boosts.add(new int[]{13, millis()}); 
+      break;
+    case 14:
+      println("Get poisoned");
+      //Boosts.add(14);
+      break;
+    case 15:
+      println("IDEK yet");
+      //Boosts.add(15);
+      break;
+    case 16:
+      println("Chuck bombs");
+      //Boosts.add(16);
+      break;
+    case 17:
+      println("Push bombs");
+      t1.Boosts.add(new int[]{17, millis()});
+      t1.canPushBomb = true;
+      break;
+    }
   }
 
   //GETTING RID OF THE EFFECTS OF POWERUP/ STACKS
@@ -231,14 +288,125 @@ class Sprite {
         if (Boosts.get(i)[0] == 12 && s.range > 1) {
           s.range--;
         }
-        if (Boosts.get(i)[0] == 13 && maxBombsOnBoard >= 1) {
-          maxBombsOnBoard--;
+        if (Boosts.get(i)[0] == 13 && s.maxBombsOnBoard >= 1) {
+          s.maxBombsOnBoard--;
         }
-        if (Boosts.get(i)[0] == 17 && canPushBomb == true) {
-          canPushBomb = false;
+        if (Boosts.get(i)[0] == 17 && s.canPushBomb == true) {
+          s.canPushBomb = false;
         }
         Boosts.remove(Boosts.get(i));
         i--;
+      }
+    }
+  }
+
+
+  //GETTING RID OF THE EFFECTS OF POWERUP/ STACKS FOR PLAYER 2
+  void losePowerUp2() {
+    for (int i = 0; i < Boosts.size(); i++) {
+      if (millis() - Boosts.get(i)[1] >= 10000) { 
+        if (Boosts.get(i)[0] == 8 && t1.STEP >= 3) {
+          t1.STEP--; //* Boosts.get(i)[2];
+        }
+        if (Boosts.get(i)[0] == 9 && t1.STEP <= 3) {
+          t1.STEP++; //* Boosts.get(i)[2];
+        }
+        if (Boosts.get(i)[0] == 10 && t1.numBombs >= 3) {
+          t1.numBombs--;
+        }
+        if (Boosts.get(i)[0] == 12 && t1.range > 1) {
+          t1.range--;
+        }
+        if (Boosts.get(i)[0] == 13 && t1.maxBombsOnBoard >= 1) {
+          t1.maxBombsOnBoard--;
+        }
+        if (Boosts.get(i)[0] == 17 && t1.canPushBomb == true) {
+          t1.canPushBomb = false;
+        }
+        Boosts.remove(Boosts.get(i));
+        i--;
+      }
+    }
+  }
+
+  //ALLOW PLAYER TO PUSH THE BOMBS
+  void moveBomb() {
+    for (Bomb b : BombMap) {
+      if (b.owner.equals("PlayerOne")) {
+        if (s.dir == 'l' && grid[s.y/per][(s.x - 3)/per] == 7) {
+          if (!isBlock(grid[b.y/per][(b.x - 1)/per])) {
+            b.x -= s.STEP; 
+            if (b.x/per == (s.x - 3)/per - 1) {
+              grid[b.y/per][b.x/per] = 7;
+              grid[b.y/per][b.x/per + 1] = 5;
+            }
+          }
+        } else if (s.dir == 'r' && grid[s.y/per][(s.x + 22)/per] == 7) {
+          if (!isBlock(grid[b.y/per][(b.x + 51)/per])) {
+            b.x += s.STEP;
+            if (b.x/per == (s.x - 3)/per + 1) {
+              grid[b.y/per][b.x/per] = 7;
+              grid[b.y/per][b.x/per - 1] = 5;
+            }
+          }
+        } else if (s.dir == 'u' && grid[(s.y - 3)/per][s.x/per] == 7) {
+          if (!isBlock(grid[(b.y - 3)/per][b.x/per])) {
+            b.y += s.STEP;
+            if (b.y/per == (s.y - 3)/per - 1) {
+              grid[b.y/per][b.x/per] = 7;
+              grid[b.y/per + 1][b.x/per] = 5;
+            }
+          }
+        } else if (s.dir == 'd' && grid[(s.y + 47)/per][s.x/per] == 7) {
+          if (!isBlock(grid[(b.y + 51)/per][b.x/per])) {
+            b.y -= s.STEP;
+            if (b.y/per == (s.y - 3)/per + 1) {
+              grid[b.y/per][b.x/per] = 7;
+              grid[b.y/per - 1][b.x/per] = 5;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  //ALLOW PLAYER 2 TO PUSH THE BOMBS
+  void moveBomb2() {
+    for (Bomb b : BombMap) {
+      if (b.owner.equals("PlayerTwo")) {
+        if (t1.dir == 'l' && grid[t1.y/per][(t1.x - 3)/per] == 7) {
+          if (!isBlock(grid[b.y/per][(b.x - 1)/per])) {
+            b.x -= t1.STEP; 
+            if (b.x/per == (t1.x - 3)/per - 1) {
+              grid[b.y/per][b.x/per] = 7;
+              grid[b.y/per][b.x/per + 1] = 5;
+            }
+          }
+        } else if (t1.dir == 'r' && grid[t1.y/per][(t1.x + 22)/per] == 7) {
+          if (!isBlock(grid[b.y/per][(b.x + 51)/per])) {
+            b.x += t1.STEP;
+            if (b.x/per == (t1.x - 3)/per + 1) {
+              grid[b.y/per][b.x/per] = 7;
+              grid[b.y/per][b.x/per - 1] = 5;
+            }
+          }
+        } else if (t1.dir == 'u' && grid[(t1.y - 3)/per][t1.x/per] == 7) {
+          if (!isBlock(grid[(b.y - 3)/per][b.x/per])) {
+            b.y += t1.STEP;
+            if (b.y/per == (t1.y - 3)/per - 1) {
+              grid[b.y/per][b.x/per] = 7;
+              grid[b.y/per + 1][b.x/per] = 5;
+            }
+          }
+        } else if (t1.dir == 'd' && grid[(t1.y + 47)/per][t1.x/per] == 7) {
+          if (!isBlock(grid[(b.y + 51)/per][b.x/per])) {
+            b.y -= t1.STEP;
+            if (b.y/per == (t1.y - 3)/per + 1) {
+              grid[b.y/per][b.x/per] = 7;
+              grid[b.y/per - 1][b.x/per] = 5;
+            }
+          }
+        }
       }
     }
   }
