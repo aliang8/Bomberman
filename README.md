@@ -148,6 +148,10 @@ Anthony 6/6/16
 
 - Created Restart button (should've done so awhile ago)
 
+- NVM, made a functional multiplayer mode
+
+- Added the tie game screen, fixed up code, sorry for the crappy makeshift multiplayer mode
+
 
 Anthony:
 
