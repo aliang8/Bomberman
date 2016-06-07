@@ -126,7 +126,6 @@ public void draw() {
     }
     //newBots.makeMove();
   } else if (gameState.equals("gameOver")) {
-    surface.setSize(800, 600);
     background(255);
     victoryBanner = loadImage("VictoryBanner.png");
     victoryBanner.resize(victoryBanner.width * 3, victoryBanner.height * 3);
@@ -153,8 +152,8 @@ void moveBomb() {
           grid[b.y/per][b.x/per - 1] = 5;
         }
       }
-    } else if (s.dir == 'u' && grid[(s.y - 1)/per][s.x/per] == 7) {
-      if (!isBlock(grid[(b.y - 1)/per][b.x/per])) {
+    } else if (s.dir == 'u' && grid[(s.y - 3)/per][s.x/per] == 7) {
+      if (!isBlock(grid[(b.y - 3)/per][b.x/per])) {
         b.y += s.STEP;
         if (b.y/per == (s.y - 3)/per - 1) {
           grid[b.y/per][b.x/per] = 7;
@@ -274,7 +273,6 @@ void displayMap() {
         }
         //BOMB
         if (grid[r][c] == 7) {
-          grid[r][c] = 5;
         }
         //POWERUPS
         if (grid[r][c] == 8) {
@@ -363,9 +361,9 @@ void initializeLE(String name, boolean[] downKeys) {
   Sprites.add(s);
   s.dir = 'r';
   p1 = new PlayerOne(Sprites.get(0), downKeys);
-  s2 = bot.get(0);
-  s3 = bot.get(1);
-  s4 = bot.get(2);
+  //s2 = bot.get(0);
+  //s3 = bot.get(1);
+  //s4 = bot.get(2);
   String[] vals = new String[rows*cols];
   try {  
     BufferedReader reader = createReader("level.txt");
@@ -485,10 +483,14 @@ void change(int x, int y) {
 void exit() {
   print("Write a file");
   if (gameState.equals("inGame")) {
-    PrintWriter output = createWriter("inGame.txt");
+    PrintWriter output = createWriter("level.txt");
     for (int r = 0; r < height/per; r+=1) {
       for (int c = 0; c < width/per; c+=1) {
-        output.print(Integer.toString(grid[r][c])+" ");
+        if (grid[r][c] == 7) {
+          output.print(Integer.toString(5) + " ");
+        } else {
+          output.print(Integer.toString(grid[r][c])+" ");
+        }
       }
     }
     output.close();
@@ -497,7 +499,11 @@ void exit() {
     PrintWriter output = createWriter("level.txt");
     for (int r = 0; r < height/per; r+=1) {
       for (int c = 0; c < width/per - 2; c+=1) {
-        output.print(Integer.toString(grid[r][c])+" ");
+        if (grid[r][c] == 7) {
+          output.print(Integer.toString(5) + " ");
+        } else {
+          output.print(Integer.toString(grid[r][c])+" ");
+        }
       }
     }
     output.close();
@@ -585,37 +591,39 @@ void displayColorSelect() {
 
 //VICTORY SPRITES
 void displayVictoryScreen() {
+  surface.setSize(800, 600);
   image(victoryBanner, 400, 120);
   if (winner().equals("green")) {
     imageMode(CENTER);
-    image(images.get(78), 400, 300 + 70);
+    image(images.get(78), 400, 370);
   } else if (winner().equals("yellow")) {
     imageMode(CENTER);
-    image(images.get(79), 400, 300 + 70);
+    image(images.get(79), 400, 370);
   } else if (winner().equals("red")) {
     imageMode(CENTER);
-    image(images.get(80), 400, 300 + 70);
+    image(images.get(80), 400, 370);
   } else {
     imageMode(CENTER);
-    image(images.get(81), 400, 300 + 70);
+    image(images.get(81), 400, 370);
   }
 }
 
 
 String winner() {
   String winner = "";
+  /*
   for (int i = 0; i < bot.size() + 1; i++) {
-    if (bot.get(i).score > bot.get(i + 1).score && bot.get(i).score > s.score) {
-      winner = bot.get(i).name;
-    } else if (bot.get(i+1).score > bot.get(i).score && bot.get(i+1).score > s.score) {
-      winner = bot.get(i+1).name;
-    } else {
-      winner = s.name;
-    }
-  }
-  return winner;
+   if (bot.get(i).score > bot.get(i + 1).score && bot.get(i).score > s.score) {
+   winner = bot.get(i).name;
+   } else if (bot.get(i+1).score > bot.get(i).score && bot.get(i+1).score > s.score) {
+   winner = bot.get(i+1).name;
+   } else {
+   winner = s.name;
+   }
+   }
+   */
+  return "red";
 }
-
 
 Bomb closestBomb() {
   for (int i = 0; i < BombMap.size(); i++) {
@@ -623,9 +631,9 @@ Bomb closestBomb() {
       return BombMap.get(i);
     } else if (s.dir == 'd' && (BombMap.get(i).y + 1 - s.y < 5 && abs(BombMap.get(i).x - s.x) < 10)) {
       return BombMap.get(i);
-    } else if (s.dir == 'l' && (BombMap.get(i).x + per + 1- s.x < 5 && abs(BombMap.get(i).y - s.y) < 20)) {
+    } else if (s.dir == 'l' && (BombMap.get(i).x + per + 1 - s.x< 5 && abs(BombMap.get(i).y - s.y) < 20)) {
       return BombMap.get(i);
-    } else if (s.dir == 'r' && (BombMap.get(i).x - 1 - s.x < 5 && abs(BombMap.get(i).y - s.y) < 20)) {
+    } else if (s.dir == 'r' && (BombMap.get(i).x - 1 - (s.x + 20) < 5 && abs(BombMap.get(i).y - s.y) < 20)) {
       return BombMap.get(i);
     }
   }

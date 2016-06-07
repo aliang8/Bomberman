@@ -68,7 +68,7 @@ class Bomb {
           if (s.t == 0) {
             s.t = millis();
           }
-          print(s.x + " " + (i * per) + " " + x + " " + " north");
+          //print(s.x + " " + (i * per) + " " + x + " " + " north");
           s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24) {
@@ -114,7 +114,7 @@ class Bomb {
           if (s.t == 0) {
             s.t = millis();
           }
-          print(s.x + " " + (i * per) + " " + x + " " + " south");
+          //print(s.x + " " + (i * per) + " " + x + " " + " south");
           s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24) {
@@ -160,7 +160,7 @@ class Bomb {
           if (s.t == 0) {
             s.t = millis();
           }
-          print(s.x + " " + (i * per) + " " + x + " " + " east");
+          //print(s.x + " " + (i * per) + " " + x + " " + " east");
           s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24) {
@@ -206,7 +206,7 @@ class Bomb {
           if (s.t == 0) {
             s.t = millis();
           }
-          print(s.x + " " + (i * per) + " " + x + " " + " west");
+          //print(s.x + " " + (i * per) + " " + x + " " + " west");
           s.die();
           //REMOVE SPRITE AFTER DIE ANIMATION
           if (s.curFrame == 24) {

@@ -50,7 +50,7 @@ class Sprite {
     curFrame = 0;
     state = "";
     numBombs = 10;
-    canPushBomb = true;
+    canPushBomb = false;
   }
 
   //RESET MOVE
