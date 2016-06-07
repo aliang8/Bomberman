@@ -140,6 +140,17 @@ Anthony 6/6/16
 
 - Working on fixing the bug 
 
+- Fixed the bomb collisions, added finishing touches to game
+
+- Added a winner function to determine the winner based on score
+
+- We do not have a functional AI yet, so features cannot be tested
+
+- Created Restart button (should've done so awhile ago)
+
+
+Anthony:
+
 ##Project plan/outline including our goals prioritized by importance and chronology (things to do + things already done): ##
 (SUBJECT TO CHANGE)
 
@@ -150,5 +161,11 @@ Anthony 6/6/16
 4. Making different game modes such as: (will be added)
 5. TRY to make 3D version
 
+Anthony: 
 
-Link to Demo version:
+##Future Implementation/ Bug Fixes/ More Features?
+
+1. Finish up the AI, make better AIs that don't crash
+2. Add more powerUp effects, even though we have more than enough
+3. Make mechanics smoother and graphics better
+4. If we get AIs working, we could create different modes.
