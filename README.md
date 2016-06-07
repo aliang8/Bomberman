@@ -15,8 +15,11 @@ Lastly, we will TRY to implement a 3-D version of the game.
 
 ##How To Use/Play: ##
 1) Click on Normal Game on the start up menu.
+
 2) Player One then chooses a color he/she wants.
+
 3) Player Two then chooses a color he/she wants.
+
 4) Game will start, the player who lives, wins the game.
 
 ##Controls##
