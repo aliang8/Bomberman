@@ -15,6 +15,7 @@ class Sprite {
   int numBombs;
   int range = 1;
   int time;
+  int score;
   boolean canPushBomb;
 
   //SPRITE CONSTRUCTORS
@@ -29,17 +30,17 @@ class Sprite {
     for (int i = 1; i < 26; i++) {
       String imageName = "Blue" + "(" + i + ").gif";
       images.add(loadImage(imageName));
-      images.get(i+25-1).resize(25, 50);
+      images.get(i+25-1).resize(25, 45);
     }
     for (int i = 1; i < 26; i++) {
       String imageName = "Yellow" + "(" + i + ").gif";
       images.add(loadImage(imageName));
-      images.get(i+49-1).resize(25, 50);
+      images.get(i+49-1).resize(25, 45);
     }
     for (int i = 1; i < 26; i++) {
       String imageName = "Green" + "(" + i + ").gif";
       images.add(loadImage(imageName));
-      images.get(i+73-1).resize(25, 50);
+      images.get(i+73-1).resize(25, 45);
     }
     Boosts = new ArrayList<int[]>(); 
     this.x = x;
@@ -49,7 +50,7 @@ class Sprite {
     curFrame = 0;
     state = "";
     numBombs = 10;
-    canPushBomb = false;
+    canPushBomb = true;
   }
 
   //RESET MOVE
