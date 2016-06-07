@@ -3,6 +3,7 @@ boolean[] downKeys = new boolean[260];
 boolean[] downKeys2 = new boolean[260];
 PFont font;
 PlayerOne p1;
+PlayerTwo p2;
 char[] controls = new char[] {'w', 'a', 's', 'd', 
   'g', 'h', 'e', 'q', 
   'r', 'f', 'x', 'c'}; // player 1
@@ -15,6 +16,7 @@ ArrayList<Sprite> Sprites;
 ArrayList<Sprite> bot = new ArrayList<Sprite>();
 Timer t;
 Sprite s, s2, s3, s4;
+Sprite t1;
 int per;
 ArrayList<PImage> images;
 PImage menu;
@@ -24,6 +26,7 @@ PImage background;
 String gameState;
 int blockType;
 int maxBombsOnBoard = 1;
+String p1Color;
 
 
 //*--------------------------LOAD IMAGES AND INIT VARIABLES-------------------------*
@@ -116,12 +119,13 @@ public void draw() {
     menu = loadImage("Menu.jpg");
     menu.resize(800, 600);
     displayMenu();
-  } else if (gameState.equals("selectColor") || gameState.equals("selectColorLE")) {
+  } else if (gameState.equals("selectColorP1") || gameState.equals("selectColorP2") ||gameState.equals("selectColorLE")) {
     background(255);
     displayColorSelect();
   } else if (gameState.equals("levelEditor") || gameState.equals("inGame")) {
     displayMap();
     p1.action();
+    p2.action();
     t.run();
     displayExplosion();
     if (s.canPushBomb) {
@@ -315,7 +319,7 @@ void displayMap() {
   }
 }
 
-void initialize(String name, boolean[] downKeys) {
+void initialize(String name, String name2, boolean[] downKeys, boolean[] downKeys2) {
   surface.setSize(700, 600);
   int rows = height/per;
   int cols = width/per;
@@ -324,10 +328,15 @@ void initialize(String name, boolean[] downKeys) {
   PowerUps = new ArrayList <PowerUp>();
   Sprites = new ArrayList <Sprite>();
   s = new Sprite(52, 52, name);
+  t1 = new Sprite(600, 52, name2);
   Sprites.add(s);
+  Sprites.add(t1);
   s.dir = 'r';
+  t1.dir = 'l';
   s.RIGHT_BOUND = width;
-  p1 = new PlayerOne(Sprites.get(0), downKeys);
+  t1.RIGHT_BOUND = width;
+  p1 = new PlayerOne(s, downKeys);
+  p2 = new PlayerTwo(t1, downKeys2);
   //s2 = newBots.bot.get(0);
   //s3 = newBots.bot.get(1);
   //s4 = newBots.bot.get(2);
@@ -363,6 +372,7 @@ void initializeLE(String name, boolean[] downKeys) {
   s = new Sprite(52, 52, name);
   Sprites.add(s);
   s.dir = 'r';
+  s.RIGHT_BOUND = width;
   p1 = new PlayerOne(Sprites.get(0), downKeys);
   //s2 = bot.get(0);
   //s3 = bot.get(1);
@@ -390,29 +400,43 @@ void initializeLE(String name, boolean[] downKeys) {
 }
 
 void mouseClicked() {
-  //print(mouseX + " " + mouseY);
+  print(mouseX + " " + mouseY);
   //GO TO SELECT COLOR SCREEN
   if (gameState.equals("menu")) {
     if (mouseX > 237 && mouseX < 562 && mouseY > 393 && mouseY < 427) {
-      gameState = "selectColor";
+      gameState = "selectColorP1";
     }
     if (mouseX > 237 && mouseX < 562 && mouseY > 437 && mouseY < 469) {
       gameState = "selectColorLE";
     }
   } //LOAD GAME
-  else if (gameState.equals("selectColor")) {
+  else if (gameState.equals("selectColorP1")) {
+    if (mouseX > 40 && mouseX < 380 && mouseY > 40 && mouseY < 280) {
+      gameState = "selectColorP2";
+      p1Color = "red";
+    } else if (mouseX > 420 && mouseX < 760 && mouseY > 40 && mouseY < 280) {
+      gameState = "selectColorP2";
+      p1Color = "blue";
+    } else if (mouseX > 40 && mouseX < 380 && mouseY > 320 && mouseY < 560) {
+      gameState = "selectColorP2";
+      p1Color = "green";
+    } else if (mouseX > 420 && mouseX < 760 && mouseY > 320 && mouseY < 560) {
+      gameState = "selectColorP2";
+      p1Color = "yellow";
+    }
+  } else if (gameState.equals("selectColorP2")) {
     if (mouseX > 40 && mouseX < 380 && mouseY > 40 && mouseY < 280) {
       gameState = "inGame";
-      initialize("red", downKeys);
+      initialize(p1Color, "red", downKeys, downKeys2);
     } else if (mouseX > 420 && mouseX < 760 && mouseY > 40 && mouseY < 280) {
       gameState = "inGame";
-      initialize("blue", downKeys);
+      initialize(p1Color, "blue", downKeys, downKeys2);
     } else if (mouseX > 40 && mouseX < 380 && mouseY > 320 && mouseY < 560) {
       gameState = "inGame";
-      initialize("green", downKeys);
+      initialize(p1Color, "green", downKeys, downKeys2);
     } else if (mouseX > 420 && mouseX < 760 && mouseY > 320 && mouseY < 560) {
       gameState = "inGame";
-      initialize("yellow", downKeys);
+      initialize(p1Color, "yellow", downKeys, downKeys2);
     }
   } //LOAD FOR LEVEL EDITOR
   else if (gameState.equals("selectColorLE")) {
@@ -577,6 +601,13 @@ void displayMenu() {
 
 //SELECT THE COLOR OF SPRITE
 void displayColorSelect() {
+  if (gameState.equals("selectColorP1")) {
+    textSize(15);
+    text("PlayerOne", 10, 10, 300, 200);
+  } else if (gameState.equals("selectColorP2")) {
+    textSize(15);
+    text("PlayerTwo", 10, 10, 300, 200);
+  }
   rectMode(CORNER);
   fill(#FF3333);
   rect(40, 40, 340, 240);
