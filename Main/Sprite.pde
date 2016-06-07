@@ -122,61 +122,61 @@ class Sprite {
      */
     switch (powerUp) {
     case 8:
-      print("Picked up boots");
+      println("Picked up boots");
       Boosts.add(new int[]{8, millis()}); 
       if (s.STEP <= 6) {
         s.STEP += 1;
       }
       break;
     case 9:
-      print("Picked up some slime");
+      println("Picked up some slime");
       Boosts.add(new int[]{9, millis()}); 
       if (s.STEP >= 1) {
         s.STEP -= 1;
       }
       break;
     case 10:
-      print("More bombs");
+      println("More bombs");
       Boosts.add(new int[]{10, millis()}); 
       if (s.numBombs <= 5) {
         s.numBombs += 1;
       }
       break;
     case 11:
-      print("Lower firerange");
+      println("Lower firerange");
       Boosts.add(new int[]{11, millis()}); 
       if (s.range > 1){
         s.range -= 1;
       }
       break;
     case 12:
-      print("Increase fire range");
+      println("Increase fire range");
       Boosts.add(new int[]{12, millis()}); 
       if (s.range <= 6){
         s.range += 1;
       }
       break;
     case 13:
-      print("Place more bombs");
+      println("Place more bombs");
       Boosts.add(new int[]{13, millis()}); 
       if (maxBombsOnBoard <= 5){
         maxBombsOnBoard += 1;
       }
       break;
     case 14:
-      print("Get poisoned");
+      println("Get poisoned");
       //Boosts.add(14);
       break;
     case 15:
-      print("IDEK yet");
+      println("IDEK yet");
       //Boosts.add(15);
       break;
     case 16:
-      print("Chuck bombs");
+      println("Chuck bombs");
       //Boosts.add(16);
       break;
     case 17:
-      print("Push bombs");
+      println("Push bombs");
       Boosts.add(new int[]{17, millis()});
       canPushBomb = true;
       break;

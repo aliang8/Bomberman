@@ -43,6 +43,8 @@ class Bomb {
             image(images.get(wallFrame), x, y - i * per);
           }
           if (wallFrame == 9) {
+            s.score += 10;
+            println("Player Score = " + s.score);
             if (Math.random() < .33) {
               dropPowerUp(x, y - i * per);
             } else {
@@ -64,7 +66,7 @@ class Bomb {
         if (Sprites.size() > 0 
           && s.y + i * per + per > y
           && s.y < y
-          && abs(s.x - x) < 10) {
+          && abs(s.x - x) < 22) {
           if (s.t == 0) {
             s.t = millis();
           }
@@ -89,6 +91,8 @@ class Bomb {
             image(images.get(wallFrame), x, y + i * per);
           }
           if (wallFrame == 9) {
+            s.score += 10;
+            println("Player Score = " + s.score);
             if (Math.random() < .33) {
               dropPowerUp(x, y + i * per);
             } else {
@@ -110,7 +114,7 @@ class Bomb {
         if (Sprites.size() > 0 
           && s.y - i * per - per < y 
           && s.y > y
-          && abs(s.x - x) < 10) {
+          && abs(s.x - x) < 22) {
           if (s.t == 0) {
             s.t = millis();
           }
@@ -135,6 +139,8 @@ class Bomb {
             image(images.get(wallFrame), x + i * per, y);
           }
           if (wallFrame == 9) {
+            s.score += 10;
+            println("Player Score = " + s.score);
             if (Math.random() < .33) {
               dropPowerUp(x + i * per, y);
             } else {
@@ -181,6 +187,8 @@ class Bomb {
             image(images.get(wallFrame), x - i * per, y);
           }
           if (wallFrame == 9) {
+            s.score += 10;
+            println("Player Score = " + s.score);
             if (Math.random() < .33) {
               dropPowerUp(x - i * per, y);
             } else {

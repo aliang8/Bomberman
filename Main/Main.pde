@@ -90,7 +90,7 @@ public void setup() {
     images.add(loadImage(imageName));
     images.get(i+77).resize(200, 299);
   }
-  t = new Timer(60);
+  t = new Timer(120);
   size(800, 600);
   surface.setResizable(true);
   //s2 = newBots.bot.get(0);
@@ -102,6 +102,9 @@ public void setup() {
 
 public void draw() {
   background = loadImage("background.png");
+  if (t.time == 119) {
+    gameState = "gameOver";
+  }
   if (gameState.equals("inGame")) {
     background.resize(700, 600);
     background(background);
@@ -130,6 +133,8 @@ public void draw() {
     victoryBanner = loadImage("VictoryBanner.png");
     victoryBanner.resize(victoryBanner.width * 3, victoryBanner.height * 3);
     displayVictoryScreen();
+  } else if (gameState.equals("restart")) {
+    displayRestartButton();
   }
 }
 
@@ -318,7 +323,6 @@ void initialize(String name, boolean[] downKeys) {
   BombMap = new ArrayList <Bomb>();
   PowerUps = new ArrayList <PowerUp>();
   Sprites = new ArrayList <Sprite>();
-  t = new Timer(62); // actually starts at 60 seconds because timer is slightly off
   s = new Sprite(52, 52, name);
   Sprites.add(s);
   s.dir = 'r';
@@ -356,7 +360,6 @@ void initializeLE(String name, boolean[] downKeys) {
   BombMap = new ArrayList <Bomb>();
   PowerUps = new ArrayList <PowerUp>();
   Sprites = new ArrayList <Sprite>();
-  t = new Timer(62); // actually starts at 60 seconds because timer is slightly off
   s = new Sprite(52, 52, name);
   Sprites.add(s);
   s.dir = 'r';
@@ -366,7 +369,7 @@ void initializeLE(String name, boolean[] downKeys) {
   //s4 = bot.get(2);
   String[] vals = new String[rows*cols];
   try {  
-    BufferedReader reader = createReader("level.txt");
+    BufferedReader reader = createReader("inGame.txt");
     String line = reader.readLine();
     vals = line.split(" ");
     println("Read a file");
@@ -387,7 +390,7 @@ void initializeLE(String name, boolean[] downKeys) {
 }
 
 void mouseClicked() {
-  print(mouseX + " " + mouseY);
+  //print(mouseX + " " + mouseY);
   //GO TO SELECT COLOR SCREEN
   if (gameState.equals("menu")) {
     if (mouseX > 237 && mouseX < 562 && mouseY > 393 && mouseY < 427) {
@@ -439,6 +442,13 @@ void mouseClicked() {
       } else {
         change(mouseX, mouseY);
       }
+    }
+  } else if (gameState.equals("gameOver")) {
+    gameState = "restart";
+  } else if (gameState.equals("restart")) {
+    //RESTART BUTTON
+    if (mouseX > 150 && mouseX < 650 && mouseY > 125 && mouseY < 475) {
+      gameState = "selectColor";
     }
   }
 }
@@ -496,7 +506,7 @@ void exit() {
     output.close();
   } 
   if (gameState.equals("levelEditor")) {
-    PrintWriter output = createWriter("level.txt");
+    PrintWriter output = createWriter("inGame.txt");
     for (int r = 0; r < height/per; r+=1) {
       for (int c = 0; c < width/per - 2; c+=1) {
         if (grid[r][c] == 7) {
@@ -567,6 +577,7 @@ void displayMenu() {
 
 //SELECT THE COLOR OF SPRITE
 void displayColorSelect() {
+  rectMode(CORNER);
   fill(#FF3333);
   rect(40, 40, 340, 240);
   fill(#000000);
@@ -608,6 +619,16 @@ void displayVictoryScreen() {
   }
 }
 
+//RESTART
+void displayRestartButton() {
+  background(255);
+  rectMode(CENTER);
+  stroke(50);
+  noFill();
+  rect(400, 300, 500, 350);
+  textSize(100);
+  text(" RESTART ", 140, 330);
+}
 
 String winner() {
   String winner = "";
@@ -627,13 +648,14 @@ String winner() {
 
 Bomb closestBomb() {
   for (int i = 0; i < BombMap.size(); i++) {
-    if (s.dir == 'u' && (BombMap.get(i).y + per + 1 - s.y < 5 && abs(BombMap.get(i).x - s.x) < 10)) {
+    if (s.dir == 'u' && (abs(s.y - per - BombMap.get(i).y) < 5 && abs(BombMap.get(i).x - s.x) < 23)) {
       return BombMap.get(i);
-    } else if (s.dir == 'd' && (BombMap.get(i).y + 1 - s.y < 5 && abs(BombMap.get(i).x - s.x) < 10)) {
+    } else if (s.dir == 'd' && (abs(BombMap.get(i).y - per - s.y) < 5 && abs(BombMap.get(i).x - s.x) < 23)) {
+      print(BombMap.get(i).y + 1 - s.y);
       return BombMap.get(i);
-    } else if (s.dir == 'l' && (BombMap.get(i).x + per + 1 - s.x< 5 && abs(BombMap.get(i).y - s.y) < 20)) {
+    } else if (s.dir == 'l' && (abs(BombMap.get(i).x + per + 1 - s.x)< 5 && abs(BombMap.get(i).y - s.y) < 20)) {
       return BombMap.get(i);
-    } else if (s.dir == 'r' && (BombMap.get(i).x - 1 - (s.x + 20) < 5 && abs(BombMap.get(i).y - s.y) < 20)) {
+    } else if (s.dir == 'r' && (abs(BombMap.get(i).x - 1 - (s.x + 20)) < 5 && abs(BombMap.get(i).y - s.y) < 20)) {
       return BombMap.get(i);
     }
   }
